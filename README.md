@@ -12,18 +12,18 @@ We'll need tables to store:
 * Users
 * User permissons
 * Website list
-** name
-** url
-** status (disabled or enabled)
-** list order
-** duration (global default or seconds)
-** image path
-** created
-** last updated
+ * name
+ * url
+ * status (disabled or enabled)
+ * list order
+ * duration (global default or seconds)
+ * image path
+ * created
+ * last updated
 * Global configuration options
-** Global delay
-** Item limit
-** Item fetch limit
+ * Global delay
+ * Item limit
+ * Item fetch limit
 * Cron job logs
 
 ## Front End
