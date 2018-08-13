@@ -14,6 +14,7 @@ class ConfigTableSeeder extends Seeder
     {
         // Add default config.
         DB::table('configs')->insert([
+            'config_name' => 'global',
         	'global_delay' => 30,
         	'fetch_limit' => 50,
         	'page_list_limit' => 50,

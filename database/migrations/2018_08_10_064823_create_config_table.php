@@ -15,6 +15,7 @@ class CreateConfigTable extends Migration
     {
         Schema::create('configs', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('config_name');
             $table->smallInteger('global_delay');
             $table->smallInteger('fetch_limit');
             $table->smallInteger('page_list_limit');
