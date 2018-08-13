@@ -13,7 +13,7 @@ class CreateFetchLogTable extends Migration
      */
     public function up()
     {
-        Schema::create('fetch_log', function (Blueprint $table) {
+        Schema::create('fetch_logs', function (Blueprint $table) {
             $table->increments('id');
             $table->smallInteger('pages_fk');
             $table->string('response');
@@ -28,6 +28,6 @@ class CreateFetchLogTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fetch_log');
+        Schema::dropIfExists('fetch_logs');
     }
 }

@@ -13,7 +13,7 @@ class CreateConfigTable extends Migration
      */
     public function up()
     {
-        Schema::create('config', function (Blueprint $table) {
+        Schema::create('configs', function (Blueprint $table) {
             $table->increments('id');
             $table->smallInteger('global_delay');
             $table->smallInteger('fetch_limit');
@@ -29,6 +29,6 @@ class CreateConfigTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('config');
+        Schema::dropIfExists('configs');
     }
 }
