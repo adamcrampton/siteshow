@@ -12,6 +12,7 @@ class FetchController extends Controller
     private $globalConfig;
     private $fetchedPages;
     private $fetchedUrls;
+    private $savedFiles;
 
     public function __construct(Config $config)
     {
@@ -34,7 +35,9 @@ class FetchController extends Controller
         $this->fetchedUrls = $page->getPageUrls($this->fetchedPages);
 
         // Get Browsershot to crawl the URLs and save the images.
-        $fetch->processUrls($this->fetchedUrls, $this->globalConfig->default_save_path);
+        $this->savedFiles = $fetch->processUrls($this->fetchedUrls, $this->globalConfig->default_save_path, $this->globalConfig->overwrite_files);
+
+        dd($this->savedFiles);
     }
 
     /**
