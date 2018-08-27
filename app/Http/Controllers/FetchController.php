@@ -11,8 +11,9 @@ class FetchController extends Controller
 {
     private $globalConfig;
     private $fetchedPages;
-    private $fetchedUrls;
+    private $fetchedPageData;
     private $savedFiles;
+    private $updatedPages;
 
     public function __construct(Config $config)
     {
@@ -31,13 +32,18 @@ class FetchController extends Controller
         // Limit is set to the global default if not specified.
         $this->fetchedPages = $page->getPages($this->globalConfig->fetch_limit);
 
-        // Create an array of URLs to hand off to Browsershot.
-        $this->fetchedUrls = $page->getPageUrls($this->fetchedPages);
+        // Create an array of URLs and Ids to hand off to the processing method.
+        $this->fetchedPageData = $page->getPageData($this->fetchedPages);
 
         // Get Browsershot to crawl the URLs and save the images.
-        $this->savedFiles = $fetch->processUrls($this->fetchedUrls, $this->globalConfig->default_save_path, $this->globalConfig->overwrite_files);
+        $this->savedFiles = $fetch->processUrls($this->fetchedPageData, $this->globalConfig->default_save_path, $this->globalConfig->overwrite_files);
 
-        dd($this->savedFiles);
+        // Now we have an array of paired filenames - original and saved, for each id in the pages table.
+        // If overwriting is switched on, values will be the same.
+        // Next, we update the pages table if we need to.
+        $this->updatedPages = $page->processUpdates($this->savedFiles);
+
+        dd($this->updatedPages);
     }
 
     /**

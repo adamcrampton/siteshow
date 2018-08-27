@@ -24,9 +24,9 @@ class Fetch extends Model
     		'savedFiles' => []
     	];
 
-    	$urlCollection->each(function($url) use(&$loopFunctionVariables) {
+    	$urlCollection->each(function($page, $key) use(&$loopFunctionVariables) {
     		// Convert URL to usable string so we can have a meaningful filename, and overwrite on each cron job execution (if option is set).
-    		$parsedUrl = parse_url($url);
+    		$parsedUrl = parse_url($page['url']);
 
     		// Get the host and replace dots with dashes.
 	   		$imageFileName = str_replace('.', '-', $parsedUrl['host']);
@@ -44,15 +44,13 @@ class Fetch extends Model
     		$imageFileName .= '.jpg';
 
     		// Grab the screenshot and save the image.
-    		Browsershot::url($url)
+    		Browsershot::url($page['url'])
     		->setScreenshotType('jpeg', 100)
     		->save($loopFunctionVariables['defaultSavePath'] . $imageFileName);
 
     		// Add file to saved files array - this works because of the pass by reference in the use statement.
-    		$loopFunctionVariables['savedFiles'][]['original'] = $imageFileName;
-    		$loopFunctionVariables['savedFiles'][]['saved'] = $imageFileName;
-
-
+    		$loopFunctionVariables['savedFiles'][$page['id']]['original'] = $originalFileName;
+    		$loopFunctionVariables['savedFiles'][$page['id']]['saved'] = $imageFileName;
     	});
 
     	return $loopFunctionVariables['savedFiles'];

@@ -20,8 +20,31 @@ class Page extends Model
     	return Page::all()->take($fetchLimit);
     }
 
-    public function getPageUrls($pageCollection)
+    // Pass back id and url in a tidy Collection for prcocessing.
+    public function getPageData($pageCollection)
     {
-    	return $pageCollection->pluck('url');
+    	$pageData = $pageCollection->map(function($page) {
+    		return $page->only(['id', 'url']);
+    	});
+
+    	return $pageData;
+    }
+
+    public function processUpdates($pageDataArray)
+    {
+    	// Keep an update counter to return.
+    	$updateCount = 0;
+
+    	// Check if any items had a change in filename. If so, update the pages table.
+    	foreach ($pageDataArray as $id => $values) {
+    		if ($values['original'] !== $values['saved']) {
+    			$results = Page::where('id', $id)->update(['image_path' => $values['saved']]);
+
+    			if ($results) {
+    				$updateCount++;
+    			}
+    		}
+    	}
+    	return $updateCount;
     }
 }
