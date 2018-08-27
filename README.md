@@ -30,6 +30,8 @@ Details:
  * delay
  * item display limit
  * item fetch limit
+ * default save path
+ * overwrite files y/n
 * Logs (cron job results)
 
 ## Front End
