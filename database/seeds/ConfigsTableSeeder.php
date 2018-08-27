@@ -18,6 +18,8 @@ class ConfigsTableSeeder extends Seeder
         	'global_delay' => 30,
         	'fetch_limit' => 50,
         	'page_list_limit' => 50,
+            'overwrite_files' => 1,
+            'default_save_path' => 'storage/site_images/',
         	'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
         	'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
         ]);

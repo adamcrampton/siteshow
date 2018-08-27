@@ -19,6 +19,8 @@ class CreateConfigsTable extends Migration
             $table->smallInteger('global_delay');
             $table->smallInteger('fetch_limit');
             $table->smallInteger('page_list_limit');
+            $table->boolean('overwrite_files')->default(1);
+            $table->string('default_save_path');
             $table->timestamps();
         });
     }

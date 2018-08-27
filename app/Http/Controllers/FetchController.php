@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 
 class FetchController extends Controller
 {
+    private $globalConfig;
     private $fetchedPages;
     private $fetchedUrls;
 
@@ -33,9 +34,7 @@ class FetchController extends Controller
         $this->fetchedUrls = $page->getPageUrls($this->fetchedPages);
 
         // Get Browsershot to crawl the URLs and save the images.
-        $browserShotResponse = $fetch->processUrls($this->fetchedUrls);
-
-        dd($browserShotResponse);
+        $fetch->processUrls($this->fetchedUrls, $this->globalConfig->default_save_path);
     }
 
     /**
