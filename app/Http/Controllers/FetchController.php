@@ -2,23 +2,40 @@
 
 namespace App\Http\Controllers;
 
-use App\Fetch;
-use Illuminate\Http\Request;
+use App\Models\Fetch;
+use App\Models\Page;
 use App\Models\Config;
+use Illuminate\Http\Request;
 
 class FetchController extends Controller
 {
+    private $fetchedPages;
+    private $fetchedUrls;
+
+    public function __construct(Config $config)
+    {
+        // Grab global config.
+        $this->globalConfig = Config::where('config_name', 'global')->first();
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Page $page, Fetch $fetch)
     {
-        // Grab default config.
-        $defaultConfig = Config::where('config_name', 'global')->get();
+        // Get all records from pages table for processing.
+        // Limit is set to the global default if not specified.
+        $this->fetchedPages = $page->getPages($this->globalConfig->fetch_limit);
 
-        return $defaultConfig;
+        // Create an array of URLs to hand off to Browsershot.
+        $this->fetchedUrls = $page->getPageUrls($this->fetchedPages);
+
+        // Get Browsershot to crawl the URLs and save the images.
+        $browserShotResponse = $fetch->processUrls($this->fetchedUrls);
+
+        dd($browserShotResponse);
     }
 
     /**
