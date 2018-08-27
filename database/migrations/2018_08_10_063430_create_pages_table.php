@@ -17,10 +17,10 @@ class CreatePagesTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('url');
-            $table->tinyInteger('status');
-            $table->integer('duration');
+            $table->tinyInteger('status')->default(1);
+            $table->integer('duration')->default(30);
             $table->string('image_path');
-            $table->smallInteger('rank');
+            $table->smallInteger('rank')->default(0);
             $table->timestamps();
         });
     }
