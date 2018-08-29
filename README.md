@@ -25,8 +25,7 @@ The usage of this app is pretty much as follows:
 * list order
 * duration (global default or seconds)
 * image path
-* created
-* last updated
+* timestamps
 
 **Global configuration options**
 * delay
@@ -36,6 +35,9 @@ The usage of this app is pretty much as follows:
 * overwrite files y/n
 
 **Logs (cron job results)**
+* page fk
+* response
+* timesteamps
 
 ## Front End
 An AJAX request will fetch website data:
