@@ -19,7 +19,7 @@ class CreatePagesTable extends Migration
             $table->string('url');
             $table->tinyInteger('status')->default(1);
             $table->integer('duration')->default(30);
-            $table->string('image_path');
+            $table->string('image_path')->nullable();
             $table->smallInteger('rank')->default(0);
             $table->timestamps();
         });

@@ -33,7 +33,7 @@ class FetchController extends Controller
         $this->fetchedPages = $page->getPages($this->globalConfig->fetch_limit);
 
         // Create an array of URLs and Ids to hand off to the processing method.
-        $this->fetchedPageData = $page->getPageData($this->fetchedPages);
+        $this->fetchedPageData = $page->getPageData($this->fetchedPages);   
 
         // Get Browsershot to crawl the URLs and save the images.
         $this->savedFiles = $fetch->processUrls($this->fetchedPageData, $this->globalConfig->default_save_path, $this->globalConfig->overwrite_files);

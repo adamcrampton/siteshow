@@ -24,7 +24,7 @@ class Page extends Model
     public function getPageData($pageCollection)
     {
     	$pageData = $pageCollection->map(function($page) {
-    		return $page->only(['id', 'url']);
+    		return $page->only(['id', 'url', 'image_path']);
     	});
 
     	return $pageData;

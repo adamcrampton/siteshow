@@ -25,7 +25,10 @@ class Fetch extends Model
     	];
 
     	$urlCollection->each(function($page, $key) use(&$loopFunctionVariables) {
-    		// Convert URL to usable string so we can have a meaningful filename, and overwrite on each cron job execution (if option is set).
+    		// Check if a image_path is set for this record. If not - it's a new record and we need to insert the value to the table.
+            $newRecord = $page['image_path'] === null;
+
+            // Convert URL to usable string so we can have a meaningful filename, and overwrite on each cron job execution (if option is set).
     		$parsedUrl = parse_url($page['url']);
 
     		// Get the host and replace dots with dashes.
@@ -51,7 +54,10 @@ class Fetch extends Model
     		// Add file to saved files array - this works because of the pass by reference in the use statement.
     		$loopFunctionVariables['savedFiles'][$page['id']]['original'] = $originalFileName;
     		$loopFunctionVariables['savedFiles'][$page['id']]['saved'] = $imageFileName;
+            $loopFunctionVariables['savedFiles'][$page]['id']['new'] = $newRecord;
     	});
+
+        dd($loopFunctionVariables['savedFiles']);
 
     	return $loopFunctionVariables['savedFiles'];
     }
