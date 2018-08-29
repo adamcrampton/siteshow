@@ -14,8 +14,10 @@ The usage of this app is pretty much as follows:
 * name
 * email
 * permission fk
+
 **User permissons**
 * name
+
 **Website list**
 * name
 * url
@@ -25,12 +27,14 @@ The usage of this app is pretty much as follows:
 * image path
 * created
 * last updated
+
 **Global configuration options**
 * delay
 * item display limit
 * item fetch limit
 * default save path
 * overwrite files y/n
+
 **Logs (cron job results)**
 
 ## Front End
