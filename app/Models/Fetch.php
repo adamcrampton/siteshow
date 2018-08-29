@@ -54,7 +54,7 @@ class Fetch extends Model
     		// Add file to saved files array - this works because of the pass by reference in the use statement.
     		$loopFunctionVariables['savedFiles'][$page['id']]['original'] = $originalFileName;
     		$loopFunctionVariables['savedFiles'][$page['id']]['saved'] = $imageFileName;
-            $loopFunctionVariables['savedFiles'][$page]['id']['new'] = $newRecord;
+            $loopFunctionVariables['savedFiles'][$page['id']]['new'] = $newRecord;
     	});
 
         dd($loopFunctionVariables['savedFiles']);
