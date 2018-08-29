@@ -10,29 +10,28 @@ The usage of this app is pretty much as follows:
 * Hitting the index page of the site displays a full screen version of each site image, rotating through the list based on predefined duration and ordering options.
 
 ## Database
-Details:
-* Users
- * name
- * email
- * permission fk
-* User permissons
- * name
-* Website list
- * name
- * url
- * status (disabled or enabled)
- * list order
- * duration (global default or seconds)
- * image path
- * created
- * last updated
-* Global configuration options
- * delay
- * item display limit
- * item fetch limit
- * default save path
- * overwrite files y/n
-* Logs (cron job results)
+**Users**
+* name
+* email
+* permission fk
+**User permissons**
+* name
+**Website list**
+* name
+* url
+* status (disabled or enabled)
+* list order
+* duration (global default or seconds)
+* image path
+* created
+* last updated
+**Global configuration options**
+* delay
+* item display limit
+* item fetch limit
+* default save path
+* overwrite files y/n
+**Logs (cron job results)**
 
 ## Front End
 An AJAX request will fetch website data:
