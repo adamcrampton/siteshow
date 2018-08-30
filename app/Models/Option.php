@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Config extends Model
+class Option extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -12,9 +12,14 @@ class Config extends Model
      * @var array
      */
     protected $fillable = [
-        'config_name',
-        'global_delay',
-        'fetch_limit',
-        'page_list_limit'
+        'option_name',
+        'option_value'
     ];
+
+    public function getGlobalConfig()
+    {
+    	$allConfig = Option::all();
+
+    	dd($allConfig->flatten());
+    }
 }

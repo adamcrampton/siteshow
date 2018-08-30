@@ -12,7 +12,7 @@ class PagesTableSeeder extends Seeder
      */
     public function run()
     {
-        // Add default config.
+        // Add test values.
         DB::table('pages')->insert([
             [
                 'name' => 'BBC News',

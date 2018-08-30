@@ -6,9 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Page extends Model
 {
-	private $globalConfig;
-	private $fetchLimit;
-
 	public function __construct()
     {
         
@@ -39,7 +36,7 @@ class Page extends Model
     		// Update all rows, increment count if the values have changed, indicating a new file was created.
 			$rowsUpdated += Page::where('id', $id)->update(['image_path' => $values['saved']]);
     	}
-    	
+
     	return $rowsUpdated;
     }
 }

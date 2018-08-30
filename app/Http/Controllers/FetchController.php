@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Fetch;
 use App\Models\FetchLog;
 use App\Models\Page;
-use App\Models\Config;
+use App\Models\Option;
 use Illuminate\Http\Request;
 
 class FetchController extends Controller
@@ -16,10 +16,12 @@ class FetchController extends Controller
     private $savedFiles;
     private $processedPageData;
 
-    public function __construct(Config $config)
+    public function __construct(Option $option)
     {
         // Grab global config.
-        $this->globalConfig = Config::where('config_name', 'global')->first();
+        $this->globalConfig = $option->getGlobalConfig();
+
+        dd($this->globalConfig);
     }
 
     /**
