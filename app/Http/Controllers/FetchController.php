@@ -20,8 +20,6 @@ class FetchController extends Controller
     {
         // Grab global config.
         $this->globalConfig = $option->getGlobalConfig();
-
-        dd($this->globalConfig);
     }
 
     /**
@@ -36,13 +34,13 @@ class FetchController extends Controller
 
         // Get all records from pages table for processing.
         // Limit is set to the global default if not specified.
-        $this->fetchedPages = $page->getPages($this->globalConfig->fetch_limit);
+        $this->fetchedPages = $page->getPages($this->globalConfig['global_fetch_limit']);
 
         // Create an array of URLs and Ids to hand off to the processing method.
         $this->fetchedPageData = $page->getPageData($this->fetchedPages);   
 
         // Get Browsershot to crawl the URLs and save the images.
-        $this->savedFiles = $fetch->processUrls($this->fetchedPageData, $this->globalConfig->default_save_path, $this->globalConfig->overwrite_files);
+        $this->savedFiles = $fetch->processUrls($this->fetchedPageData, $this->globalConfig['default_save_path'], $this->globalConfig['global_overwrite_files']);
 
         // Set datetime variables for output array.
         $jsonData['startTime'] = $this->savedFiles['startTime'];

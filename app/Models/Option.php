@@ -16,10 +16,17 @@ class Option extends Model
         'option_value'
     ];
 
+    private $configData;
+
     public function getGlobalConfig()
     {
+    	// Set up array of global config and return.
     	$allConfig = Option::all();
 
-    	dd($allConfig->flatten());
+    	$allConfig->each(function($item, $key) {
+    		$this->configData[$item->option_name] = $item->option_value;
+    	});
+
+    	return $this->configData;
     }
 }
