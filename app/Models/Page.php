@@ -32,19 +32,14 @@ class Page extends Model
 
     public function processUpdates($pageDataArray)
     {
-    	// Keep an update counter to return.
-    	$updateCount = 0;
-
-    	// Check if any items had a change in filename. If so, update the pages table.
+    	// Keep counters to easily return important values.
+    	$rowsUpdated = 0;
+    	
     	foreach ($pageDataArray as $id => $values) {
-    		if ($values['original'] !== $values['saved']) {
-    			$results = Page::where('id', $id)->update(['image_path' => $values['saved']]);
-
-    			if ($results) {
-    				$updateCount++;
-    			}
-    		}
+    		// Update all rows, increment count if the values have changed, indicating a new file was created.
+			$rowsUpdated += Page::where('id', $id)->update(['image_path' => $values['saved']]);
     	}
-    	return $updateCount;
+    	
+    	return $rowsUpdated;
     }
 }

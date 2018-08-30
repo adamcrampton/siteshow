@@ -13,7 +13,7 @@ class FetchController extends Controller
     private $fetchedPages;
     private $fetchedPageData;
     private $savedFiles;
-    private $updatedPages;
+    private $processedPageData;
 
     public function __construct(Config $config)
     {
@@ -38,12 +38,15 @@ class FetchController extends Controller
         // Get Browsershot to crawl the URLs and save the images.
         $this->savedFiles = $fetch->processUrls($this->fetchedPageData, $this->globalConfig->default_save_path, $this->globalConfig->overwrite_files);
 
-        // Now we have an array of paired filenames - original and saved, for each id in the pages table.
-        // If overwriting is switched on, values will be the same.
-        // Next, we update the pages table if we need to.
-        $this->updatedPages = $page->processUpdates($this->savedFiles);
+        // Process files, returning a ray of updated rows and new files added (if overwriting is switched off);
+         $this->processedPageData = $page->processUpdates($this->savedFiles);
 
-        dd($this->updatedPages);
+        // Generate and output results object.
+        $jsonData = [];
+        $jsonData['filesUpdated'] = $this->savedFiles;
+        $jsonData['totalUpdates'] = $this->processedPageData;
+
+        return json_encode($jsonData);
     }
 
     /**

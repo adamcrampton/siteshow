@@ -57,8 +57,6 @@ class Fetch extends Model
             $loopFunctionVariables['savedFiles'][$page['id']]['new'] = $newRecord;
     	});
 
-        dd($loopFunctionVariables['savedFiles']);
-
     	return $loopFunctionVariables['savedFiles'];
     }
 }
