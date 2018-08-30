@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Fetch;
+use App\Models\FetchLog;
 use App\Models\Page;
 use App\Models\Config;
 use Illuminate\Http\Request;
@@ -26,8 +27,11 @@ class FetchController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Page $page, Fetch $fetch)
+    public function index(Page $page, Fetch $fetch, FetchLog $fetchLog)
     {
+        // Generate and output results object.
+        $jsonData = [];
+
         // Get all records from pages table for processing.
         // Limit is set to the global default if not specified.
         $this->fetchedPages = $page->getPages($this->globalConfig->fetch_limit);
@@ -38,11 +42,32 @@ class FetchController extends Controller
         // Get Browsershot to crawl the URLs and save the images.
         $this->savedFiles = $fetch->processUrls($this->fetchedPageData, $this->globalConfig->default_save_path, $this->globalConfig->overwrite_files);
 
-        // Process files, returning a ray of updated rows and new files added (if overwriting is switched off);
-         $this->processedPageData = $page->processUpdates($this->savedFiles);
+        // Set datetime variables for output array.
+        $jsonData['startTime'] = $this->savedFiles['startTime'];
+        $jsonData['endTime'] = $this->savedFiles['endTime'];
+        $jsonData['duration'] = $this->savedFiles['duration'];
 
-        // Generate and output results object.
-        $jsonData = [];
+        // Set up fill values for log table insertion.
+        $fillValues = [
+            'started' => $this->savedFiles['startTime'],
+            'finished' => $this->savedFiles['endTime'],
+            'duration' => $this->savedFiles['duration']
+        ];
+
+        // Unset datetime variables from savedFiles so they don't interfere with the next few items.
+        unset($this->savedFiles['startTime'], $this->savedFiles['endTime'], $this->savedFiles['duration']);
+
+        // Add image info for log table insertion.
+        $fillValues['output'] = json_encode($this->savedFiles);
+
+        // Add collected data to fetch log.
+        $fetchLog->fill($fillValues);
+        $fetchLog->save();
+
+        // Process files, returning a ray of updated rows and new files added (if overwriting is switched off).
+        $this->processedPageData = $page->processUpdates($this->savedFiles);
+
+        // Populate remaining data for output.
         $jsonData['filesUpdated'] = $this->savedFiles;
         $jsonData['totalUpdates'] = $this->processedPageData;
 

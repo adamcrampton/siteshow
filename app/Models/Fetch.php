@@ -9,6 +9,8 @@ use Carbon\Carbon;
 class Fetch extends Model
 {
 	public $defaultSavePath;
+	private $startTime;
+	private $endTime;
 
 	public function __construct()
     {
@@ -23,6 +25,8 @@ class Fetch extends Model
     		'overwriteFiles' => $overwriteFiles,
     		'savedFiles' => []
     	];
+
+    	$this->startTime = Carbon::createFromFormat('Y-m-d H:i:s', Carbon::now());
 
     	$urlCollection->each(function($page, $key) use(&$loopFunctionVariables) {
     		// Check if a image_path is set for this record. If not - it's a new record and we need to insert the value to the table.
@@ -52,10 +56,19 @@ class Fetch extends Model
     		->save($loopFunctionVariables['defaultSavePath'] . $imageFileName);
 
     		// Add file to saved files array - this works because of the pass by reference in the use statement.
+
     		$loopFunctionVariables['savedFiles'][$page['id']]['original'] = $originalFileName;
     		$loopFunctionVariables['savedFiles'][$page['id']]['saved'] = $imageFileName;
             $loopFunctionVariables['savedFiles'][$page['id']]['new'] = $newRecord;
     	});
+
+    	// End timer and determine duration.
+    	$this->endTime = Carbon::createFromFormat('Y-m-d H:i:s', Carbon::now());
+
+    	// Set times and duration to return with file info.
+    	$loopFunctionVariables['savedFiles']['duration'] = $this->startTime->diffInSeconds($this->endTime);
+    	$loopFunctionVariables['savedFiles']['startTime'] = (string) $this->startTime;
+    	$loopFunctionVariables['savedFiles']['endTime'] = (string) $this->endTime;
 
     	return $loopFunctionVariables['savedFiles'];
     }

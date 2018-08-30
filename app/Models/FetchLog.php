@@ -6,5 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class FetchLog extends Model
 {
-    //
+	/**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'started', 'finished', 'duration', 'output'
+    ];    
 }

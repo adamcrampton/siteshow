@@ -15,8 +15,10 @@ class CreateFetchLogsTable extends Migration
     {
         Schema::create('fetch_logs', function (Blueprint $table) {
             $table->increments('id');
-            $table->smallInteger('pages_url_fk');
-            $table->string('response');
+            $table->dateTime('started');
+            $table->dateTime('finished');
+            $table->smallInteger('duration');
+            $table->text('output');
             $table->timestamps();
         });
     }
