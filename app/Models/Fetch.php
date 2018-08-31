@@ -14,15 +14,20 @@ class Fetch extends Model
 
 	public function __construct()
     {
-
+        //
     }
 
-    public function processUrls($urlCollection, $defaultSavePath, $overwriteFiles)
+    public function processUrls($urlCollection, $globalConfig)
     {
     	// Set up array of data to pass into the collection function.
     	$loopFunctionVariables = [
-    		'defaultSavePath' => $defaultSavePath, 
-    		'overwriteFiles' => $overwriteFiles,
+    		'defaultSavePath' => $globalConfig['default_save_path'], 
+    		'overwriteFiles' => $globalConfig['global_overwrite_files'],
+            'windowWidth' => $globalConfig['global_fetch_window_width'],
+            'windowLength' => $globalConfig['global_fetch_window_height'],
+            'fetchDelay' => $globalConfig['global_fetch_delay'],
+            'dismissDialogues' => $globalConfig['dismiss_dialogues'],
+            'waitUntilNetworkIdle' => $globalConfig['wait_until_network_idle'],
     		'savedFiles' => []
     	];
 
@@ -51,12 +56,26 @@ class Fetch extends Model
     		$imageFileName .= '.jpg';
 
     		// Grab the screenshot and save the image.
-    		Browsershot::url($page['url'])
-    		->setScreenshotType('jpeg', 100)
-    		->save($loopFunctionVariables['defaultSavePath'] . $imageFileName);
+            // Create object instance and set URL.
+    		$browserShot = Browsershot::url($page['url']);
+
+            // Set image options.
+            $browserShot->setScreenshotType('jpeg', 100)
+                        ->windowSize($loopFunctionVariables['windowWidth'], $loopFunctionVariables['windowLength']);
+            
+            // Certain options only set if enabled.
+            if ($loopFunctionVariables['dismissDialogues']) {
+                $browserShot->dismissDialogs();
+            }
+
+            if ($loopFunctionVariables['waitUntilNetworkIdle']) {
+                $browserShot->waitUntilNetworkIdle();
+            }
+    		
+            // Save the image.
+            $browserShot->save($loopFunctionVariables['defaultSavePath'] . $imageFileName);
 
     		// Add file to saved files array - this works because of the pass by reference in the use statement.
-
     		$loopFunctionVariables['savedFiles'][$page['id']]['original'] = $originalFileName;
     		$loopFunctionVariables['savedFiles'][$page['id']]['saved'] = $imageFileName;
             $loopFunctionVariables['savedFiles'][$page['id']]['new'] = $newRecord;

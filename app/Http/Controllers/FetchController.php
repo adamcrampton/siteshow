@@ -40,7 +40,7 @@ class FetchController extends Controller
         $this->fetchedPageData = $page->getPageData($this->fetchedPages);   
 
         // Get Browsershot to crawl the URLs and save the images.
-        $this->savedFiles = $fetch->processUrls($this->fetchedPageData, $this->globalConfig['default_save_path'], $this->globalConfig['global_overwrite_files']);
+        $this->savedFiles = $fetch->processUrls($this->fetchedPageData, $this->globalConfig);
 
         // Set datetime variables for output array.
         $jsonData['startTime'] = $this->savedFiles['startTime'];
