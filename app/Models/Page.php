@@ -34,7 +34,10 @@ class Page extends Model
     	
     	foreach ($pageDataArray as $id => $values) {
     		// Update all rows, increment count if the values have changed, indicating a new file was created.
-			$rowsUpdated += Page::where('id', $id)->update(['image_path' => $values['saved']]);
+            // Do not attempt the select if 'saved' doesn't exist - this would indicate it threw an exception on processing.
+            if (array_key_exists('saved', $values)) {
+                $rowsUpdated += Page::where('id', $id)->update(['image_path' => $values['saved']]);    
+            }
     	}
 
     	return $rowsUpdated;

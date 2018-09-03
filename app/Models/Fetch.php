@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Browsershot\Browsershot;
 use Carbon\Carbon;
+use Exception;
 
 class Fetch extends Model
 {
@@ -28,13 +29,14 @@ class Fetch extends Model
             'fetchDelay' => $globalConfig['global_fetch_delay'],
             'dismissDialogues' => $globalConfig['dismiss_dialogues'],
             'waitUntilNetworkIdle' => $globalConfig['wait_until_network_idle'],
+            'errors' => [],
     		'savedFiles' => []
     	];
 
     	$this->startTime = Carbon::createFromFormat('Y-m-d H:i:s', Carbon::now());
 
     	$urlCollection->each(function($page, $key) use(&$loopFunctionVariables) {
-    		// Check if a image_path is set for this record. If not - it's a new record and we need to insert the value to the table.
+    		// Check if a image_path is set for this record. If not - it's a new record and we need to indicate this in our response.
             $newRecord = $page['image_path'] === null;
 
             // Convert URL to usable string so we can have a meaningful filename, and overwrite on each cron job execution (if option is set).
@@ -72,13 +74,21 @@ class Fetch extends Model
                 $browserShot->waitUntilNetworkIdle();
             }
     		
-            // Save the image.
-            $browserShot->save($loopFunctionVariables['defaultSavePath'] . $imageFileName);
+            // Save the image, save the exception details if it failed.
+            try {
+                $browserShot->save($loopFunctionVariables['defaultSavePath'] . $imageFileName);
+            } catch (Exception $e) {
+                $loopFunctionVariables['savedFiles'][$page['id']]['error'] = $e->getMessage();
+            }
+            
 
     		// Add file to saved files array - this works because of the pass by reference in the use statement.
-    		$loopFunctionVariables['savedFiles'][$page['id']]['original'] = $originalFileName;
-    		$loopFunctionVariables['savedFiles'][$page['id']]['saved'] = $imageFileName;
-            $loopFunctionVariables['savedFiles'][$page['id']]['new'] = $newRecord;
+            // Note: Don't bother saving this info if an exception has been thrown.
+            if (! array_key_exists('error', $loopFunctionVariables['savedFiles'][$page['id']])) {
+                $loopFunctionVariables['savedFiles'][$page['id']]['original'] = $originalFileName;
+                $loopFunctionVariables['savedFiles'][$page['id']]['saved'] = $imageFileName;
+                $loopFunctionVariables['savedFiles'][$page['id']]['new'] = $newRecord;    
+            }
     	});
 
     	// End timer and determine duration.
