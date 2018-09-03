@@ -9,41 +9,57 @@ The usage of this app is pretty much as follows:
 * A cron job collates this list (using a predetermined limit), and saves an image snapshot of each URL.
 * Hitting the index page of the site displays a full screen version of each site image, rotating through the list based on predefined duration and ordering options.
 
+## Config
+The following config options are available:
+* Display delay
+* Fetch limit
+* Page list limit
+* Overwrite files y/n
+* Fetch window width
+* Fetch window height
+* Dismiss dialogues y/n
+* Wait until network idle y/n
+* Fetch delay
+* Image save path
+
 ## Database
-**Users**
+**users**
 * name
 * email
-* permission fk
+* password
+* user_permissions_fk
+* token & timestamps
 
-**User permissons**
-* name
+**user_permissions**
+* permssion
+* timestamps
 
-**Website list**
+**pages**
 * name
 * url
 * status (disabled or enabled)
-* list order
 * duration (global default or seconds)
 * image path
+* rank
 * timestamps
 
-**Global configuration options**
-* delay
-* item display limit
-* item fetch limit
-* default save path
-* overwrite files y/n
+**options**
+* option_name
+* option_value
+* timestamps
 
-**Logs (cron job results)**
-* page fk
-* response
-* timesteamps
+**fetch_logs (cron job results)**
+* started
+* finished
+* duration
+* output (JSON)
+* timestamps
 
 ## Front End
 An AJAX request will fetch website data:
 * where status is enabled
 * ordered by list order
-* limited by the global limit
+* using all option settings
 
 The returned JSON will be interated through, showing a full screen image of each item in the list, cycling to the next based on the delay value set.
 
