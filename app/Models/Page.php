@@ -14,7 +14,7 @@ class Page extends Model
 	// Fetch all records from pages table, bound by limit.
     public function getPages($fetchLimit)
     {
-    	return Page::all()->take($fetchLimit);
+        return Page::where('status', 1)->take($fetchLimit)->get();
     }
 
     // Pass back id and url in a tidy Collection for prcocessing.
