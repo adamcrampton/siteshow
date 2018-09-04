@@ -29,14 +29,17 @@ class Fetch extends Model
             'fetchDelay' => $globalConfig['global_fetch_delay'],
             'dismissDialogues' => $globalConfig['dismiss_dialogues'],
             'waitUntilNetworkIdle' => $globalConfig['wait_until_network_idle'],
-            'errors' => [],
+            'error' => [],
     		'savedFiles' => []
     	];
 
     	$this->startTime = Carbon::createFromFormat('Y-m-d H:i:s', Carbon::now());
 
     	$urlCollection->each(function($page, $key) use(&$loopFunctionVariables) {
-    		// Check if a image_path is set for this record. If not - it's a new record and we need to indicate this in our response.
+    		// Initalise index value for this iteration.
+            $loopFunctionVariables['savedFiles'][$page['id']] = [];
+
+            // Check if a image_path is set for this record. If not - it's a new record and we need to indicate this in our response.
             $newRecord = $page['image_path'] === null;
 
             // Convert URL to usable string so we can have a meaningful filename, and overwrite on each cron job execution (if option is set).
