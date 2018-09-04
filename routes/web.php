@@ -3,10 +3,10 @@
 // Fetch routes.
 Route::resource('fetch', 'FetchController');
 
-// Auth routes.
-Auth::routes();
-
 // Front end routes.
 Route::resource('/', 'DisplayController');
 Route::resource('manage', 'ManageController');
 
+// Auth routes.
+Auth::routes();
+Route::get('/logout', 'Auth\LoginController@logout')->name('logout');

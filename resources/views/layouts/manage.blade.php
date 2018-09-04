@@ -14,13 +14,10 @@
     <title>@yield('title')</title>
   </head>
   <body>
-
-
     <div class="container">
       @yield('content')
     </div>
-  
-
+    
     <!-- Bootstrap and jQuery -->
     <script src="{{ URL::asset('vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ URL::asset('vendor/bootstrap/js/bootstrap.min.js') }}"></script>

@@ -13,9 +13,10 @@ class ManageController extends Controller
      */
     public function index()
     {
-        //
-
-        return 'manage';
+        // Manage home page.
+        return view('manage.index', [
+            
+        ]);
     }
 
     /**
