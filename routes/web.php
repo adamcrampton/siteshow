@@ -6,5 +6,7 @@ Route::resource('fetch', 'FetchController');
 // Auth routes.
 Auth::routes();
 
-// Admin routes.
-Route::get('/home', 'HomeController@index')->name('home');
+// Front end routes.
+Route::resource('/', 'DisplayController');
+Route::resource('manage', 'ManageController');
+
