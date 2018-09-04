@@ -18,6 +18,7 @@ class CreateFetchLogsTable extends Migration
             $table->dateTime('started');
             $table->dateTime('finished');
             $table->smallInteger('duration');
+            $table->string('user_agent_used');
             $table->text('output');
             $table->timestamps();
         });

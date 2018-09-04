@@ -23,6 +23,7 @@ class Fetch extends Model
     	// Set up array of data to pass into the collection function.
     	$loopFunctionVariables = [
     		'defaultSavePath' => $globalConfig['default_save_path'], 
+            'userAgent' => $globalConfig['user_agent'],
     		'overwriteFiles' => $globalConfig['global_overwrite_files'],
             'windowWidth' => $globalConfig['global_fetch_window_width'],
             'windowLength' => $globalConfig['global_fetch_window_height'],
@@ -67,6 +68,9 @@ class Fetch extends Model
             // Set image options.
             $browserShot->setScreenshotType('jpeg', 100)
                         ->windowSize($loopFunctionVariables['windowWidth'], $loopFunctionVariables['windowLength']);
+
+            // Set user agent.
+            $browserShot->userAgent($loopFunctionVariables['userAgent']);
             
             // Certain options only set if enabled.
             if ($loopFunctionVariables['dismissDialogues']) {

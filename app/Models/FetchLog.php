@@ -12,6 +12,6 @@ class FetchLog extends Model
      * @var array
      */
     protected $fillable = [
-        'started', 'finished', 'duration', 'output'
+        'started', 'finished', 'duration', 'user_agent_used', 'output'
     ];    
 }

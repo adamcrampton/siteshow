@@ -57,6 +57,9 @@ class FetchController extends Controller
         // Unset datetime variables from savedFiles so they don't interfere with the next few items.
         unset($this->savedFiles['startTime'], $this->savedFiles['endTime'], $this->savedFiles['duration']);
 
+        // Add user currently set user agent.
+        $fillValues['user_agent_used'] = $this->globalConfig['user_agent'];
+
         // Add image info for log table insertion.
         $fillValues['output'] = json_encode($this->savedFiles);
 
