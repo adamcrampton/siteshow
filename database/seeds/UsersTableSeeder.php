@@ -14,9 +14,11 @@ class UsersTableSeeder extends Seeder
     {
     	// Set up default admin user.
         DB::table('users')->insert([
-        	'name' => 'administrator',
-            'email' => 'administrator@email.com',
-            'password' => bcrypt('password'),
+        	'first_name' => env('SEEDER_USER_FIRST_NAME'),
+            'last_name' => env('SEEDER_USER_LAST_NAME'),
+            'name' => env('SEEDER_USER_DISPLAY_NAME'),
+            'email' => env('SEEDER_USER_EMAIL'),
+            'password' => Hash::make((env('SEEDER_USER_PASSWORD'))),
             'user_permissions_fk' => 1,
             'status' => 1,
         	'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
