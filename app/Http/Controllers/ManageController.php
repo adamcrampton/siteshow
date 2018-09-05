@@ -6,6 +6,12 @@ use Illuminate\Http\Request;
 
 class ManageController extends Controller
 {
+    public function __construct()
+    {
+        // Require authentication.
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *

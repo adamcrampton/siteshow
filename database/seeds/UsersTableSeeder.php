@@ -18,6 +18,7 @@ class UsersTableSeeder extends Seeder
             'email' => 'administrator@email.com',
             'password' => bcrypt('password'),
             'user_permissions_fk' => 1,
+            'status' => 1,
         	'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
         	'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
         ]);
