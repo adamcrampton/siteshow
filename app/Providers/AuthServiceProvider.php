@@ -35,19 +35,19 @@ class AuthServiceProvider extends ServiceProvider
 
         // Gates if you need them.
         Gate::define('admin-functions', function($user) {
-            $requiredAdminRoles = ['admin'];
+            $requiredAdminRoles = ['administrator'];
 
             return in_array($user->permission->permission, $requiredAdminRoles);
         });
 
         Gate::define('editor-functions', function($user) {
-            $requiredEditorRoles = ['admin', 'editor'];
+            $requiredEditorRoles = ['administrator', 'editor'];
 
             return in_array($user->permission->permission, $requiredEditorRoles);
         });
 
         Gate::define('viewer-functions', function($user) {
-            $requiredViewerRoles = ['admin', 'editor', 'viewer'];
+            $requiredViewerRoles = ['administrator', 'editor', 'viewer'];
 
             return in_array($user->permission->permission, $requiredViewerRoles);
         });

@@ -55,21 +55,21 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <a class="nav-link {{ Request::is('admin') ? 'active' : '' }}" href="/manage">Home
+                <a class="nav-link {{ Request::is('manage') ? 'active' : '' }}" href="/manage">Home
                   <span class="sr-only">(current)</span>
                 </a>
               </li>
             {{-- Editor or higher access required for managing pages. --}}
             @can('editor-functions', auth()->user())  
             <li class="nav-item">
-              <a class="nav-link {{ Request::is($route) ? 'active' : '' }}" href="/pages">Manage Pages</a>
+              <a class="nav-link {{ Request::is('pages') ? 'active' : '' }}" href="/pages">Manage Pages</a>
             </li>
             @endcan
 
             {{-- Only admins can manage global config and users. --}}
             @can('admin-functions', auth()->user())            
             <li class="nav-item">
-              <a class="nav-link {{ Request::is('config') ? 'active' : '' }}" href="/options">Set Options</a>
+              <a class="nav-link {{ Request::is('options') ? 'active' : '' }}" href="/options">Set Options</a>
             </li>
             <li class="nav-item">
               <a class="nav-link {{ Request::is('users') ? 'active' : '' }}" href="/users">Manage Users</a>

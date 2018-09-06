@@ -8,11 +8,12 @@
           </div>
     </div>
     @endif
+
     <!-- Page Content -->
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
-          <h1 class="mt-5">Hi </h1>
+          <h1 class="mt-5">Hi {{ Auth::user()->first_name }}</h1>
           <p class="lead">Admin options</p>
           <ul>
             {{-- Editor or higher access required for managing pages. --}}
