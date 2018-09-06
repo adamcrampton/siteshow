@@ -3,17 +3,34 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Option;
+use App\Models\User;
 
 class OptionController extends Controller
 {
+    private $bounceReason = 'Sorry, you require admin access to manage the options.';
+
+    public function __construct()
+    {
+        //
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Option $option, User $user)
     {
-        //
+        // Check user is authorised.
+        if ($user->cant('index', $option)) {
+            return redirect()->route('manage.index')->with('warning', $this->bounceReason);
+        }
+
+        // Global Config home page.
+        return view('manage.option', [
+            
+        ]);
     }
 
     /**

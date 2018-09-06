@@ -41,6 +41,6 @@ class User extends Authenticatable
     // Users have a single permission level.
     public function permission()
     {
-        return $this->hasOne('App\Models\Permission', 'id', 'permission_fk');
+        return $this->hasOne('App\Models\UserPermission', 'id', 'user_permissions_fk');
     }
 }

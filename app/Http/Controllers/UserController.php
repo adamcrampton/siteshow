@@ -3,17 +3,36 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\UserPermission;
+use Hash;
+use Validator;
 
 class UserController extends Controller
 {
+    private $bounceReason = 'Sorry, you require admin access to manage users.';
+
+    public function __construct()
+    {
+        //
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(User $user)
     {
-        //
+        // Check user is authorised.
+        if ($user->cant('index', $user)) {
+            return redirect()->route('manage.index')->with('warning', $this->bounceReason);
+        }
+
+        // Global Config home page.
+        return view('manage.user', [
+            
+        ]);
     }
 
     /**

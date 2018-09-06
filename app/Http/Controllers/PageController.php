@@ -6,14 +6,30 @@ use Illuminate\Http\Request;
 
 class PageController extends Controller
 {
+    private $bounceReason = 'Sorry, you require editor access or higher to manage issue types.';
+
+    public function __construct()
+    {
+        //
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Page $page, User $user)
     {
-        //
+        // Check user is authorised.
+        if ($user->cant('index', $page)) {
+            return redirect()->route('manage.index')->with('warning', $this->bounceReason);
+        }
+
+        // Issue Type home page.
+        // Since we have a single page for adding and editing these records, no need to use the create method.
+        return view('manage.page', [
+
+        ]);
     }
 
     /**
