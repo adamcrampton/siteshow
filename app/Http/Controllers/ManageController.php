@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
 
 class ManageController extends Controller
 {
@@ -21,7 +22,7 @@ class ManageController extends Controller
     {
         // Manage home page.
         return view('manage.index', [
-            
+            'pageTitle' => 'Hi ' . Auth::user()->first_name
         ]);
     }
 
