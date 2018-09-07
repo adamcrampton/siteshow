@@ -12,7 +12,7 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
-          <h1>Global Options</h1>
+          <h1 class="mt-5">Global Options</h1>
           
          </div>
         </div>

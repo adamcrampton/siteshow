@@ -11,6 +11,7 @@ Route::resource('manage', 'ManageController');
 Route::resource('options', 'OptionController');
 Route::resource('pages', 'PageController');
 Route::resource('users', 'UserController');
+Route::resource('logs', 'FetchLogController');
 
 // Auth routes.
 Auth::routes();
