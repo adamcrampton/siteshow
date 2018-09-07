@@ -9,6 +9,7 @@ Route::resource('/', 'DisplayController');
 //Admin routes.
 Route::resource('manage', 'ManageController');
 Route::resource('options', 'OptionController');
+Route::post('batchUpdate', 'OptionController@batchUpdate');
 Route::resource('pages', 'PageController');
 Route::resource('users', 'UserController');
 Route::resource('logs', 'FetchLogController');
