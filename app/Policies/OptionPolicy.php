@@ -20,7 +20,7 @@ class OptionPolicy
      */
     public function index(User $user)
     {
-        return Auth::user()->permission->permission_name === 'admin';
+        return Auth::user()->permission->permission === 'administrator';
     }
 
     /**
@@ -32,6 +32,6 @@ class OptionPolicy
      */
     public function update(User $user, Option $option)
     {
-        return Auth::user()->permission->permission_name === 'admin';
+        return Auth::user()->permission->permission === 'administrator';
     }
 }

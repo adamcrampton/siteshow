@@ -19,7 +19,7 @@ class UserPolicy
      */
     public function index(User $user)
     {
-        return Auth::user()->permission->permission_name === 'admin';
+        return Auth::user()->permission->permission === 'administrator';
     }
 
     /**
@@ -30,7 +30,7 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        return Auth::user()->permission->permission_name === 'admin';
+        return Auth::user()->permission->permission === 'administrator';
     }
 
     /**
@@ -42,6 +42,6 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
-        return Auth::user()->permission->permission_name === 'admin';
+        return Auth::user()->permission->permission === 'admin';
     }    
 }

@@ -11,7 +11,7 @@ class PagePolicy
 {
     use HandlesAuthorization;
 
-    private $defaultPermissionLevels = ['admin', 'editor'];
+    private $defaultPermissionLevels = ['administrator', 'editor'];
 
     /**
      * Determine whether the user can view the index page.
@@ -22,7 +22,7 @@ class PagePolicy
      */
     public function index(User $user)
     {
-        return in_array(Auth::user()->permission->permission_name, $this->defaultPermissionLevels);
+        return in_array(Auth::user()->permission->permission, $this->defaultPermissionLevels);
     }
 
     /**
@@ -34,6 +34,6 @@ class PagePolicy
      */
     public function update(User $user, Page $page)
     {
-        return in_array(Auth::user()->permission->permission_name, $this->defaultPermissionLevels);
+        return in_array(Auth::user()->permission->permission, $this->defaultPermissionLevels);
     }
 }
