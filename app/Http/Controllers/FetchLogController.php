@@ -21,7 +21,7 @@ class FetchLogController extends Controller
     {
         // Log view.
         return view('manage.log', [
-            
+            'pageTitle' => 'View Logs'
         ]);
     }
 

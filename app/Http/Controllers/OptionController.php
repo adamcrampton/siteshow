@@ -29,7 +29,7 @@ class OptionController extends Controller
 
         // Global Config home page.
         return view('manage.option', [
-            
+            'pageTitle' => 'Set Options'
         ]);
     }
 

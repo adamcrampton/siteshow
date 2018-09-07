@@ -31,7 +31,7 @@ class UserController extends Controller
 
         // Global Config home page.
         return view('manage.user', [
-            
+            'pageTitle' => 'Manage users'
         ]);
     }
 

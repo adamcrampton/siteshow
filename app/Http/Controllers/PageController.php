@@ -30,7 +30,7 @@ class PageController extends Controller
         // Issue Type home page.
         // Since we have a single page for adding and editing these records, no need to use the create method.
         return view('manage.page', [
-
+            'pageTitle' => 'Manage Pages'
         ]);
     }
 

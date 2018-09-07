@@ -90,8 +90,25 @@
     </nav>
 
     <div class="container container__main-container">
-      @yield('content')
+      @if (session('status'))
+        <div class="card-body">
+              <div class="alert alert-success" role="alert">
+                  {{ session('status') }}
+              </div>
+        </div>
+      @endif
+
+      <!-- Page Content -->
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <h1 class="mt-5">{{ $pageTitle }}</h1>
+            @yield('content')
+          </div>
+        </div>
+      </div>
     </div>
+   </div>
     
     <!-- Bootstrap and jQuery -->
     <script src="{{ URL::asset('vendor/jquery/jquery.min.js') }}"></script>
