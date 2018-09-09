@@ -8,6 +8,9 @@ class FetchLogController extends ManagePagesController
 {
     public function __construct()
     {
+        // Initialise parent constructor.
+        parent::__construct();
+
         // Require authentication.
         $this->middleware('auth');
     }

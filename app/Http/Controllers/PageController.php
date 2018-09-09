@@ -12,7 +12,8 @@ class PageController extends ManagePagesController
 
     public function __construct()
     {
-        //
+        // Initialise parent constructor.
+        parent::__construct();
     }
 
     /**

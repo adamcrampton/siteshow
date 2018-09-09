@@ -8,17 +8,12 @@ use App\Models\User;
 
 class OptionController extends ManagePagesController
 {
-    private $globalOptions = [];
     private $bounceReason = 'Sorry, you require admin access to manage the options.';
 
     public function __construct()
     {
-        // Set up global options object.
-        $optionCollection = Option::all();
-
-        $optionCollection->each(function($item, $key) {
-            $this->globalOptions[$item->option_name] = $item->option_value;
-        });
+        // Initialise parent constructor.
+        parent::__construct();
     }
 
     /**
