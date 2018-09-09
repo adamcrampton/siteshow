@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Option;
 use App\Models\User;
 
-class OptionController extends Controller
+class OptionController extends ManagePagesController
 {
     private $globalOptions = [];
     private $bounceReason = 'Sorry, you require admin access to manage the options.';

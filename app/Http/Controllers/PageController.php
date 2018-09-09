@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Page;
 use App\Models\User;
 
-class PageController extends Controller
+class PageController extends ManagePagesController
 {
     private $bounceReason = 'Sorry, you require editor access or higher to manage issue types.';
 

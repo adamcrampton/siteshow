@@ -8,7 +8,7 @@ use App\Models\UserPermission;
 use Hash;
 use Validator;
 
-class UserController extends Controller
+class UserController extends ManagePagesController
 {
     private $bounceReason = 'Sorry, you require admin access to manage users.';
 

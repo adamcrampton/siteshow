@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class FetchLogController extends Controller
+class FetchLogController extends ManagePagesController
 {
     public function __construct()
     {
