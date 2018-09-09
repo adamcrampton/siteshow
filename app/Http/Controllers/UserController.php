@@ -11,10 +11,12 @@ use Validator;
 class UserController extends ManagePagesController
 {
     private $bounceReason = 'Sorry, you require admin access to manage users.';
+    protected $controllerType = 'user';
 
     public function __construct()
     {
-        //
+        // Initialise parent constructor.
+        parent::__construct();
     }
 
     /**

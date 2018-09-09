@@ -9,6 +9,7 @@ use App\Models\User;
 class OptionController extends ManagePagesController
 {
     private $bounceReason = 'Sorry, you require admin access to manage the options.';
+    protected $controllerType = 'option';
 
     public function __construct()
     {

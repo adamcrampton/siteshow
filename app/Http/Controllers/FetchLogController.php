@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 class FetchLogController extends ManagePagesController
 {
+    protected $controllerType = 'fetchLog';
+
     public function __construct()
     {
         // Initialise parent constructor.

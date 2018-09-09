@@ -7,11 +7,10 @@ use Auth;
 
 class ManageController extends Controller
 {
+    protected $controllerType = 'manage';
+
     public function __construct()
-    {
-        // Initialise parent constructor.
-        parent::__construct();
-        
+    {       
         // Require authentication.
         $this->middleware('auth');
     }
