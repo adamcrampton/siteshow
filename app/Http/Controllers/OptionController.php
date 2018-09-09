@@ -33,7 +33,7 @@ class OptionController extends Controller
             return redirect()->route('manage.index')->with('warning', $this->bounceReason);
         }
 
-        // Global Config home page.
+        // Global Options home page.
         return view('manage.option', [
             'pageTitle' => 'Set Options',
             'option' => $this->globalOptions
@@ -93,7 +93,7 @@ class OptionController extends Controller
     public function update(Request $request, $id, User $user)
     {
         // Check user is authorised.
-        if ($user->cant('update', $user)) {
+        if ($user->cant('update', $option)) {
             return redirect()->route('manage.index')->with('warning', $this->bounceReason);
         }
     }
@@ -105,12 +105,14 @@ class OptionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function batchUpdate(Request $request, User $user)
+    public function batchUpdate(Request $request, User $user, Option $option)
     {
-        // Check user is authorised.
-        if ($user->cant('update', $user)) {
+          // Check user is authorised.
+        if ($user->cant('update', $option)) {
             return redirect()->route('manage.index')->with('warning', $this->bounceReason);
         }
+
+        $updateResult = $option->processUpdates($this->globalOptions, $request);
     }
 
     /**

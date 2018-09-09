@@ -16,7 +16,8 @@ class Option extends Model
         'option_value'
     ];
 
-    private $configData;
+    private $optionData;
+    private $updateArray = [];
 
     public function getGlobalConfig()
     {
@@ -24,9 +25,19 @@ class Option extends Model
     	$allConfig = Option::all();
 
     	$allConfig->each(function($item, $key) {
-    		$this->configData[$item->option_name] = $item->option_value;
+    		$this->optionData[$item->option_name] = $item->option_value;
     	});
 
-    	return $this->configData;
+    	return $this->optionData;
+    }
+
+    public function processUpdates($originalValues, $request)
+    {
+        // Compare the original values against the request, and set up an update array.
+        foreach ($originalValues as $option => $value) {
+            if ($originalValues[$option] !== $request->$option) {
+                $this->updateArray[$option] = $request->$option;
+            }
+        }
     }
 }
