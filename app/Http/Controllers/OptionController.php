@@ -9,12 +9,11 @@ use App\Models\User;
 class OptionController extends ManagePagesController
 {
     private $bounceReason = 'Sorry, you require admin access to manage the options.';
-    protected $controllerType = 'option';
 
     public function __construct()
     {
-        // Initialise parent constructor.
-        parent::__construct();
+        // Initialise parent constructor, passing in controller type value.
+        parent::__construct('option');
     }
 
     /**
@@ -107,6 +106,9 @@ class OptionController extends ManagePagesController
         if ($user->cant('update', $option)) {
             return redirect()->route('manage.index')->with('warning', $this->bounceReason);
         }
+
+        // Validate request.
+        $request->validate($this->updateValidationOptions);
 
         $updateResult = $option->processUpdates($this->globalOptions, $request);
     }

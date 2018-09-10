@@ -10,10 +10,16 @@ use App\Models\User;
 
 class ManagePagesController extends Controller
 {
+    protected $controllerType;
     protected $globalOptions = [];
+    protected $insertValidationOptions;
+    protected $updateValidationOptions;
 
-    public function __construct()
+    public function __construct($controllerType)
     {
+        // Set controller type being used.
+        $this->controllerType = $controllerType;
+
         // Set up global options object.
         $optionCollection = Option::all();
 
@@ -44,6 +50,7 @@ class ManagePagesController extends Controller
                     'global_fetch_window_width' => 'required',
                     'global_fetch_window_height' => 'required'
                 ];
+                break;
 
             default:
                 $this->insertValidationOptions = [];
