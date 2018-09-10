@@ -110,7 +110,27 @@ class OptionController extends ManagePagesController
         // Validate request.
         $request->validate($this->updateValidationOptions);
 
+        // Validation has passed, process update.
         $updateResult = $option->processUpdates($this->globalOptions, $request);
+
+        // Return update result to front end.
+        if (empty($updateResult)) {
+            return redirect()
+                ->route('options.index')
+                ->with('warning', 'No options were updated');
+        } else {
+            $returnHTML = '<ul>';
+
+            foreach ($updateResult as $option => $value) {
+                $returnHTML .= '<li>'.$option.' was updated to '.$value.'</li>';
+            }
+
+            $returnHTML .= '</ul>';
+
+            return redirect()
+                ->route('options.index')
+                ->with('success', $returnHTML); 
+        }
     }
 
     /**

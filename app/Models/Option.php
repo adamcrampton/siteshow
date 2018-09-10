@@ -39,5 +39,14 @@ class Option extends Model
                 $this->updateArray[$option] = $request->$option;
             }
         }
+
+        // Update database.
+        foreach ($this->updateArray as $option => $value) {
+            Option::where('option_name', $option)
+                ->update(['option_value' => $value]);
+        }
+
+        // Return updated values so we can inform the front end.
+        return $this->updateArray;
     }
 }
