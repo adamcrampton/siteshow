@@ -35,7 +35,9 @@ class PageController extends ManagePagesController
         // Manage Pages front end.
         return view('manage.page', [
             'pageTitle' => 'Manage Pages',
-            'page' => $allPages
+            'page' => $allPages,
+            'pageCount' => $allPages->count(),
+            'option' => $this->globalOptions
         ]);
     }
 
