@@ -55,6 +55,16 @@ class ManagePagesController extends Controller
                 ];
                 break;
 
+            case 'page':
+                $this->insertValidationOptions = [
+                    'name' => 'required',
+                    'url' => 'required',
+                    'duration' => 'required',
+                    'rank' => 'required'
+                ];
+                $this->updateValidationOptions = [];
+                break;
+
             default:
                 $this->insertValidationOptions = [];
                 $this->updateValidationOptions = [];

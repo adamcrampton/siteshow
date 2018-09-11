@@ -28,7 +28,7 @@
 			<div class="col-lg-9">
 				<select class="form-control" name="rank" id="rank" required>
 		        <option value required>Please select one:</option>
-		        	@for ($i = 1; $i <= $pageCount; $i++)
+		        	@for ($i = 1; $i <= $pageCount + 1; $i++)
 		        		<option value="{{ $i }}">{{ $i }}</option>
 		        	@endfor
 				</select>	

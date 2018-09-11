@@ -26,7 +26,19 @@ class PagePolicy
     }
 
     /**
-     * Determine whether the user can update the page.
+     * Determine whether the user can create a page.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Page $page
+     * @return mixed
+     */
+    public function create(User $user, Page $page)
+    {
+        return in_array(Auth::user()->permission->permission, $this->defaultPermissionLevels);
+    }
+
+    /**
+     * Determine whether the user can update the pages.
      *
      * @param  \App\Models\User  $user
      * @param  \App\Page $page

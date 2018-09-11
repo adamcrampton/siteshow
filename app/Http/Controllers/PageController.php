@@ -8,8 +8,7 @@ use App\Models\User;
 
 class PageController extends ManagePagesController
 {
-    private $bounceReason = 'Sorry, you require editor access or higher to manage issue types.';
-    protected $controllerType = 'page';
+    private $bounceReason = 'Sorry, you require editor access or higher to manage pages.';
 
     public function __construct()
     {
@@ -57,9 +56,27 @@ class PageController extends ManagePagesController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, User $user, Page $page)
     {
-        //
+        // Check user is authorised.
+        if ($user->cant('create', $page)) {
+            return redirect()->route('manage.index')->with('warning', $this->bounceReason);
+        }
+
+        // Validate then insert if successful.
+        $request->validate($this->insertValidationOptions);
+
+        $page->name = $request->name;
+        $page->url = $request->url;
+        $page->duration = $request->duration;
+
+        #TODO: method to rearrange ranking based on the request value.
+        $page->rank = $request->rank;
+
+        $page->save();
+
+        // Return to index with success message.
+        return redirect()->route('pages.index')->with('success', 'Success! New Page <strong>' . $request->name . '</strong> has been added.');
     }
 
     /**
