@@ -121,8 +121,9 @@ class OptionController extends ManagePagesController
         } else {
             $returnHTML = '<ul>';
 
-            foreach ($updateResult as $option => $value) {
-                $returnHTML .= '<li>'.$option.' was updated to '.$value.'</li>';
+            // Ensure we return the "nice name" version of the option name.
+            foreach ($updateResult as $optionName => $value) {
+                $returnHTML .= '<li>'.$this->optionNames[$optionName].' was updated to '.$value.'</li>';
             }
 
             $returnHTML .= '</ul>';

@@ -12,6 +12,7 @@ class ManagePagesController extends Controller
 {
     protected $controllerType;
     protected $globalOptions = [];
+    protected $optionNames = [];
     protected $insertValidationOptions;
     protected $updateValidationOptions;
 
@@ -25,7 +26,9 @@ class ManagePagesController extends Controller
 
         $optionCollection->each(function($item, $key) {
             $this->globalOptions[$item->option_name] = $item->option_value;
+            $this->optionNames[$item->option_name] = $item->option_nice_name;
         });
+
 
         // Determine fields required for validation and associated rules.
         $this->setValidationRules($this->controllerType);

@@ -102,7 +102,7 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-12">
-            <h1 class="mt-5">{{ $pageTitle }}</h1>
+            <h1 class="mt-5">{{ isset($pageTitle) ? $pageTitle : '' }}</h1>
             @yield('content')
           </div>
         </div>
