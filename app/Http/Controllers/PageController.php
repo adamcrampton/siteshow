@@ -14,7 +14,7 @@ class PageController extends ManagePagesController
     public function __construct()
     {
         // Initialise parent constructor.
-        parent::__construct();
+        parent::__construct('page');
     }
 
     /**
@@ -29,10 +29,13 @@ class PageController extends ManagePagesController
             return redirect()->route('manage.index')->with('warning', $this->bounceReason);
         }
 
-        // Issue Type home page.
-        // Since we have a single page for adding and editing these records, no need to use the create method.
+        // Get all pages.
+        $allPages = Page::all();
+
+        // Manage Pages front end.
         return view('manage.page', [
-            'pageTitle' => 'Manage Pages'
+            'pageTitle' => 'Manage Pages',
+            'page' => $allPages
         ]);
     }
 
