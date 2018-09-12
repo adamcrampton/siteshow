@@ -114,6 +114,18 @@ class PageController extends ManagePagesController
     }
 
     /**
+     * Update the specified resources in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function batchUpdate(Request $request)
+    {
+        //
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
