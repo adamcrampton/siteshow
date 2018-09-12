@@ -82,9 +82,7 @@
 				{{ Form::text('page['. $index .'][duration]', $pageValues->duration, ['class' => 'form-control', 'id' => 'duration', 'required']) }}
 			</td>
 			<td>								
-				{{-- Store id and original value for each row - to be processed as an array in the backend. --}}
-				{{ Form::text('page['. $index .'][original_value_image_path]', $pageValues->image_path, ['style' => 'display:none']) }}
-				{{ Form::text('page['. $index .'][image_path]', $pageValues->image_path, ['class' => 'form-control', 'id' => 'image_path', 'required']) }}
+				<a href="{{ $option['default_save_path'] }}{{ $pageValues->image_path }}.jpg">Link</a>
 			</td>
 			<td>								
 				{{-- Store id and original value for each row - to be processed as an array in the backend. --}}
@@ -103,7 +101,7 @@
 		</tr>
 	@endforeach
 		<tr>
-			<td colspan="5" class="text-right">
+			<td colspan="7" class="text-right">
 				<input type="reset" class="btn btn-secondary" value="Cancel">
 				{!! Form::submit('Update', ['class' => 'btn btn-primary']) !!}
 			</td>
