@@ -35,7 +35,7 @@ class PageController extends ManagePagesController
         return view('manage.page', [
             'pageTitle' => 'Manage Pages',
             'page' => $allPages,
-            'pageCount' => $allPages->count(),
+            'pageCount' => $allPages->where('status', 1)->count(),
             'option' => $this->globalOptions
         ]);
     }
