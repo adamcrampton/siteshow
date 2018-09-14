@@ -29,7 +29,7 @@ class PageController extends ManagePagesController
         }
 
         // Get all pages.
-        $allPages = Page::all();
+        $allPages = Page::all()->sortBy('rank');
 
         // Manage Pages front end.
         return view('manage.page', [
