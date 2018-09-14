@@ -12,9 +12,16 @@ class Page extends Model
     }
 
 	// Fetch all records from pages table, bound by limit.
-    public function getPages($fetchLimit)
+    public function getPages($fetchLimit = null)
     {
-        return Page::where('status', 1)->take($fetchLimit)->get();
+        $pages = Page::where('status', 1);
+
+        // Apply limit only if passed in.
+        if ($fetchLimit) {
+            $pages->take($fetchLimit);
+        }
+
+        return $pages->get();
     }
 
     // Pass back id and url in a tidy Collection for prcocessing.
@@ -41,5 +48,33 @@ class Page extends Model
     	}
 
     	return $rowsUpdated;
+    }
+
+    // After a new record is inserted, we need to ensure the other records have their ranks adjusted - so we don't have duplicate rank values.
+    public function updatePageRanks($insertedPageId, $insertedPageRank)
+    {
+        // We only count rows that have an active status. Inactive records have a zero rank and shouldn't be included.
+        $activePages = $this->getPages();
+
+        // Determine if the rank passed in is the bottom of the list. If so, nothing needs to be done.
+        if ($insertedPageRank > $activePages->count()) {
+            return false;
+        }
+
+        // This is not just being inserted as the last record, so we'll bump other record ranks.
+        $pagesToUpdate = Page::where([
+            ['status', 1],
+            ['rank', '>=', $insertedPageRank]
+        ])->get();
+
+        $pagesToUpdate->each(function($item, $key) {
+            // Set a bumped rank value;
+            $newRank = $item->rank + 1;
+
+            Page::where('id', $item->id)
+                ->update(['rank' => $newRank]);
+        });
+
+        return $pagesToUpdate->count();
     }
 }

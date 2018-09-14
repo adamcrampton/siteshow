@@ -66,13 +66,14 @@ class PageController extends ManagePagesController
         // Validate then insert if successful.
         $request->validate($this->insertValidationOptions);
 
+        // Before creating, we need to rearrange the other records in the pages table so each item has an individual rank value.
+        $rowsUpdated = $page->updatePageRanks($page->id, $request->rank);
+
+        // Insert the record.
         $page->name = $request->name;
         $page->url = $request->url;
         $page->duration = $request->duration;
-
-        #TODO: method to rearrange ranking based on the request value.
         $page->rank = $request->rank;
-
         $page->save();
 
         // Return to index with success message.
