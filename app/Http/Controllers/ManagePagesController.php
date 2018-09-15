@@ -41,26 +41,26 @@ class ManagePagesController extends Controller
             case 'option':
                 $this->insertValidationOptions = [];
                 $this->updateValidationOptions = [
-                    'global_delay' => 'required', 
-                    'global_fetch_limit' => 'required', 
-                    'global_fetch_delay' => 'required', 
-                    'global_page_list_limit' => 'required', 
+                    'global_delay' => 'required|integer', 
+                    'global_fetch_limit' => 'required|integer', 
+                    'global_fetch_delay' => 'required|integer', 
+                    'global_page_list_limit' => 'required|integer', 
                     'user_agent' => 'required', 
                     'default_save_path' => 'required',
-                    'global_overwrite_files' => 'required',
-                    'dismiss_dialogues' => 'required',
-                    'wait_until_network_idle' => 'required',
-                    'global_fetch_window_width' => 'required',
-                    'global_fetch_window_height' => 'required'
+                    'global_overwrite_files' => 'required|boolean',
+                    'dismiss_dialogues' => 'required|boolean',
+                    'wait_until_network_idle' => 'required|boolean',
+                    'global_fetch_window_width' => 'required|integer',
+                    'global_fetch_window_height' => 'required|integer'
                 ];
                 break;
 
             case 'page':
                 $this->insertValidationOptions = [
                     'name' => 'required',
-                    'url' => 'required',
-                    'duration' => 'required',
-                    'rank' => 'required'
+                    'url' => 'required|url',
+                    'duration' => 'required|integer',
+                    'rank' => 'required|integer'
                 ];
                 $this->updateValidationOptions = [];
                 break;
