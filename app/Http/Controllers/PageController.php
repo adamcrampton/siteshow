@@ -149,7 +149,7 @@ class PageController extends ManagePagesController
                 ->route('pages.index')
                 ->with('warning', 'No options were updated');
         } else {
-            return $this->processBatchUpdates('Page', $updateArray);
+            return $this->processBatchUpdates(Page::class, $updateArray);
         }
     }
 

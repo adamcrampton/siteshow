@@ -91,8 +91,8 @@ class ManagePagesController extends Controller
     }
 
     // Process batch updates from child controller.
-    protected function processBatchUpdates($modelName, $updateArray)
+    protected function processBatchUpdates($model, $updateArray)
     {
-        // TODO: Figure out how to use a model name argument to create an instance of class.
+        dd($model::all());
     }
 }
