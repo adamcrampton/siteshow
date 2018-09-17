@@ -1,4 +1,8 @@
-// App CSS.
+// App CSS
+// =======
+
+// Bootstrap additions and overrides.
+// ==================================
 
 // Account for fixed navbar
 .container.container__main-container {
@@ -7,4 +11,11 @@
 
 .alert-top {
 	top: 56px;
+}
+
+// Add red asterisk for required fields.
+.form-group.required .form-control-label::after { 
+   content:"*";
+   margin-left: 5px;
+   color:red;
 }

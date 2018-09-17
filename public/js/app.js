@@ -75,7 +75,6 @@ module.exports = __webpack_require__(2);
 /* 1 */
 /***/ (function(module, exports) {
 
-
 // Helper functions for the public front end.
 $(document).ready(function () {});
 

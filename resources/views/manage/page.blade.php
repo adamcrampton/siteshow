@@ -48,7 +48,7 @@
 <div class="col-lg-12 mt-5">
 	<h2 class="float-md-left">Manage Pages</h2>
 	<div class="float-md-right">
-		<a href="#" class="btn btn-primary btn-right">Show Disabled Pages</a>
+		<button class="btn btn-primary btn-right" type="button" data-toggle="collapse" data-target=".disabled-row" aria-expanded="false" aria-controls="disabled-row">Show Disabled Pages</button>
 	</div>
 	{!! Form::open(['action' => ['PageController@batchUpdate'], 'class' => 'form', 'id' => 'update_form']) !!}
 	<table class="table table-hover">
@@ -66,7 +66,7 @@
 
 		@foreach($page as $index => $pageValues)
 			{{-- Hide row if item is disabled --}}
-			<tr {!! $pageValues->status == 0 ? 'class="d-none"' : '' !!}>
+			<tr {!! $pageValues->status == 0 ? 'class="collapse disabled-row"' : '' !!}>
 				<td>
 					{{-- Store id and original value for each row - to be processed as an array in the backend. --}}
 					{{ Form::text('page['. $index .'][id]', $pageValues->id, ['style' => 'display:none']) }}
