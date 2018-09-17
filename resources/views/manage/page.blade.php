@@ -51,6 +51,7 @@
 		<button class="btn btn-primary btn-right" type="button" data-toggle="collapse" data-target=".disabled-row" aria-expanded="false" aria-controls="disabled-row">Show Disabled Pages</button>
 	</div>
 	{!! Form::open(['action' => ['PageController@batchUpdate'], 'class' => 'form', 'id' => 'update_form']) !!}
+	{{ method_field('PATCH') }}
 	<table class="table table-hover">
 		<thead>
 			<tr>

@@ -9,7 +9,6 @@
 			<div class="card-body">
 			{!! Form::open(['action' => ['OptionController@batchUpdate'], 'class' => 'form']) !!}
 			{{ method_field('PATCH') }}
-
 				<div class="form-group row required">
 					<label class="col-lg-3 col-form-label form-control-label">Delay</label>
 					<div class="col-lg-9">

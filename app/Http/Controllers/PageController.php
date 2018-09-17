@@ -121,9 +121,36 @@ class PageController extends ManagePagesController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function batchUpdate(Request $request)
-    {
-        //
+    public function batchUpdate(Request $request, User $user, Page $page)
+    {   
+        // Check user is authorised.
+        if ($user->cant('update', $page)) {
+            return redirect()->route('manage.index')->with('warning', $this->bounceReason);
+        }
+
+        // Set array for request rows.
+        $batchRequest = $request->all();
+
+        // Set update array.
+        $updateArray = [];
+
+        // Loops through each page and check if any changes were made.
+        foreach ($batchRequest['page'] as $page => $values) {
+            foreach ($this->fieldsToCompare as $fieldName) {
+                if ($values[$fieldName] !== $values['original_value_'.$fieldName]) {
+                    $updateArray[$values['id']][$fieldName] = $values[$fieldName];
+                }
+            }
+        }
+        
+        // Process any updates.
+        if (empty($updateArray)) {
+            return redirect()
+                ->route('pages.index')
+                ->with('warning', 'No options were updated');
+        } else {
+            return $this->processBatchUpdates('Page', $updateArray);
+        }
     }
 
     /**

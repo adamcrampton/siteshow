@@ -15,6 +15,7 @@ class ManagePagesController extends Controller
     protected $optionNames = [];
     protected $insertValidationOptions;
     protected $updateValidationOptions;
+    protected $fieldsToCompare;
 
     public function __construct($controllerType)
     {
@@ -29,14 +30,16 @@ class ManagePagesController extends Controller
             $this->optionNames[$item->option_name] = $item->option_nice_name;
         });
 
-
         // Determine fields required for validation and associated rules.
         $this->setValidationRules($this->controllerType);
+
+        // Determine fields to compare when updating.
+        $this->fieldsToCompare = $this->fieldsToCompare($this->controllerType);
     }
 
+    // Depending on controller type, return the set of required validation rules.
     private function setValidationRules($controllerType)
     {
-        // Depending on the admin page, return the set of required validation rules.
         switch ($controllerType) {
             case 'option':
                 $this->insertValidationOptions = [];
@@ -70,5 +73,26 @@ class ManagePagesController extends Controller
                 $this->updateValidationOptions = [];
                 break;
         }
+    }
+
+    // Depending on the controller type, return original and new fields to compare against.
+    protected function fieldsToCompare($controllerType) {
+        switch ($controllerType) {
+            case 'page':
+                return [
+                    'name', 'url', 'duration', 'rank'
+                ];
+                break;
+            
+            default:
+                // Empty array to check against in case it falls through.
+                $this->fieldsToCompare = [];
+        }
+    }
+
+    // Process batch updates from child controller.
+    protected function processBatchUpdates($modelName, $updateArray)
+    {
+        // TODO: Figure out how to use a model name argument to create an instance of class.
     }
 }
