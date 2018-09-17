@@ -93,6 +93,12 @@ class ManagePagesController extends Controller
     // Process batch updates from child controller.
     protected function processBatchUpdates($model, $updateArray)
     {
-        dd($model::all());
+        foreach ($updateArray as $id => $values) {
+            foreach ($values as $valueName => $updateValue) {
+                dd($values);
+                $model::where('id', $id)
+                    ->update([$valueName => $updateValue]);
+            }
+        }
     }
 }
