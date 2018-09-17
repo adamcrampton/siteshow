@@ -95,7 +95,6 @@ class ManagePagesController extends Controller
     {
         foreach ($updateArray as $id => $values) {
             foreach ($values as $valueName => $updateValue) {
-                dd($values);
                 $model::where('id', $id)
                     ->update([$valueName => $updateValue]);
             }
