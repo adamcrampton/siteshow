@@ -151,10 +151,10 @@ class PageController extends ManagePagesController
             }
         }
 
-        // Build success message for returning to front end.
-        $successMessage = $this->buildUpdateSuccessMessage(Page::class, $batchRequest, $updateArray);
+        // Build and return success message for returning to front end.
+        $successMessage = $this->buildUpdateSuccessMessage(Page::class, $updateArray);
 
-        dd($successMessage);
+        return redirect()->route('pages.index')->with('success', $successMessage);
     }
 
     /**

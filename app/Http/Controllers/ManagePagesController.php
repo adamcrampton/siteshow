@@ -140,39 +140,43 @@ class ManagePagesController extends Controller
     }
 
     // Prepare success HTML when one or more records are updated.
-    protected function buildUpdateSuccessMessage($model, $batchRequest, $updateArray)
+    protected function buildUpdateSuccessMessage($model, $updateArray)
     {
         // Set nameColumn to regular variable for use with Eloquent.
-
         $nameColumn = $this->nameColumn;
 
-        // Convert batchRequest to Collection.
-        $batchRequest = collect($batchRequest['page']);
-
-        // Add original values and human readable name to updateArray.
+        // Add human readable name to updateArray.
         foreach ($updateArray as $id => $updateValues) {
             $updateArray[$id]['display_name'] = $model::where('id', $id)->first()->$nameColumn;
-
-            // Find and add original values to updateArray.
-            // foreach ($updateValues as $valueName => $value) {
-            //     $updateArray[$id]['original_value_'.$valueName] = $batchRequest->where('id', $id)->first()['original_value_'.$valueName];
-
-            // }
         }
 
-        dd($updateArray);
-        
+        // Now make that the key name of the array, as we no longer need the id.
+        $updateArray = collect($updateArray)->keyBy(function($item) {
+            return $item['display_name'];
+        });
 
         // Loop through each item and generate the success message.
+        $successMessage = '<p>Success! The following updates were made:</p>';   
+        $successMessage .= '<ul>';
 
-        $successMessage = '<p>Success! The following updates were made:</p>';
-        $successMessage .= '<ul><li>';
+        foreach ($updateArray as $displayName => $itemValues) {
+            // Show row display name.
+            $successMessage .= '<li><strong>'.$displayName.'</strong> was updated with the following values:';
+            $successMessage .= '<ul>';
+            // Add each updated item for this row to the success message.
+            foreach ($itemValues as $itemName => $itemValue) {
+                // Skip if it's display_name. Unsetting it earlier would be better but it's a pain in the butt.
+                if ($itemName === 'display_name') {
+                    continue;
+                }
 
-        foreach ($updateArray as $id => $itemValues) {
+                $successMessage .= '<li><strong>'.ucfirst($itemName).'</strong> was updated to '.$itemValue;
+            }
 
+            $successMessage .= '</ul>';
         }
 
-        $successMessage .= '</li></ul>';
+        $successMessage .= '</ul>';
 
         return $successMessage;
     }
