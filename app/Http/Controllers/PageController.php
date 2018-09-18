@@ -131,24 +131,16 @@ class PageController extends ManagePagesController
         // Set array for request rows.
         $batchRequest = $request->all();
 
-        // Set update array.
-        $updateArray = [];
+        // Check if any items in request have been updated. This method will return with warning if not.
+        // Otherwise, the update array is populated.
+        $updateArray = $this->checkRequestForUpdates($batchRequest);
 
-        // Loops through each page and check if any changes were made.
-        foreach ($batchRequest['page'] as $page => $values) {
-            foreach ($this->fieldsToCompare as $fieldName) {
-                if ($values[$fieldName] !== $values['original_value_'.$fieldName]) {
-                    $updateArray[$values['id']][$fieldName] = $values[$fieldName];
-                }
-            }
-        }
-        
-        // Process any updates.
-        if (empty($updateArray)) {
+        if (! $updateArray) {
             return redirect()
                 ->route('pages.index')
-                ->with('warning', 'No options were updated');
+                ->with('warning', 'No updates were submitted.');
         } else {
+            // Process any updates.
             return $this->processBatchUpdates(Page::class, $updateArray);
         }
     }

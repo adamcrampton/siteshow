@@ -90,6 +90,25 @@ class ManagePagesController extends Controller
         }
     }
 
+    // Check request to see if any items were updated.
+    protected function checkRequestForUpdates($batchRequest)
+    {
+        // Set update array.
+        $updateArray = [];
+
+        // Loops through each page and check if any changes were made.
+        foreach ($batchRequest['page'] as $page => $values) {
+            foreach ($this->fieldsToCompare as $fieldName) {
+                if ($values[$fieldName] !== $values['original_value_'.$fieldName]) {
+                    $updateArray[$values['id']][$fieldName] = $values[$fieldName];
+                }
+            }
+        }
+
+        // Return values or false if nothing to update.
+        return (empty($updateArray)) ? false : $updateArray;
+    }
+
     // Process batch updates from child controller.
     protected function processBatchUpdates($model, $updateArray)
     {
