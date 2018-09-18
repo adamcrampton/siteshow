@@ -4,12 +4,15 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use App\Traits\UserPermissionsTrait;
 use App\Policies\OptionPolicy;
 use App\Policies\PagePolicy;
 use App\Policies\UserPolicy;
+use App\Policies\FetchLogPolicy;
 use App\Models\Option;
 use App\Models\Page;
 use App\Models\User;
+use App\Models\FetchLog;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -22,6 +25,7 @@ class AuthServiceProvider extends ServiceProvider
         Option::class => OptionPolicy::class,
         Page::class => PagePolicy::class,
         User::class => UserPolicy::class,
+        FetchLog::class => FetchLogPolicy::class
     ];
 
     /**

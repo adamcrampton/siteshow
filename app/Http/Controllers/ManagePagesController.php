@@ -88,6 +88,10 @@ class ManagePagesController extends Controller
                 return 'name';
                 break;
 
+            case 'fetchlog':
+                return null;
+                break;
+
             default:
                 return 'name';
                 break;

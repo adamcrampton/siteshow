@@ -3,15 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class FetchLogController extends ManagePagesController
 {
-    protected $controllerType = 'fetchLog';
+    private $bounceReason = 'Sorry, you require viewer access or higher to view logs.';
 
     public function __construct()
     {
         // Initialise parent constructor.
-        parent::__construct();
+        parent::__construct('fetchlog');
 
         // Require authentication.
         $this->middleware('auth');
@@ -22,8 +23,13 @@ class FetchLogController extends ManagePagesController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(User $user)
     {
+        // Check user is authorised.
+        if ($user->cant('index', $user)) {
+            return redirect()->route('manage.index')->with('warning', $this->bounceReason);
+        }
+
         // Log view.
         return view('manage.log', [
             'pageTitle' => 'View Logs'
