@@ -50,21 +50,21 @@ class Page extends Model
     	return $rowsUpdated;
     }
 
-    // After a new record is inserted, we need to ensure the other records have their ranks adjusted - so we don't have duplicate rank values.
-    public function updatePageRanks($insertedPageId, $insertedPageRank)
+    // After a record is inserted or updated, we need to ensure the other records have their ranks adjusted - so we don't have duplicate rank values.
+    public function updatePageRanks($PageId, $PageRank)
     {
         // We only count rows that have an active status. Inactive records have a zero rank and shouldn't be included.
         $activePages = $this->getPages();
 
         // Determine if the rank passed in is the bottom of the list. If so, nothing needs to be done.
-        if ($insertedPageRank > $activePages->count()) {
+        if ($PageRank > $activePages->count()) {
             return false;
         }
 
         // This is not just being inserted as the last record, so we'll bump other record ranks.
         $pagesToUpdate = Page::where([
             ['status', 1],
-            ['rank', '>=', $insertedPageRank]
+            ['rank', '>=', $PageRank]
         ])->get();
 
         $pagesToUpdate->each(function($item, $key) {

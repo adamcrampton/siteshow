@@ -143,6 +143,13 @@ class PageController extends ManagePagesController
             // Process any updates.
             return $this->processBatchUpdates(Page::class, $updateArray);
         }
+
+        // Deal with rank updating if required.
+        foreach ($updateArray as $pageId => $updateValues) {
+            if (array_key_exists('rank', $updateValues)) {
+                $this->updatePageRanks($pageId, $updateValues['rank']);
+            }
+        }
     }
 
     /**
