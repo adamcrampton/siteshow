@@ -15,6 +15,7 @@ class ManagePagesController extends Controller
     protected $optionNames = [];
     protected $insertValidationOptions;
     protected $updateValidationOptions;
+    protected $nameColumn;
     protected $fieldsToCompare;
 
     public function __construct($controllerType)
@@ -35,6 +36,9 @@ class ManagePagesController extends Controller
 
         // Determine fields to compare when updating.
         $this->fieldsToCompare = $this->fieldsToCompare($this->controllerType);
+
+        // Set column name for the model used by the controller.
+        $this->nameColumn = $this->setNameColumn($this->controllerType);
     }
 
     // Depending on controller type, return the set of required validation rules.
@@ -71,6 +75,21 @@ class ManagePagesController extends Controller
             default:
                 $this->insertValidationOptions = [];
                 $this->updateValidationOptions = [];
+                break;
+        }
+    }
+
+    // Depending on the controller type, specify the human-readable "name" column for the model. This helps with status messages etc.
+    private function setNameColumn($controllerType)
+    {
+        switch ($controllerType) {
+            case 'page':
+            case 'user':
+                return 'name';
+                break;
+
+            default:
+                return 'name';
                 break;
         }
     }
@@ -112,13 +131,55 @@ class ManagePagesController extends Controller
     // Process batch updates from child controller.
     protected function processBatchUpdates($model, $updateArray)
     {
-        dd($updateArray);
-
         foreach ($updateArray as $id => $values) {
             foreach ($values as $valueName => $updateValue) {
                 $model::where('id', $id)
                     ->update([$valueName => $updateValue]);
             }
         }
+    }
+
+    // Prepare success HTML when one or more records are updated.
+    protected function buildUpdateSuccessMessage($model, $batchRequest, $updateArray)
+    {
+        // Set nameColumn to regular variable for use with Eloquent.
+
+        $nameColumn = $this->nameColumn;
+
+        // Convert batchRequest to Collection.
+        $batchRequest = collect($batchRequest['page']);
+
+        // Add original values and human readable name to updateArray.
+        foreach ($updateArray as $id => $updateValues) {
+            $updateArray[$id]['display_name'] = $model::where('id', $id)->first()->$nameColumn;
+
+            // Find and add original values to updateArray.
+            // foreach ($updateValues as $valueName => $value) {
+            //     $updateArray[$id]['original_value_'.$valueName] = $batchRequest->where('id', $id)->first()['original_value_'.$valueName];
+
+            // }
+        }
+
+        dd($updateArray);
+        
+
+        // Loop through each item and generate the success message.
+
+        $successMessage = '<p>Success! The following updates were made:</p>';
+        $successMessage .= '<ul><li>';
+
+        foreach ($updateArray as $id => $itemValues) {
+
+        }
+
+        $successMessage .= '</li></ul>';
+
+        return $successMessage;
+    }
+
+    // Prepare success HTML when one or more records are disabled.
+    protected function buildDisabledSuccessMessage($disableArray)
+    {
+
     }
 }

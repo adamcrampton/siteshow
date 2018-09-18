@@ -141,15 +141,20 @@ class PageController extends ManagePagesController
                 ->with('warning', 'No updates were submitted.');
         } else {
             // Process any updates.
-            return $this->processBatchUpdates(Page::class, $updateArray);
+            $this->processBatchUpdates(Page::class, $updateArray);
         }
 
         // Deal with rank updating if required.
         foreach ($updateArray as $pageId => $updateValues) {
             if (array_key_exists('rank', $updateValues)) {
-                $this->updatePageRanks($pageId, $updateValues['rank']);
+                $page->updatePageRanks($pageId, $updateValues['rank']);
             }
         }
+
+        // Build success message for returning to front end.
+        $successMessage = $this->buildUpdateSuccessMessage(Page::class, $batchRequest, $updateArray);
+
+        dd($successMessage);
     }
 
     /**
