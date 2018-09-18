@@ -3,12 +3,14 @@
 namespace App\Policies;
 
 use App\Models\User;
+use App\Traits\UserPermissionsTrait;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Auth;
 
 class UserPolicy
 {
     use HandlesAuthorization;
+    use UserPermissionsTrait;
 
     /**
      * Determine whether the user can view the index page.
@@ -19,7 +21,7 @@ class UserPolicy
      */
     public function index(User $user)
     {
-        return Auth::user()->permission->permission === 'administrator';
+        return $this->isAdministrator();
     }
 
     /**
@@ -30,7 +32,7 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        return Auth::user()->permission->permission === 'administrator';
+        return $this->isAdministrator();
     }
 
     /**
@@ -42,6 +44,6 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
-        return Auth::user()->permission->permission === 'admin';
+        return $this->isAdministrator();
     }    
 }

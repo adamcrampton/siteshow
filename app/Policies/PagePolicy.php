@@ -4,14 +4,14 @@ namespace App\Policies;
 
 use App\Models\User;
 use App\Models\Page;
+use App\Traits\UserPermissionsTrait;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Auth;
 
 class PagePolicy
 {
     use HandlesAuthorization;
-
-    private $defaultPermissionLevels = ['administrator', 'editor'];
+    use UserPermissionsTrait;
 
     /**
      * Determine whether the user can view the index page.
@@ -22,7 +22,7 @@ class PagePolicy
      */
     public function index(User $user)
     {
-        return in_array(Auth::user()->permission->permission, $this->defaultPermissionLevels);
+        return $this->isEditor();
     }
 
     /**
@@ -34,7 +34,7 @@ class PagePolicy
      */
     public function create(User $user, Page $page)
     {
-        return in_array(Auth::user()->permission->permission, $this->defaultPermissionLevels);
+        return $this->isEditor();
     }
 
     /**
@@ -46,6 +46,6 @@ class PagePolicy
      */
     public function update(User $user, Page $page)
     {
-        return in_array(Auth::user()->permission->permission, $this->defaultPermissionLevels);
+        return $this->isEditor();
     }
 }

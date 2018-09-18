@@ -4,12 +4,14 @@ namespace App\Policies;
 
 use App\Models\User;
 Use App\Models\Option;
+use App\Traits\UserPermissionsTrait;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Auth;
 
 class OptionPolicy
 {
     use HandlesAuthorization;
+    use UserPermissionsTrait;
 
     /**
      * Determine whether the user can view the index page.
@@ -20,7 +22,7 @@ class OptionPolicy
      */
     public function index(User $user)
     {
-        return Auth::user()->permission->permission === 'administrator';
+        return $this->isAdministrator();
     }
 
     /**
@@ -32,6 +34,6 @@ class OptionPolicy
      */
     public function update(User $user, Option $option)
     {
-        return Auth::user()->permission->permission === 'administrator';
+        return $this->isAdministrator();
     }
 }
