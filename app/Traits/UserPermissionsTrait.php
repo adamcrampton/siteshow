@@ -8,7 +8,6 @@ use Auth;
 trait UserPermissionsTrait
 {
     private $permissionLevels;
-    private $currentUserPermissionLevel;
 
     public function __construct()
     {
@@ -18,21 +17,21 @@ trait UserPermissionsTrait
         $this->permissionLevels['viewer'] = ['viewer', 'editor', 'viewer'];
 
         // Get current user permission level.
-        $this->currentUserPermissionLevel = Auth::user()->permission->permission;
+        // $this->currentUserPermissionLevel = ;
     }
 
     public function isAdministrator()
     {
-    	return in_array($this->currentUserPermissionLevel, $this->permissionLevels['administrator']);
+    	return in_array(Auth::user()->permission->permission, $this->permissionLevels['administrator']);
     }
 
     public function isEditor()
     {
-    	return in_array($this->currentUserPermissionLevel, $this->permissionLevels['editor']);
+    	return in_array(Auth::user()->permission->permission, $this->permissionLevels['editor']);
     }
 
     public function isViewer()
     {
-    	return in_array($this->currentUserPermissionLevel, $this->permissionLevels['viewer']);
+    	return in_array(Auth::user()->permission->permission, $this->permissionLevels['viewer']);
     }
 }

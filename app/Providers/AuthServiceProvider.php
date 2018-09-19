@@ -16,6 +16,8 @@ use App\Models\FetchLog;
 
 class AuthServiceProvider extends ServiceProvider
 {
+    use UserPermissionsTrait;
+
     /**
      * The policy mappings for the application.
      *
@@ -39,21 +41,15 @@ class AuthServiceProvider extends ServiceProvider
 
         // Gates if you need them.
         Gate::define('admin-functions', function($user) {
-            $requiredAdminRoles = ['administrator'];
-
-            return in_array($user->permission->permission, $requiredAdminRoles);
+            return $this->isAdministrator();
         });
 
         Gate::define('editor-functions', function($user) {
-            $requiredEditorRoles = ['administrator', 'editor'];
-
-            return in_array($user->permission->permission, $requiredEditorRoles);
+            return $this->isEditor();
         });
 
         Gate::define('viewer-functions', function($user) {
-            $requiredViewerRoles = ['administrator', 'editor', 'viewer'];
-
-            return in_array($user->permission->permission, $requiredViewerRoles);
+            return $this->isViewer();
         });
     }
 }
