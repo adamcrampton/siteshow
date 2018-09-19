@@ -22,6 +22,14 @@
     content:"Hide Inactive";
 }
 
+#add-toggle[aria-expanded="false"]:before{
+    content:"Add New";
+}
+
+#add-toggle[aria-expanded="true"]:before{
+    content:"Hide";
+}
+
 // Add red asterisk for required fields
 .form-group.required .form-control-label::after { 
    content:"*";

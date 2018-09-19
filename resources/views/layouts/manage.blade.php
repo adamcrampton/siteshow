@@ -15,7 +15,7 @@
   </head>
   <body>
 
-  @if ($errors->any())
+    @if ($errors->any())
     <div class="alert alert-danger alert-top" role="alert">
         <p>Sorry, there was a problem submitting your form. Details:</p>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -28,19 +28,19 @@
         </ul>
     </div>
     @elseif (session()->has('warning'))
-      <div class="alert alert-warning alert-top alert-dismissible">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        {!! session()->get('warning') !!}
-      </div>
-    @elseif (session()->has('success'))
-      <div class="alert alert-success alert-top alert-dismissible">
+    <div class="alert alert-warning alert-top alert-dismissible">
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
-        {!! session()->get('success') !!}
-      </div>
+      {!! session()->get('warning') !!}
+    </div>
+    @elseif (session()->has('success'))
+    <div class="alert alert-success alert-top alert-dismissible">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      {!! session()->get('success') !!}
+    </div>
     @endif
 
     <!-- Navigation -->
@@ -89,27 +89,33 @@
       </div>
     </nav>
 
-    <div class="container container__main-container">
-      @if (session('status'))
-        <div class="card-body">
-              <div class="alert alert-success" role="alert">
-                  {{ session('status') }}
-              </div>
-        </div>
-      @endif
-
-      <!-- Page Content -->
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
-            <h1 class="mt-5">{{ isset($pageTitle) ? $pageTitle : '' }}</h1>
-            @yield('content')
-          </div>
+    <div class="container">
+    @if (session('status'))
+      <div class="card-body">
+        <div class="alert alert-success" role="alert">
+        {{ session('status') }}
         </div>
       </div>
     </div>
-   </div>
+    @endif
     
+    <div class="container container__main-container">
+      
+      <!-- Page Content -->
+      <div class="col-lg-12 clearfix">
+        <div class="mt-5 float-md-left">
+        <h1>{{ isset($pageTitle) ? $pageTitle : '' }}</h1>
+        @if (isset($introText))
+        <p>{{ $introText }}</p>
+        @endif
+        </div>
+        <div class="mt-5 float-md-right">
+          <button id="add-toggle" class="btn btn-success btn-right" type="button" data-toggle="collapse" data-target="#add-form" aria-expanded="false" aria-controls="add-form"></button>
+        </div>   
+        
+      </div>
+      @yield('content')
+    </div> 
     <!-- Bootstrap and jQuery -->
     <script src="{{ URL::asset('vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ URL::asset('vendor/bootstrap/js/bootstrap.min.js') }}"></script>

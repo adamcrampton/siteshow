@@ -1,56 +1,61 @@
 @extends('layouts.manage')
 
 @section('content')
-    
-<h2 class="mt-5">Add New Page</h2>
-	<div class="card-body">
-		{!! Form::open(['action' => ['PageController@store'], 'class' => 'form', 'id' => 'add_form']) !!}
-		<div class="form-group row required">
-	      <label class="col-lg-3 col-form-label form-control-label">Page Name</label>
-	      <div class="col-lg-9">
-	          {{ Form::text('name', null, ['class' => 'form-control', 'id' => 'name', 'required']) }}
-		  </div>
-		</div>
-		<div class="form-group row required">
-	      <label class="col-lg-3 col-form-label form-control-label">Page URL</label>
-	      <div class="col-lg-9">
-	          {{ Form::text('url', null, ['class' => 'form-control', 'id' => 'url', 'required']) }}
-		  </div>
-		</div>
-		<div class="form-group row required">
-	      <label class="col-lg-3 col-form-label form-control-label">Display Duration (seconds)</label>
-	      <div class="col-lg-9">
-	          {{ Form::text('duration', $option['global_delay'], ['class' => 'form-control', 'id' => 'duration', 'required']) }}
-		  </div>
-		</div>
-		<div class="form-group row required">
-			<label class="col-lg-3 col-form-label form-control-label">Ranking</label>
-			<div class="col-lg-9">
-				<select class="form-control" name="rank" id="rank" required>
-		        <option value required>Please select one:</option>
-		        	@for ($i = 1; $i <= $pageCount + 1; $i++)
-		        		<option value="{{ $i }}">{{ $i }}</option>
-		        	@endfor
-				</select>	
+
+<div class="col-lg-12 clearfix">
+	<div id="add-form" class="collapse multi-collapse">
+		<h2>Add New Page</h2>
+		<div class="card-body">
+			{!! Form::open(['action' => ['PageController@store'], 'class' => 'form', 'id' => 'add_form']) !!}
+			<div class="form-group row required">
+		      <label class="col-lg-3 col-form-label form-control-label">Page Name</label>
+		      <div class="col-lg-9">
+		          {{ Form::text('name', null, ['class' => 'form-control', 'id' => 'name', 'required']) }}
+			  </div>
 			</div>
+			<div class="form-group row required">
+		      <label class="col-lg-3 col-form-label form-control-label">Page URL</label>
+		      <div class="col-lg-9">
+		          {{ Form::text('url', null, ['class' => 'form-control', 'id' => 'url', 'required']) }}
+			  </div>
+			</div>
+			<div class="form-group row required">
+		      <label class="col-lg-3 col-form-label form-control-label">Display Duration (seconds)</label>
+		      <div class="col-lg-9">
+		          {{ Form::text('duration', $option['global_delay'], ['class' => 'form-control', 'id' => 'duration', 'required']) }}
+			  </div>
+			</div>
+			<div class="form-group row required">
+				<label class="col-lg-3 col-form-label form-control-label">Ranking</label>
+				<div class="col-lg-9">
+					<select class="form-control" name="rank" id="rank" required>
+			        <option value required>Please select one:</option>
+			        	@for ($i = 1; $i <= $pageCount + 1; $i++)
+			        		<option value="{{ $i }}">{{ $i }}</option>
+			        	@endfor
+					</select>	
+				</div>
+			</div>
+			<div class="form-group row text-right">
+			  <label class="col-lg-3 col-form-label form-control-label"></label>
+			  <div class="col-lg-9">
+			      <input type="reset" class="btn btn-secondary" value="Cancel">
+			      {!! Form::submit('Submit', ['class' => 'btn btn-primary']) !!}
+			  </div>
+			</div>
+		{!! Form::close() !!}
 		</div>
-		<div class="form-group row text-right">
-		  <label class="col-lg-3 col-form-label form-control-label"></label>
-		  <div class="col-lg-9">
-		      <input type="reset" class="btn btn-secondary" value="Cancel">
-		      {!! Form::submit('Submit', ['class' => 'btn btn-primary']) !!}
-		  </div>
-		</div>
-	{!! Form::close() !!}
 	</div>
 </div>
-
-<div class="col-lg-12 mt-5">
-	<h2 class="float-md-left">Manage Pages</h2>
+<div class="col-lg-12">
+	<hr>
+</div>
+<div class="mt-5 col-lg-12 clearfix">
+	<h2 class="float-md-left">Update Pages</h2>
 	<div class="float-md-right">
 		{{-- Only show visibility toggle if inactive records are on page --}}
 		@if ($page->contains('status', 0))
-		<button id="show-toggle" class="btn btn-primary btn-right" type="button" data-toggle="collapse" data-target=".inactive-row" aria-expanded="false" aria-controls="inactive-row"></button>
+		<button id="show-toggle" class="btn btn-info btn-right" type="button" data-toggle="collapse" data-target=".inactive-row" aria-expanded="false" aria-controls="inactive-row"></button>
 		@endif
 	</div>
 	{!! Form::open(['action' => ['PageController@batchUpdate'], 'class' => 'form', 'id' => 'update_form']) !!}
@@ -69,7 +74,7 @@
 
 		@foreach($page as $index => $pageValues)
 			{{-- Hide row if item is inactive --}}
-			<tr {!! $pageValues->status == 0 ? 'class="collapse inactive-row"' : '' !!}>
+			<tr {!! $pageValues->status == 0 ? 'class="collapse multi-collapse inactive-row"' : '' !!}>
 				<td>
 					{{-- Store id and original value for each row - to be processed as an array in the backend. --}}
 					{{ Form::text('page['. $index .'][id]', $pageValues->id, ['style' => 'display:none']) }}
@@ -110,7 +115,6 @@
 			</tr>
 	</table>
 	{!! Form::close() !!}
-	</div>
 </div>
 
 @endsection
