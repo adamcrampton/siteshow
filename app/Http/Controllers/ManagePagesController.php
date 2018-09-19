@@ -20,6 +20,9 @@ class ManagePagesController extends Controller
 
     public function __construct($controllerType)
     {
+        // Require authentication.
+        $this->middleware('auth');
+        
         // Set controller type being used.
         $this->controllerType = $controllerType;
 
