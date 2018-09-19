@@ -4,6 +4,12 @@
 .alert-top {
   top: 56px;
 }
+#show-toggle[aria-expanded="false"]:before {
+  content: "Show Inactive";
+}
+#show-toggle[aria-expanded="true"]:before {
+  content: "Hide Inactive";
+}
 .form-group.required .form-control-label::after {
   content: "*";
   margin-left: 5px;

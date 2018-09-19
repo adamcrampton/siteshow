@@ -48,7 +48,10 @@
 <div class="col-lg-12 mt-5">
 	<h2 class="float-md-left">Manage Pages</h2>
 	<div class="float-md-right">
-		<button class="btn btn-primary btn-right" type="button" data-toggle="collapse" data-target=".disabled-row" aria-expanded="false" aria-controls="disabled-row">Show Disabled Pages</button>
+		{{-- Only show visibility toggle if inactive records are on page --}}
+		@if ($page->contains('status', 0))
+		<button id="show-toggle" class="btn btn-primary btn-right" type="button" data-toggle="collapse" data-target=".inactive-row" aria-expanded="false" aria-controls="inactive-row"></button>
+		@endif
 	</div>
 	{!! Form::open(['action' => ['PageController@batchUpdate'], 'class' => 'form', 'id' => 'update_form']) !!}
 	{{ method_field('PATCH') }}
@@ -61,13 +64,12 @@
 				<th scope="col">Image Link</th>
 				<th scope="col">Rank</th>
 				<th scope="col">Status</th>
-				<th scope="col">Delete</th>
 			</tr>
 		</thead>
 
 		@foreach($page as $index => $pageValues)
-			{{-- Hide row if item is disabled --}}
-			<tr {!! $pageValues->status == 0 ? 'class="collapse disabled-row"' : '' !!}>
+			{{-- Hide row if item is inactive --}}
+			<tr {!! $pageValues->status == 0 ? 'class="collapse inactive-row"' : '' !!}>
 				<td>
 					{{-- Store id and original value for each row - to be processed as an array in the backend. --}}
 					{{ Form::text('page['. $index .'][id]', $pageValues->id, ['style' => 'display:none']) }}
@@ -95,19 +97,13 @@
 				<td>								
 					<select class="form-control" name="dismiss_dialogues" id="dismiss_dialogues" required>
 						<option value="1" {{ $pageValues->status == 1 ? 'selected' : '' }}>Active</option>
-						<option value="0" {{ $pageValues->status == 0 ? 'selected' : '' }}>Disabled</option>
+						<option value="0" {{ $pageValues->status == 0 ? 'selected' : '' }}>Inactive</option>
 					</select>
-				</td>
-				<td class="text-center">
-					<div class="form-check">
-					{{-- There will either be a value or not in $_POST, so the actual value of the field set doesn't matter. --}}
-					{{ Form::checkbox('page['. $index .'][delete]', null, false, ['class' => 'form-check-input']) }}
-					</div>
 				</td>
 			</tr>
 		@endforeach
 			<tr>
-				<td colspan="7" class="text-right">
+				<td colspan="6" class="text-right">
 					<input type="reset" class="btn btn-secondary" value="Cancel">
 					{!! Form::submit('Update', ['class' => 'btn btn-primary']) !!}
 				</td>

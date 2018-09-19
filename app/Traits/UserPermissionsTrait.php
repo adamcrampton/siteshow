@@ -15,9 +15,6 @@ trait UserPermissionsTrait
         $this->permissionLevels['administrator'] = ['administrator'];
         $this->permissionLevels['editor'] = ['administrator', 'editor'];
         $this->permissionLevels['viewer'] = ['viewer', 'editor', 'viewer'];
-
-        // Get current user permission level.
-        // $this->currentUserPermissionLevel = ;
     }
 
     public function isAdministrator()
