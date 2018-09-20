@@ -15,4 +15,5 @@ mix.js('resources/assets/js/app.js', 'public/js')
 	.less('resources/assets/less/app.less', 'public/css')
 	.copyDirectory('vendor/twbs/bootstrap/dist/css', 'public/vendor/bootstrap/css')
 	.copyDirectory('vendor/twbs/bootstrap/dist/js', 'public/vendor/bootstrap/js')
-	.copyDirectory('vendor/components/jquery', 'public/vendor/jquery');
+	.copyDirectory('vendor/components/jquery', 'public/vendor/jquery')
+	.copyDirectory('vendor/nicolafranchini/venobox/venobox', 'public/vendor/venobox');
