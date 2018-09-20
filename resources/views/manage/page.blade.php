@@ -71,7 +71,7 @@
 				<th scope="col">Status</th>
 			</tr>
 		</thead>
-
+		<tbody>
 		@foreach($page as $index => $pageValues)
 			{{-- Hide row if item is inactive --}}
 			<tr {!! $pageValues->status == 0 ? 'class="collapse multi-collapse inactive-row"' : '' !!}>
@@ -97,7 +97,9 @@
 				<td>								
 					{{-- Store id and original value for each row - to be processed as an array in the backend. --}}
 					{{ Form::text('page['. $index .'][original_value_rank]', $pageValues->rank, ['style' => 'display:none']) }}
-					{{ Form::text('page['. $index .'][rank]', $pageValues->rank, ['class' => 'form-control', 'id' => 'rank', 'required']) }}
+					{{ Form::text('page['. $index .'][rank]', $pageValues->rank, ['style' => 'display:none']) }}
+
+					{{ $pageValues->rank }}
 				</td>
 				<td>
 					{{-- Store id and original value for each row - to be processed as an array in the backend. --}}
@@ -111,10 +113,11 @@
 		@endforeach
 			<tr>
 				<td colspan="6" class="text-right">
-					<input type="reset" class="btn btn-secondary" value="Cancel">
+					<input type="reset" class="btn btn-secondary" id="form-cancel" value="Cancel">
 					{!! Form::submit('Update', ['class' => 'btn btn-primary']) !!}
 				</td>
 			</tr>
+		</tbody>
 	</table>
 	{!! Form::close() !!}
 </div>
