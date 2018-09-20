@@ -76,7 +76,10 @@ module.exports = __webpack_require__(2);
 /***/ (function(module, exports) {
 
 // Helper functions for the public front end.
-$(document).ready(function () {});
+$(document).ready(function () {
+  // Initialize plugins.
+  $('.venobox').venobox();
+});
 
 /***/ }),
 /* 2 */

@@ -92,15 +92,17 @@
 					{{ Form::text('page['. $index .'][duration]', $pageValues->duration, ['class' => 'form-control', 'id' => 'duration', 'required']) }}
 				</td>
 				<td>								
-					<a href="{{ $option['default_save_path'] }}{{ $pageValues->image_path }}.jpg">Link</a>
+					<a class="venobox" href="{{ $option['default_save_path'] }}{{ $pageValues->image_path }}.jpg">Link</a>
 				</td>
 				<td>								
 					{{-- Store id and original value for each row - to be processed as an array in the backend. --}}
 					{{ Form::text('page['. $index .'][original_value_rank]', $pageValues->rank, ['style' => 'display:none']) }}
 					{{ Form::text('page['. $index .'][rank]', $pageValues->rank, ['class' => 'form-control', 'id' => 'rank', 'required']) }}
 				</td>
-				<td>								
-					<select class="form-control" name="dismiss_dialogues" id="dismiss_dialogues" required>
+				<td>
+					{{-- Store id and original value for each row - to be processed as an array in the backend. --}}
+					{{ Form::text('page['. $index .'][original_value_status]', $pageValues->status, ['style' => 'display:none']) }}
+					<select class="form-control" name="page[{{$index}}][status]" id="status" required>
 						<option value="1" {{ $pageValues->status == 1 ? 'selected' : '' }}>Active</option>
 						<option value="0" {{ $pageValues->status == 0 ? 'selected' : '' }}>Inactive</option>
 					</select>

@@ -106,7 +106,7 @@ class ManagePagesController extends Controller
         switch ($controllerType) {
             case 'page':
                 return [
-                    'name', 'url', 'duration', 'rank'
+                    'name', 'url', 'duration', 'rank', 'status'
                 ];
                 break;
             
@@ -117,13 +117,13 @@ class ManagePagesController extends Controller
     }
 
     // Check request to see if any items were updated.
-    protected function checkRequestForUpdates($batchRequest)
+    protected function checkRequestForUpdates($batchRequest, $controllerType)
     {
         // Set update array.
         $updateArray = [];
 
         // Loops through each page and check if any changes were made.
-        foreach ($batchRequest['page'] as $page => $values) {
+        foreach ($batchRequest[$controllerType] as $page => $values) {
             foreach ($this->fieldsToCompare as $fieldName) {
                 if ($values[$fieldName] !== $values['original_value_'.$fieldName]) {
                     $updateArray[$values['id']][$fieldName] = $values[$fieldName];

@@ -134,7 +134,7 @@ class PageController extends ManagePagesController
 
         // Check if any items in request have been updated. This method will return with warning if not.
         // Otherwise, the update array is populated.
-        $updateArray = $this->checkRequestForUpdates($batchRequest);
+        $updateArray = $this->checkRequestForUpdates($batchRequest, 'page');
 
         if (! $updateArray) {
             return redirect()
