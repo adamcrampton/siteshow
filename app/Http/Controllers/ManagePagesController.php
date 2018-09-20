@@ -200,8 +200,9 @@ class ManagePagesController extends Controller
     private function checkUpdateArrayForExclusions($model)
     {
         switch ($model) {
+            // Example case - not currently in use.
             case 'App\Models\Page':
-                return ['rank'];
+                return [];
                 break;
             
             default:

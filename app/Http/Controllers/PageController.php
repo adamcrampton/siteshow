@@ -136,6 +136,13 @@ class PageController extends ManagePagesController
         // Otherwise, the update array is populated.
         $updateArray = $this->checkRequestForUpdates($batchRequest, 'page');
 
+        // If any of these updates set the status to zero, also set rank to zero.
+        foreach ($updateArray as $pageId => $updateValues) {
+            if (array_key_exists('status', $updateValues) && $updateValues['status'] === '0') {
+                $updateArray[$pageId]['rank'] = 0;
+            }
+        }
+
         if (! $updateArray) {
             return redirect()
                 ->route('pages.index')
@@ -144,19 +151,6 @@ class PageController extends ManagePagesController
             // Process any updates.
             $this->processBatchUpdates(Page::class, $updateArray);
         }
-
-        // Deal with rank updating if required.
-        $rankUpdateArray = [];
-
-        foreach ($updateArray as $pageId => $updateValues) {
-            if (array_key_exists('rank', $updateValues)) {
-                $rankUpdateArray[$pageId] = $updateValues['rank'];
-            }
-        }
-
-        if (! empty($rankUpdateArray)) {{
-            $rowsUpdated = $page->updatePageRanksAfterUpdate($rankUpdateArray);
-        }};
 
         // Build and return success message for returning to front end.
         $successMessage = $this->buildUpdateSuccessMessage(Page::class, $updateArray);

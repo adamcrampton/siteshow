@@ -75,10 +75,4 @@ class Page extends Model
         // Return the count (not used but useful for debugging).
         return $pagesToUpdate->count();
     }
-    
-    // Setting of values based on data passed in from the update form in the front end.
-    public function updatePageRanksAfterUpdate($rankUpdateArray)
-    {
-        // TODO after front end done.
-    }
 }
