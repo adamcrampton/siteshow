@@ -6,11 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Page extends Model
 {
-	public function __construct()
-    {
-        
-    }
-
 	// Fetch all records from pages table, bound by limit.
     public function getPages($fetchLimit = null)
     {
@@ -50,23 +45,25 @@ class Page extends Model
     	return $rowsUpdated;
     }
 
-    // After a record is inserted or updated, we need to ensure the other records have their ranks adjusted - so we don't have duplicate rank values.
-    public function updatePageRanks($PageId, $PageRank)
+    // A simple bumping of ranks after a new page has been inserted.
+    public function updatePageRanksAfterInsert($pageRank)
     {
         // We only count rows that have an active status. Inactive records have a zero rank and shouldn't be included.
         $activePages = $this->getPages();
 
-        // Determine if the rank passed in is the bottom of the list. If so, nothing needs to be done.
-        if ($PageRank > $activePages->count()) {
+        // If doing an insert, and the rank passed in is the bottom of the list, nothing needs to be done.
+        if ($pageRank > Page::max('rank')) {
             return false;
         }
 
-        // This is not just being inserted as the last record, so we'll bump other record ranks.
+        // Perform the correct query to update existing records.
         $pagesToUpdate = Page::where([
-            ['status', 1],
-            ['rank', '>=', $PageRank]
+            ['status', '=', 1],
+            ['rank', '>=', $pageRank]
         ])->get();
 
+
+        // Do the update.
         $pagesToUpdate->each(function($item, $key) {
             // Set a bumped rank value;
             $newRank = $item->rank + 1;
@@ -75,6 +72,13 @@ class Page extends Model
                 ->update(['rank' => $newRank]);
         });
 
+        // Return the count (not used but useful for debugging).
         return $pagesToUpdate->count();
+    }
+    
+    // Setting of values based on data passed in from the update form in the front end.
+    public function updatePageRanksAfterUpdate($rankUpdateArray)
+    {
+        // TODO after front end done.
     }
 }

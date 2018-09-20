@@ -68,7 +68,7 @@ class PageController extends ManagePagesController
         $request->validate($this->insertValidationOptions);
 
         // Before creating, we need to rearrange the other records in the pages table so each item has an individual rank value.
-        $rowsUpdated = $page->updatePageRanks($page->id, $request->rank);
+        $rowsUpdated = $page->updatePageRanksAfterInsert($request->rank);
 
         // Insert the record.
         $page->name = $request->name;
@@ -146,11 +146,17 @@ class PageController extends ManagePagesController
         }
 
         // Deal with rank updating if required.
+        $rankUpdateArray = [];
+
         foreach ($updateArray as $pageId => $updateValues) {
             if (array_key_exists('rank', $updateValues)) {
-                $page->updatePageRanks($pageId, $updateValues['rank']);
+                $rankUpdateArray[$pageId] = $updateValues['rank'];
             }
         }
+
+        if (! empty($rankUpdateArray)) {{
+            $rowsUpdated = $page->updatePageRanksAfterUpdate($rankUpdateArray);
+        }};
 
         // Build and return success message for returning to front end.
         $successMessage = $this->buildUpdateSuccessMessage(Page::class, $updateArray);

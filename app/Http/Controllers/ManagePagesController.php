@@ -138,8 +138,16 @@ class ManagePagesController extends Controller
     // Process batch updates from child controller.
     protected function processBatchUpdates($model, $updateArray)
     {
+        // Check if any items should be excluded from batch updating, and unset.
+        $exclusionArray = $this->checkUpdateArrayForExclusions($model);
+
         foreach ($updateArray as $id => $values) {
             foreach ($values as $valueName => $updateValue) {
+                // Skip if in exclusion list.
+                if (in_array($valueName, $exclusionArray)) {
+                    continue;
+                }
+
                 $model::where('id', $id)
                     ->update([$valueName => $updateValue]);
             }
@@ -188,9 +196,17 @@ class ManagePagesController extends Controller
         return $successMessage;
     }
 
-    // Prepare success HTML when one or more records are disabled.
-    protected function buildDisabledSuccessMessage($disableArray)
+    // Return an array of any fields that need to be excluded when batch updating.
+    private function checkUpdateArrayForExclusions($model)
     {
-
+        switch ($model) {
+            case 'App\Models\Page':
+                return ['rank'];
+                break;
+            
+            default:
+                return [];
+                break;
+        }
     }
 }
