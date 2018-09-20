@@ -12,6 +12,7 @@
         "laravel/tinker": "^1.0",
         "laravelcollective/html": "^5.4.0",
         "nesbot/carbon": "~1.21",
+        "nicolafranchini/venobox": "^1.8",
         "spatie/browsershot": "^3.24",
         "twbs/bootstrap": "4.1.3"
     },

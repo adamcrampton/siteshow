@@ -8,7 +8,7 @@ use App\Traits\UserPermissionsTrait;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Auth;
 
-class PagePolicy
+class FetchLogPolicy
 {
     use HandlesAuthorization;
     use UserPermissionsTrait;
