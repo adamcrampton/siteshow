@@ -2,4 +2,7 @@
 $(document).ready(function() {
 	// Initialize plugins.
   $('.venobox').venobox(); 
+
+  // Sortable bindings.
+  $('#update-form tbody').sortable();
 });

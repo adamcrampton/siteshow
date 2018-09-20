@@ -58,7 +58,7 @@
 		<button id="show-toggle" class="btn btn-info btn-right" type="button" data-toggle="collapse" data-target=".inactive-row" aria-expanded="false" aria-controls="inactive-row"></button>
 		@endif
 	</div>
-	{!! Form::open(['action' => ['PageController@batchUpdate'], 'class' => 'form', 'id' => 'update_form']) !!}
+	{!! Form::open(['action' => ['PageController@batchUpdate'], 'class' => 'form', 'id' => 'update-form']) !!}
 	{{ method_field('PATCH') }}
 	<table class="table table-hover">
 		<thead>

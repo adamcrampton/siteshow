@@ -119,6 +119,7 @@
     </div> 
     <!-- Vendor JS -->
     <script src="{{ URL::asset('vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ URL::asset('vendor/jqueryui/jquery-ui.min.js') }}"></script>
     <script src="{{ URL::asset('vendor/bootstrap/js/bootstrap.min.js') }}"></script>
     <script src="{{ URL::asset('vendor/venobox/venobox.min.js') }}"></script>
 

@@ -16,4 +16,5 @@ mix.js('resources/assets/js/app.js', 'public/js')
 	.copyDirectory('vendor/twbs/bootstrap/dist/css', 'public/vendor/bootstrap/css')
 	.copyDirectory('vendor/twbs/bootstrap/dist/js', 'public/vendor/bootstrap/js')
 	.copyDirectory('vendor/components/jquery', 'public/vendor/jquery')
+	.copyDirectory('vendor/components/jqueryui', 'public/vendor/jqueryui')
 	.copyDirectory('vendor/nicolafranchini/venobox/venobox', 'public/vendor/venobox');
