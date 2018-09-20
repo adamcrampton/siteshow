@@ -5,8 +5,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
+    <!-- Vendor CSS -->
     <link rel="stylesheet" href="{{ URL::asset('vendor/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('vendor/venobox/venobox.css') }}">
     
     <!-- App CSS -->
     <link rel="stylesheet" href="{{ URL::asset('css/app.css') }}">
@@ -116,9 +117,10 @@
       </div>
       @yield('content')
     </div> 
-    <!-- Bootstrap and jQuery -->
+    <!-- Vendor JS -->
     <script src="{{ URL::asset('vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ URL::asset('vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="{{ URL::asset('vendor/venobox/venobox.min.js') }}"></script>
 
     <!-- App Scripts -->
     <script src="{{ URL::asset('js/app.js') }}"></script>
