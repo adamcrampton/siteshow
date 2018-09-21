@@ -102,8 +102,8 @@
 					{{-- Store id and original value for each row - to be processed as an array in the backend. --}}
 					{{ Form::text('page['. $index .'][original_value_rank]', $pageValues->rank, ['style' => 'display:none']) }}
 					{{ Form::text('page['. $index .'][rank]', $pageValues->rank, ['style' => 'display:none']) }}
-
-					{{ $pageValues->rank }}
+					{{-- Show 'Inactive' if disabled --}}
+					{{ $pageValues->rank ? $pageValues->rank : 'Inactive' }}
 				</td>
 				<td>
 					{{-- Store id and original value for each row - to be processed as an array in the backend. --}}
