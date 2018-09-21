@@ -32,7 +32,8 @@ class UserController extends ManagePagesController
 
         // Global Config home page.
         return view('manage.user', [
-            'pageTitle' => 'Manage users'
+            'pageTitle' => 'Manage users',
+            'showAddButton' => true
         ]);
     }
 

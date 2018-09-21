@@ -32,7 +32,8 @@ class FetchLogController extends ManagePagesController
 
         // Log view.
         return view('manage.log', [
-            'pageTitle' => 'View Logs'
+            'pageTitle' => 'View Logs',
+            'showAddButton' => false
         ]);
     }
 

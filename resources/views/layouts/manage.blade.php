@@ -111,7 +111,10 @@
         @endif
         </div>
         <div class="mt-5 float-md-right">
+          {{-- Only show if relevant to the page. --}}
+          @if (isset($showAddButton) && $showAddButton)
           <button id="add-toggle" class="btn btn-success btn-right" type="button" data-toggle="collapse" data-target="#add-form" aria-expanded="false" aria-controls="add-form"></button>
+          @endif
         </div>   
         
       </div>

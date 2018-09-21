@@ -37,7 +37,8 @@ class PageController extends ManagePagesController
             'introText' => 'Add or update pages here.',
             'page' => $allPages,
             'pageCount' => $allPages->where('status', 1)->count(),
-            'option' => $this->globalOptions
+            'option' => $this->globalOptions,
+            'showAddButton' => true
         ]);
     }
 
