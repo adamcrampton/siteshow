@@ -138,9 +138,13 @@ class PageController extends ManagePagesController
         $updateArray = $this->checkRequestForUpdates($batchRequest, 'page');
 
         // If any of these updates set the status to zero, also set rank to zero.
+        // Also flag that we need to reindex the page ranking at the end.
         foreach ($updateArray as $pageId => $updateValues) {
             if (array_key_exists('status', $updateValues) && $updateValues['status'] === '0') {
                 $updateArray[$pageId]['rank'] = 0;
+
+                // Set flag.
+                $this->recordDisabled = true;
             }
         }
 

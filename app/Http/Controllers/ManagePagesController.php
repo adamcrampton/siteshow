@@ -17,6 +17,7 @@ class ManagePagesController extends Controller
     protected $updateValidationOptions;
     protected $nameColumn;
     protected $fieldsToCompare;
+    protected $recordDisabled;
 
     public function __construct($controllerType)
     {
