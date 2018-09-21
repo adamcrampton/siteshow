@@ -91,8 +91,12 @@
 					{{ Form::text('page['. $index .'][original_value_duration]', $pageValues->duration, ['style' => 'display:none']) }}
 					{{ Form::text('page['. $index .'][duration]', $pageValues->duration, ['class' => 'form-control', 'id' => 'duration', 'required']) }}
 				</td>
-				<td>								
+				<td>
+					@if (!empty($pageValues->image_path))		
 					<a class="venobox" href="{{ $option['default_save_path'] }}{{ $pageValues->image_path }}.jpg">Link</a>
+					@else
+					No image
+					@endif
 				</td>
 				<td>								
 					{{-- Store id and original value for each row - to be processed as an array in the backend. --}}
