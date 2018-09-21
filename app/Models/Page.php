@@ -79,6 +79,6 @@ class Page extends Model
     // If any records were made inactive, we need to ensure the ranking is adjusted to be consecutive.
     public function reindexPageRanks()
     {
-
+        dd(Page::all());
     }
 }

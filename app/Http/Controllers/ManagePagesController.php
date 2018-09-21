@@ -17,7 +17,7 @@ class ManagePagesController extends Controller
     protected $updateValidationOptions;
     protected $nameColumn;
     protected $fieldsToCompare;
-    protected $recordDisabled;
+    protected $recordStatusChanged = false;
 
     public function __construct($controllerType)
     {
@@ -124,10 +124,15 @@ class ManagePagesController extends Controller
         $updateArray = [];
 
         // Loops through each page and check if any changes were made.
-        foreach ($batchRequest[$controllerType] as $page => $values) {
-            foreach ($this->fieldsToCompare as $fieldName) {
-                if ($values[$fieldName] !== $values['original_value_'.$fieldName]) {
-                    $updateArray[$values['id']][$fieldName] = $values[$fieldName];
+        foreach ($batchRequest[$controllerType] as $page => $itemId) {
+            foreach ($this->fieldsToCompare as $fieldValue => $fieldName) {
+                if ($itemId[$fieldName] !== $itemId['original_value_'.$fieldName]) {
+                    $updateArray[$itemId['id']][$fieldName] = $itemId[$fieldName];
+
+                    // Additional check if record status was changed - set flag if so.
+                    if ($fieldName === 'status') {
+                        $this->recordStatusChanged = true;
+                    }
                 }
             }
         }
