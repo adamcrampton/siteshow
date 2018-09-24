@@ -99,6 +99,10 @@ class Page extends Model
             $reindexArray[$pageId] = $reindexArray[$pageId] + 1;
         }
 
-        dd($reindexArray);
+        // Update the pages table with correct ranking.
+        foreach ($reindexArray as $pageId => $rank) {
+            Page::where('id', $pageId)
+                ->update(['rank' => $rank]);
+        }
     }
 }
