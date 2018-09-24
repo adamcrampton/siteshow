@@ -79,6 +79,26 @@ class Page extends Model
     // If any records were made inactive, we need to ensure the ranking is adjusted to be consecutive.
     public function reindexPageRanks()
     {
-        dd(Page::all());
+        // Set up update array.
+        $reindexArray = [];
+
+        // Get all active pages and add rank as key, id as value.
+        $activePages = $this->getPages();
+
+        foreach ($activePages as $item => $itemValues) {
+            $reindexArray[$itemValues->rank] = $itemValues->id;
+        }
+
+        // Reindex the array keys (starting at 1).
+        $reindexArray = array_values($reindexArray);
+
+        // Flip the array then bump the values by one (there is no zero rank).
+        $reindexArray = array_flip($reindexArray);
+
+        foreach ($reindexArray as $pageId => $rank) {
+            $reindexArray[$pageId] = $reindexArray[$pageId] + 1;
+        }
+
+        dd($reindexArray);
     }
 }
