@@ -100,8 +100,8 @@
 				</td>
 				<td>								
 					{{-- Store id and original value for each row - to be processed as an array in the backend. --}}
-					{{ Form::text('page['. $index .'][original_value_rank]', $pageValues->rank, ['style' => 'display:none']) }}
-					{{ Form::text('page['. $index .'][rank]', $pageValues->rank, ['style' => 'display:none']) }}
+					{{ Form::text('page['. $index .'][original_value_rank]', $pageValues->rank, ['style' => 'display:none', 'class' => 'original_rank_field']) }}
+					{{ Form::text('page['. $index .'][rank]', $pageValues->rank, ['style' => 'display:none', 'class' => 'rank_field']) }}
 					{{-- Show 'Inactive' if disabled --}}
 					{{ $pageValues->rank ? $pageValues->rank : 'Inactive' }}
 				</td>
