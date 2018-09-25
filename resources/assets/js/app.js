@@ -11,7 +11,7 @@ $(document).ready(function() {
   	'items': '> tr'
   });
 
-    // Reset rankings if form is reset.
+  // Reset rankings if form is reset.
 	$('#form-cancel').on('click', function(e) {
 		$sortTable.sortable('cancel');
 	});

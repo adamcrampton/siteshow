@@ -93,7 +93,7 @@
 				</td>
 				<td>
 					@if (!empty($pageValues->image_path))		
-					<a class="venobox" href="{{ $option['default_save_path'] }}{{ $pageValues->image_path }}.jpg">Link</a>
+					<a class="venobox" href="{{ $option['default_save_path'] }}{{ $pageValues->image_path }}">Link</a>
 					@else
 					No image
 					@endif
