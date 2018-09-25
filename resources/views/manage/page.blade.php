@@ -58,9 +58,9 @@
 		<button id="show-toggle" class="btn btn-info btn-right" type="button" data-toggle="collapse" data-target=".inactive-row" aria-expanded="false" aria-controls="inactive-row"></button>
 		@endif
 	</div>
-	{!! Form::open(['action' => ['PageController@batchUpdate'], 'class' => 'form', 'id' => 'update-form']) !!}
+	{!! Form::open(['action' => ['PageController@batchUpdate'], 'class' => 'form']) !!}
 	{{ method_field('PATCH') }}
-	<table class="table table-hover">
+	<table class="table table-hover" id="update-form">
 		<thead>
 			<tr>
 				<th scope="col">Page Name</th>
@@ -79,12 +79,12 @@
 					{{-- Store id and original value for each row - to be processed as an array in the backend. --}}
 					{{ Form::text('page['. $index .'][id]', $pageValues->id, ['style' => 'display:none']) }}
 					{{ Form::text('page['. $index .'][original_value_name]', $pageValues->name, ['style' => 'display:none']) }}
-					{{ Form::text('page['. $index .'][name]', $pageValues->name, ['class' => 'form-control first_name', 'data-input-type' => 'name', 'data-update-row' => $index, 'required']) }}
+					{{ Form::text('page['. $index .'][name]', $pageValues->name, ['class' => 'form-control name_field', 'data-input-type' => 'name', 'data-update-row' => $index, 'required']) }}
 				</td>
 				<td>
 					{{-- Store id and original value for each row - to be processed as an array in the backend. --}}
 					{{ Form::text('page['. $index .'][original_value_url]', $pageValues->url, ['style' => 'display:none']) }}
-					{{ Form::text('page['. $index .'][url]', $pageValues->url, ['class' => 'form-control last_name', 'data-input-type' => 'url', 'data-update-row' => $index, 'required']) }}
+					{{ Form::text('page['. $index .'][url]', $pageValues->url, ['class' => 'form-control', 'data-input-type' => 'url', 'data-update-row' => $index, 'required']) }}
 				</td>
 				<td>
 					{{-- Store id and original value for each row - to be processed as an array in the backend. --}}
@@ -115,6 +115,10 @@
 				</td>
 			</tr>
 		@endforeach
+		</tbody>
+	</table>
+	<table>
+		<tbody>
 			<tr>
 				<td colspan="6" class="text-right">
 					<input type="reset" class="btn btn-secondary" id="form-cancel" value="Cancel">
