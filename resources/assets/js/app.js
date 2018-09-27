@@ -16,56 +16,19 @@ $(document).ready(function() {
 		$sortTable.sortable('cancel');
 	});
 
+  // Whenever an update is made, re-sort all on-page records based on element order.
   $sortTable.sortable({
     update: function(event, ui) {
+      // Build a list without zero value items - these are inactive records with no rank.
+      var $rankFields = $('.rank_field').filter(function() {
+          return $(this).attr('value') > 0;
+      });
 
-
-
-
-
-      
-    //   // Get the hidden field that contains rank value for moved element. 
-    //   var movedRankField = ui.item.find('input.rank_field');
-
-    //   // Get moved field's name so we can check for it later.
-    //   var movedRankFieldName = movedRankField.attr('name');
-
-    //   $('tr.ui-sortable-handle').each(function (key, element) {
-    //      // Set input rank field element.
-    //     var thisRankField = $(this).find('input.rank_field');
-
-    //     // Update rank for moved element.
-    //     if (thisRankField.attr('name') == movedRankFieldName) {
-
-    //       // Set the new value
-    //       movedRankField.val(ui.item.index() + 1);
-
-    //       console.log($(this).find('input.name_field').val(), thisRankField.val());
-
-    //     } else {
-
-
-    //       // Adjust ranks up and down.
-    //       if (thisRankField.val() < movedRankField.val()) {
-    //         $(thisRankField).val(function(i, oldVal) {
-    //           return oldVal++;
-    //         })
-
-            
-
-    //       } else if (thisRankField.val() > movedRankField.val()) {
-    //          $(thisRankField).val(function(i, oldVal) {
-    //           return oldVal--;
-    //         })
-
-             
-    //       }
-
-    //       console.log($(this).find('input.name_field').val(), thisRankField.val());
-    //     }
-        
-
-    //   });
-    // }
+      $rankFields.each(function(index, value) {
+        // Set the value to iteration order - which will be equal to the DOM order.
+        // Add 1 because we want the list to start at 1.
+        $(this).val(index + 1);
+      });
+    }
   });
 });
