@@ -216,4 +216,17 @@ class ManagePagesController extends Controller
                 break;
         }
     }
+
+    protected function toggleStatus($model, $updateArray)
+    {
+
+
+        foreach ($updateArray as $id => $values) {
+        
+            // dd($values['status']);
+
+            $model::where('id', $id)
+                ->update(['status' => $values['status']]);
+        }
+    }
 }

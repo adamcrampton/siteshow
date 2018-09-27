@@ -106,14 +106,8 @@ class Page extends Model
         }
     }
 
-    public function togglePageStatus($updateArray)
-    {
-        foreach ($updateArray as $pageId => $updateValues) {
-             if (array_key_exists('status', $updateValues)) {
-
-                $pageUpdate = Page::where('id', $pageId)
-                    ->update(['status' => $updateValues['status']]);
-             }
-        }
+    // Returns highest rank assignment.
+    public function getMaxRank() {
+        return Page::max('rank');
     }
 }

@@ -154,10 +154,25 @@ class PageController extends ManagePagesController
             $this->processBatchUpdates(Page::class, $updateArray);
         }
 
-        // If there were any records disabled or enabled, we need to re-sort the ranking, and set the status.
+        // If there were any records disabled or enabled, we need to re-sort the ranking, and set the status, the assign a rank at the bottom of the list.
         if ($this->recordStatusChanged) {
-            $page->togglePageStatus($updateArray);
+            // Reset all.
             $page->reindexPageRanks();
+
+            // Set status per update array.
+            $this->toggleStatus(Page::class, $updateArray);
+
+            // Find maximum rank assignment add it to this + 1.
+            foreach ($updateArray as $pageId => $updateValues) {
+                // Set max rank for this iteration.
+                $lastRank = $page->getMaxRank() + 1;
+
+                // Set rank at bottom of list.
+                if (array_key_exists('status', $updateValues)) {
+                    Page::where('id', $pageId)
+                        ->update(['rank' => $lastRank]);
+                }
+            }
         }
 
         // Build and return success message for returning to front end.
