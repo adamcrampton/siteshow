@@ -105,4 +105,15 @@ class Page extends Model
                 ->update(['rank' => $rank]);
         }
     }
+
+    public function togglePageStatus($updateArray)
+    {
+        foreach ($updateArray as $pageId => $updateValues) {
+             if (array_key_exists('status', $updateValues)) {
+
+                $pageUpdate = Page::where('id', $pageId)
+                    ->update(['status' => $updateValues['status']]);
+             }
+        }
+    }
 }

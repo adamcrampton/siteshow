@@ -208,7 +208,7 @@ class ManagePagesController extends Controller
         switch ($model) {
             // Example case - not currently in use.
             case 'App\Models\Page':
-                return [];
+                return ['status'];
                 break;
             
             default:

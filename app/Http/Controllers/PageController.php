@@ -137,11 +137,11 @@ class PageController extends ManagePagesController
         // Otherwise, the update array is populated.
         $updateArray = $this->checkRequestForUpdates($batchRequest, 'page');
 
-        // If any of these updates set the status to zero, also set rank to zero.
+        // If any of these updates had a status change, we need to adjust the rank value.
         foreach ($updateArray as $pageId => $updateValues) {
 
-            if (array_key_exists('status', $updateValues) && $updateValues['status'] === '0') {
-                $updateArray[$pageId]['rank'] = 0;
+            if (array_key_exists('status', $updateValues)) {
+                $updateArray[$pageId]['rank'] = ($updateValues['status'] === '0') ? 0 : Page::where('rank', '>', 0)->count() + 1;  
             }
         }
 
@@ -154,8 +154,9 @@ class PageController extends ManagePagesController
             $this->processBatchUpdates(Page::class, $updateArray);
         }
 
-        // If there were any records disabled or enabled, we need to re-sort the ranking.
+        // If there were any records disabled or enabled, we need to re-sort the ranking, and set the status.
         if ($this->recordStatusChanged) {
+            $page->togglePageStatus($updateArray);
             $page->reindexPageRanks();
         }
 
