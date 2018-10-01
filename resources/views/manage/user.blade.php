@@ -36,7 +36,7 @@
 			<div class="col-lg-9">
 				<select class="form-control" name="user_permission_level" id="user_permission_level" required>
 					<option value required>Please select one:</option>
-					@foreach($userPemissions as $userPermission)
+					@foreach($userPermissions as $userPermission)
 						<option value="{{ $userPermission->id }}">{{ $userPermission->permission }}</option>
 					@endforeach
 				</select>
@@ -89,23 +89,27 @@
 			<tr {!! $userValues->status == 0 ? 'class="collapse multi-collapse inactive-row"' : '' !!}>
 				<td>
 					{{-- Store id and original value for each row - to be processed as an array in the backend. --}}
-					{{ Form::text('page['. $index .'][id]', $userValues->id, ['style' => 'display:none']) }}
-					{{ Form::text('page['. $index .'][original_value_first_name]', $userValues->first_name, ['style' => 'display:none']) }}
-					{{ Form::text('page['. $index .'][first_name]', $userValues->first_name, ['class' => 'form-control first_name_field', 'data-input-type' => 'first_name', 'data-update-row' => $index, 'required']) }}
+					{{ Form::text('user['. $index .'][id]', $userValues->id, ['style' => 'display:none']) }}
+					{{ Form::text('user['. $index .'][original_value_first_name]', $userValues->first_name, ['style' => 'display:none']) }}
+					{{ Form::text('user['. $index .'][first_name]', $userValues->first_name, ['class' => 'form-control first_name_field', 'data-input-type' => 'first_name', 'data-update-row' => $index, 'required']) }}
 				</td>
 				</td>
 				<td>
 					{{-- Store id and original value for each row - to be processed as an array in the backend. --}}
-					{{ Form::text('page['. $index .'][original_value_last_name]', $userValues->last_name, ['style' => 'display:none']) }}
-					{{ Form::text('page['. $index .'][last_name]', $userValues->last_name, ['class' => 'form-control last_name_field', 'data-input-type' => 'last_name', 'data-update-row' => $index, 'required']) }}
+					{{ Form::text('user['. $index .'][original_value_last_name]', $userValues->last_name, ['style' => 'display:none']) }}
+					{{ Form::text('user['. $index .'][last_name]', $userValues->last_name, ['class' => 'form-control last_name_field', 'data-input-type' => 'last_name', 'data-update-row' => $index, 'required']) }}
 				</td>
 				<td>
 					{{-- Store id and original value for each row - to be processed as an array in the backend. --}}
-					{{ Form::text('page['. $index .'][original_value_name]', $userValues->name, ['style' => 'display:none']) }}
-					{{ Form::text('page['. $index .'][name]', $userValues->name, ['class' => 'form-control name_field', 'data-input-type' => 'name', 'data-update-row' => $index, 'required']) }}
+					{{ Form::text('user['. $index .'][original_value_name]', $userValues->name, ['style' => 'display:none']) }}
+					{{ Form::text('user['. $index .'][name]', $userValues->name, ['class' => 'form-control name_field', 'data-input-type' => 'name', 'data-update-row' => $index, 'required']) }}
 				</td>
 				<td>
-					TODO
+					<select class="form-control" name="user_permission_level" id="user_permission_level" required>
+						@foreach($userPermissions as $userPermission)
+							<option value="{{ $userPermission->id }}" {{ $userValues->user_permissions_fk == $userPermission->id ? 'selected' : '' }}>{{ $userPermission->permission }}</option>
+						@endforeach
+					</select>
 				</td>
 				<td>								
 					{{-- Store id and original value for each row - to be processed as an array in the backend. --}}
@@ -113,7 +117,11 @@
 				</td>
 				<td>
 					{{-- Store id and original value for each row - to be processed as an array in the backend. --}}
-					TODO
+					{{ Form::text('user['. $index .'][original_value_status]', $userValues->status, ['style' => 'display:none']) }}
+					<select class="form-control" name="user[{{$index}}][status]" id="status" required>
+						<option value="1" {{ $userValues->status == 1 ? 'selected' : '' }}>Active</option>
+						<option value="0" {{ $userValues->status == 0 ? 'selected' : '' }}>Inactive</option>
+					</select>
 				</td>
 			</tr>
 		@endforeach
