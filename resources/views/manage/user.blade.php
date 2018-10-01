@@ -33,9 +33,14 @@
 			</div>
 			<div class="form-group row required">
 		      <label class="col-lg-3 col-form-label form-control-label">Permission Level</label>
-		      <div class="col-lg-9">
-		          TODO
-			  </div>
+			<div class="col-lg-9">
+				<select class="form-control" name="user_permission_level" id="user_permission_level" required>
+					<option value required>Please select one:</option>
+					@foreach($userPemissions as $userPermission)
+						<option value="{{ $userPermission->id }}">{{ $userPermission->permission }}</option>
+					@endforeach
+				</select>
+			</div>
 			</div>
 			<div class="form-group row required">
 		      <label class="col-lg-3 col-form-label form-control-label">Password</label>

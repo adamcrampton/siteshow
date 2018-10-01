@@ -30,14 +30,18 @@ class UserController extends ManagePagesController
             return redirect()->route('manage.index')->with('warning', $this->bounceReason);
         }
 
-        // Get all active users.
+        // Get all users.
         $allUsers = User::all()->sortBy('user_permissions_fk');
+
+        // Get user permission list.
+        $allPermissions = UserPermission::all();
 
         // Global Config home page.
         return view('manage.user', [
             'pageTitle' => 'Manage users',
             'introText' => 'Add or update users here.',
             'user' => $allUsers,
+            'userPemissions' => $allPermissions,
             'pageCount' => $allUsers->where('status', 1)->count(),
             'option' => $this->globalOptions,
             'showAddButton' => true,
