@@ -28,9 +28,15 @@ class User extends Authenticatable
     ];
 
     // Get all user details.
-    public function getUsers()
+    public function getUsers($sortOption = null)
     {
-        return User::where('user_status', 1)->get();
+        $users = User::where('status', 1);
+
+        if ($sortOption) {
+            $users->orderBy($sortOption);
+        }
+
+        return $users->get();
     }
 
     public function getDeletedUsers()
