@@ -76,6 +76,17 @@ class ManagePagesController extends Controller
                 $this->updateValidationOptions = [];
                 break;
 
+            case 'user':
+                $this->insertValidationOptions = [
+                    'first_name' => 'required',
+                    'last_name' => 'required',
+                    'name' => 'required',
+                    'email' => 'required|email',
+                    'user_permission_level' => 'required|integer',
+                    'password' => 'required'
+                ];
+                $this->updateValidationOptions = [];            
+
             default:
                 $this->insertValidationOptions = [];
                 $this->updateValidationOptions = [];

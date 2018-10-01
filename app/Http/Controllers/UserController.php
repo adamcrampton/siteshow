@@ -64,9 +64,27 @@ class UserController extends ManagePagesController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, User $user)
     {
-        //
+        // Check user is authorised.
+        if ($user->cant('create', $user)) {
+            return redirect()->route('manage.index')->with('warning', $this->bounceReason);
+        }
+
+        // Validate then insert if successful.
+        $request->validate($this->insertValidationOptions);
+
+        // Insert the record.
+        $user->first_name = $request->first_name;
+        $user->last_name = $request->last_name;
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->user_permissions_fk = $request->user_permission_level;
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        // Return to index with success message.
+        return redirect()->route('users.index')->with('success', 'Success! New User <strong>' . $request->name . '</strong> has been added.');
     }
 
     /**

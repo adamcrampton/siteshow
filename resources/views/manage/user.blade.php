@@ -45,7 +45,7 @@
 			<div class="form-group row required">
 		      <label class="col-lg-3 col-form-label form-control-label">Password</label>
 		      <div class="col-lg-9">
-		          TODO
+		         {{ Form::password('password', ['class' => 'form-control', 'id' => 'password', 'required']) }}
 			  </div>
 			</div>
 			<div class="form-group row text-right">
