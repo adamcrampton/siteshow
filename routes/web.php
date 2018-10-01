@@ -13,6 +13,7 @@ Route::patch('optionBatchUpdate', 'OptionController@batchUpdate');
 Route::resource('pages', 'PageController');
 Route::patch('pageBatchUpdate', 'PageController@batchUpdate');
 Route::resource('users', 'UserController');
+Route::patch('userBatchUpdate', 'UserController@batchUpdate');
 Route::resource('logs', 'FetchLogController');
 
 // Auth routes.

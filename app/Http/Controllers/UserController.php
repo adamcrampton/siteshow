@@ -33,7 +33,8 @@ class UserController extends ManagePagesController
         // Global Config home page.
         return view('manage.user', [
             'pageTitle' => 'Manage users',
-            'showAddButton' => true
+            'showAddButton' => true,
+            'user' => collect([])
         ]);
     }
 
@@ -90,6 +91,18 @@ class UserController extends ManagePagesController
     public function update(Request $request, $id)
     {
         //
+    }
+
+    /**
+     * Update the specified resources in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function batchUpdate(Request $request, User $user, Page $page)
+    {
+        return 'test';
     }
 
     /**
