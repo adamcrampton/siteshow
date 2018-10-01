@@ -89,15 +89,20 @@
 			<tr {!! $userValues->status == 0 ? 'class="collapse multi-collapse inactive-row"' : '' !!}>
 				<td>
 					{{-- Store id and original value for each row - to be processed as an array in the backend. --}}
-					TODO
+					{{ Form::text('page['. $index .'][id]', $userValues->id, ['style' => 'display:none']) }}
+					{{ Form::text('page['. $index .'][original_value_first_name]', $userValues->first_name, ['style' => 'display:none']) }}
+					{{ Form::text('page['. $index .'][first_name]', $userValues->first_name, ['class' => 'form-control first_name_field', 'data-input-type' => 'first_name', 'data-update-row' => $index, 'required']) }}
+				</td>
 				</td>
 				<td>
 					{{-- Store id and original value for each row - to be processed as an array in the backend. --}}
-					TODO
+					{{ Form::text('page['. $index .'][original_value_last_name]', $userValues->last_name, ['style' => 'display:none']) }}
+					{{ Form::text('page['. $index .'][last_name]', $userValues->last_name, ['class' => 'form-control last_name_field', 'data-input-type' => 'last_name', 'data-update-row' => $index, 'required']) }}
 				</td>
 				<td>
 					{{-- Store id and original value for each row - to be processed as an array in the backend. --}}
-					TODO
+					{{ Form::text('page['. $index .'][original_value_name]', $userValues->name, ['style' => 'display:none']) }}
+					{{ Form::text('page['. $index .'][name]', $userValues->name, ['class' => 'form-control name_field', 'data-input-type' => 'name', 'data-update-row' => $index, 'required']) }}
 				</td>
 				<td>
 					TODO
