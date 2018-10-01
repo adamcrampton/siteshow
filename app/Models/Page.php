@@ -7,13 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 class Page extends Model
 {
 	// Fetch all records from pages table, bound by limit.
-    public function getPages($fetchLimit = null)
+    public function getPages($fetchLimit = null, $sortOption = null)
     {
         $pages = Page::where('status', 1);
 
         // Apply limit only if passed in.
         if ($fetchLimit) {
             $pages->take($fetchLimit);
+        }
+
+        // Apply sorting if specified.
+        if ($sortOption) {
+            $pages->orderBy($sortOption);
         }
 
         return $pages->get();
@@ -77,13 +82,13 @@ class Page extends Model
     }
 
     // If any records were made inactive, we need to ensure the ranking is adjusted to be consecutive.
-    public function reindexPageRanks()
+    public function reindexPageRanks($sortOption = null)
     {
         // Set up update array.
         $reindexArray = [];
 
         // Get all active pages and add rank as key, id as value.
-        $activePages = $this->getPages();
+        $activePages = $this->getPages(null, $sortOption);
 
         foreach ($activePages as $item => $itemValues) {
             $reindexArray[$itemValues->rank] = $itemValues->id;

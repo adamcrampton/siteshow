@@ -137,14 +137,6 @@ class PageController extends ManagePagesController
         // Otherwise, the update array is populated.
         $updateArray = $this->checkRequestForUpdates($batchRequest, 'page');
 
-        // If any of these updates had a status change, we need to adjust the rank value.
-        foreach ($updateArray as $pageId => $updateValues) {
-
-            if (array_key_exists('status', $updateValues)) {
-                $updateArray[$pageId]['rank'] = ($updateValues['status'] === '0') ? 0 : Page::where('rank', '>', 0)->count() + 1;  
-            }
-        }
-
         if (! $updateArray) {
             return redirect()
                 ->route('pages.index')
@@ -156,23 +148,29 @@ class PageController extends ManagePagesController
 
         // If there were any records disabled or enabled, we need to re-sort the ranking, and set the status, the assign a rank at the bottom of the list.
         if ($this->recordStatusChanged) {
-            // Reset all.
-            $page->reindexPageRanks();
 
             // Set status per update array.
             $this->toggleStatus(Page::class, $updateArray);
 
-            // Find maximum rank assignment add it to this + 1.
             foreach ($updateArray as $pageId => $updateValues) {
                 // Set max rank for this iteration.
                 $lastRank = $page->getMaxRank() + 1;
 
-                // Set rank at bottom of list.
-                if (array_key_exists('status', $updateValues)) {
+                // Set rank to zero if made inactive.
+                if (array_key_exists('status', $updateValues) && $updateValues['status'] === '0') {
+                    Page::where('id', $pageId)
+                        ->update(['rank' => 0]);
+                } 
+
+                if (array_key_exists('status', $updateValues) && $updateValues['status'] === '1') {
+                    // If made active, bump into last position.
                     Page::where('id', $pageId)
                         ->update(['rank' => $lastRank]);
                 }
             }
+
+            // Reset all.
+            $page->reindexPageRanks('rank');
         }
 
         // Build and return success message for returning to front end.
