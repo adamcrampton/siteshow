@@ -78,8 +78,8 @@
 				<th scope="col">First Name</th>
 				<th scope="col">Last Name</th>
 				<th scope="col">Display Name</th>
+				<th scope="col">Email</th>
 				<th scope="col">Permission Level</th>
-				<th scope="col">Password</th>
 				<th scope="col">Status</th>
 			</tr>
 		</thead>
@@ -105,20 +105,21 @@
 					{{ Form::text('user['. $index .'][name]', $userValues->name, ['class' => 'form-control name_field', 'data-input-type' => 'name', 'data-update-row' => $index, 'required']) }}
 				</td>
 				<td>
-					<select class="form-control" name="user_permission_level" id="user_permission_level" required>
+					{{-- Store id and original value for each row - to be processed as an array in the backend. --}}
+					{{ Form::text('user['. $index .'][original_value_email]', $userValues->email, ['style' => 'display:none']) }}
+					{{ Form::text('user['. $index .'][email]', $userValues->email, ['class' => 'form-control email_field', 'data-input-type' => 'email', 'data-update-row' => $index, 'required']) }}
+				</td>
+				<td>
+					<select class="form-control user_permission_level_field" name="user_permission_level" id="user_permission_level" required>
 						@foreach($userPermissions as $userPermission)
 							<option value="{{ $userPermission->id }}" {{ $userValues->user_permissions_fk == $userPermission->id ? 'selected' : '' }}>{{ $userPermission->permission }}</option>
 						@endforeach
 					</select>
 				</td>
-				<td>								
-					{{-- Store id and original value for each row - to be processed as an array in the backend. --}}
-					TODO
-				</td>
 				<td>
 					{{-- Store id and original value for each row - to be processed as an array in the backend. --}}
 					{{ Form::text('user['. $index .'][original_value_status]', $userValues->status, ['style' => 'display:none']) }}
-					<select class="form-control" name="user[{{$index}}][status]" id="status" required>
+					<select class="form-control status_field" name="user[{{$index}}][status]" id="status" required>
 						<option value="1" {{ $userValues->status == 1 ? 'selected' : '' }}>Active</option>
 						<option value="0" {{ $userValues->status == 0 ? 'selected' : '' }}>Inactive</option>
 					</select>
@@ -130,7 +131,7 @@
 	<table>
 		<tbody>
 			<tr>
-				<td colspan="6" class="text-right">
+				<td colspan="5" class="text-right">
 					<input type="reset" class="btn btn-secondary" id="form-cancel" value="Cancel">
 					{!! Form::submit('Update', ['class' => 'btn btn-primary']) !!}
 				</td>

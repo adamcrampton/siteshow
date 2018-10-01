@@ -73,7 +73,9 @@ class ManagePagesController extends Controller
                     'duration' => 'required|integer',
                     'rank' => 'required|integer'
                 ];
-                $this->updateValidationOptions = [];
+                $this->updateValidationOptions = [
+
+                ];
                 break;
 
             case 'user':
@@ -85,7 +87,9 @@ class ManagePagesController extends Controller
                     'user_permission_level' => 'required|integer',
                     'password' => 'required'
                 ];
-                $this->updateValidationOptions = [];            
+                $this->updateValidationOptions = [
+                    
+                ];            
 
             default:
                 $this->insertValidationOptions = [];
@@ -119,6 +123,11 @@ class ManagePagesController extends Controller
             case 'page':
                 return [
                     'name', 'url', 'duration', 'rank', 'status'
+                ];
+                break;
+            case 'user':
+                return [
+                    'first_name', 'last_name', 'name', 'email', 'user_permission_level'
                 ];
                 break;
             
