@@ -128,7 +128,7 @@ class UserController extends ManagePagesController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function batchUpdate(Request $request, User $user, Page $page)
+    public function batchUpdate(Request $request, User $user)
     {
         return 'test';
     }
