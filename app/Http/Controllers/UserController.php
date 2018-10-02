@@ -130,7 +130,36 @@ class UserController extends ManagePagesController
      */
     public function batchUpdate(Request $request, User $user)
     {
-        return 'test';
+        // Check user is authorised.
+        if ($user->cant('update', $user)) {
+            return redirect()->route('manage.index')->with('warning', $this->bounceReason);
+        }
+
+        // Set array for request rows.
+        $batchRequest = $request->all();
+
+        // Check if any items in request have been updated. This method will return with warning if not.
+        // Otherwise, the update array is populated.
+        $updateArray = $this->checkRequestForUpdates($batchRequest, 'user');
+
+        if (! $updateArray) {
+            return redirect()
+                ->route('users.index')
+                ->with('warning', 'No updates were submitted.');
+        } else {
+            // Process any updates.
+            $this->processBatchUpdates(User::class, $updateArray);
+        }
+
+        // Set status per update array - if any status changes were detected.
+        if ($this->recordStatusChanged) {
+            $this->toggleStatus(User::class, $updateArray);
+        }
+
+        // Build and return success message for returning to front end.
+        $successMessage = $this->buildUpdateSuccessMessage(User::class, $updateArray);
+
+        return redirect()->route('users.index')->with('success', $successMessage);
     }
 
     /**

@@ -110,7 +110,9 @@
 					{{ Form::text('user['. $index .'][email]', $userValues->email, ['class' => 'form-control email_field', 'data-input-type' => 'email', 'data-update-row' => $index, 'required']) }}
 				</td>
 				<td>
-					<select class="form-control user_permission_level_field" name="user_permission_level" id="user_permission_level" required>
+					{{-- Store id and original value for each row - to be processed as an array in the backend. --}}
+					{{ Form::text('user['. $index .'][original_value_user_permission_level]', $userValues->user_permissions_fk, ['style' => 'display:none']) }}
+					<select class="form-control user_permission_level_field" name="user[{{$index}}][user_permission_level]" id="user_permission_level" required>
 						@foreach($userPermissions as $userPermission)
 							<option value="{{ $userPermission->id }}" {{ $userValues->user_permissions_fk == $userPermission->id ? 'selected' : '' }}>{{ $userPermission->permission }}</option>
 						@endforeach
