@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\FetchLog;
 use App\Models\User;
 
 class FetchLogController extends ManagePagesController
@@ -30,9 +31,15 @@ class FetchLogController extends ManagePagesController
             return redirect()->route('manage.index')->with('warning', $this->bounceReason);
         }
 
+        // Fetch all logs.
+        $allLogs = FetchLog::all();
+
         // Log view.
         return view('manage.log', [
             'pageTitle' => 'View Logs',
+            'introText' => 'View logs from fetch requests',
+            'log' => $allLogs,
+            'option' => $this->globalOptions,
             'showAddButton' => false
         ]);
     }
