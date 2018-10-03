@@ -88,7 +88,7 @@ class ManagePagesController extends Controller
                     'password' => 'required'
                 ];
                 $this->updateValidationOptions = [
-                    
+
                 ];            
 
             default:
@@ -127,7 +127,7 @@ class ManagePagesController extends Controller
                 break;
             case 'user':
                 return [
-                    'first_name', 'last_name', 'name', 'email', 'user_permission_level'
+                    'first_name', 'last_name', 'name', 'email', 'user_permission_level', 'status'
                 ];
                 break;
             
