@@ -112,7 +112,7 @@
 				<td>
 					{{-- Store id and original value for each row - to be processed as an array in the backend. --}}
 					{{ Form::text('user['. $index .'][original_value_user_permission_level]', $userValues->user_permissions_fk, ['style' => 'display:none']) }}
-					<select class="form-control user_permission_level_field" name="user[{{$index}}][user_permission_level]" id="user_permission_level" required>
+					<select class="form-control user_permission_level_field" name="user[{{$index}}][user_permission_level]" required>
 						@foreach($userPermissions as $userPermission)
 							<option value="{{ $userPermission->id }}" {{ $userValues->user_permissions_fk == $userPermission->id ? 'selected' : '' }}>{{ $userPermission->permission }}</option>
 						@endforeach
@@ -121,7 +121,7 @@
 				<td>
 					{{-- Store id and original value for each row - to be processed as an array in the backend. --}}
 					{{ Form::text('user['. $index .'][original_value_status]', $userValues->status, ['style' => 'display:none']) }}
-					<select class="form-control status_field" name="user[{{$index}}][status]" id="status" required>
+					<select class="form-control status_field" name="user[{{$index}}][status]" required>
 						<option value="1" {{ $userValues->status == 1 ? 'selected' : '' }}>Active</option>
 						<option value="0" {{ $userValues->status == 0 ? 'selected' : '' }}>Inactive</option>
 					</select>

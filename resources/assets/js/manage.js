@@ -51,5 +51,7 @@ function nameFieldListener() {
 	$displayName = $('#name');
 
 	// Set up listener for any changes to first or last name, and rebuild the display name value.
-	
+	$('#first_name, #last_name').on('change', function() {
+		$displayName.val($firstName.val() + ' ' + $lastName.val());
+	});
 }
