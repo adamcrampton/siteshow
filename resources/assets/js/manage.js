@@ -6,8 +6,10 @@ $(document).ready(function() {
 
 	// Initalise Sortable and set up update listener.
   	var $pageSortTable = $('#update-form tbody');
-
   	initSortable($pageSortTable);
+
+  	// Set up listener for user first and last name fields, and auto-update the display name field on change.
+  	nameFieldListener();
 });
 
 function initVenobox() {
@@ -40,4 +42,14 @@ function initSortable($sortTable) {
       });
     }
   });
+}
+
+function nameFieldListener() {
+	// Define fields for insert form.
+	$firstName = $('#first_name');
+	$lastName = $('#last_name');
+	$displayName = $('#name');
+
+	// Set up listener for any changes to first or last name, and rebuild the display name value.
+	
 }
