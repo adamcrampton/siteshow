@@ -80,12 +80,24 @@ module.exports = __webpack_require__(4);
 // Various JS required for the manage pages.
 // =========================================
 $(document).ready(function () {
-	// Initalise Venobox.
-	initVenobox();
+	// Get model attached to this page - if it exists.
+	var modelName = typeof $('body').attr('data-model-name') !== 'undefined' ? $('body').attr('data-model-name') : null;
 
-	// Initalise Sortable and set up update listener.
-	var $pageSortTable = $('#update-form tbody');
-	initSortable($pageSortTable);
+	// Initalise Venobox for allowed models.
+	var allowedModelsVenobox = ['page'];
+
+	if (modelName && $.inArray(modelName, allowedModelsVenobox) >= 0) {
+		initVenobox();
+	}
+
+	// Initialise sortable and set up update listener on allowed models.
+	var allowedModelsSortable = ['page'];
+
+	if (modelName && $.inArray(modelName, allowedModelsSortable) >= 0) {
+		// Set the element to use and initialise.
+		var $pageSortTable = $('#update-form tbody');
+		initSortable($pageSortTable);
+	}
 
 	// Set up listener for user first and last name fields, and auto-update the display name field on change.
 	nameFieldListener();

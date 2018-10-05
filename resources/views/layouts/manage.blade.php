@@ -14,7 +14,7 @@
 
     <title>@yield('title')</title>
   </head>
-  <body {{ isset($modelName) ? 'class='.strtolower($modelName) : '' }}>
+  <body {{ isset($modelName) ? 'data-model-name='.strtolower($modelName) : '' }}>
 
     @if ($errors->any())
     <div class="alert alert-danger alert-top" role="alert">
