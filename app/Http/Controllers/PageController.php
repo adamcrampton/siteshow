@@ -137,15 +137,13 @@ class PageController extends ManagePagesController
         $validationArray = collect($request->page)->map(function($item) {
             // For each item, we'll need to create a Request object to pass into the validator.
             $requestRow = new Request($item);
-            
-            $requestRow->validate($this->updateValidationOptions);
 
             // If validator fails on any row, immediately return so database isn't touched.
-            // $validator = Validator::make($requestRow->all(), $this->updateValidationOptions);
+            $validator = Validator::make($requestRow->all(), $this->updateValidationOptions);
 
-            // if ($validator->fails()) {
-            //     return redirect()->route('manage.index');
-            // }
+            if ($validator->fails()) {
+                dd('Validator failed');
+            };
 
         });
 
