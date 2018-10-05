@@ -51,7 +51,20 @@ function nameFieldListener() {
 	$displayName = $('#name');
 
 	// Set up listener for any changes to first or last name, and rebuild the display name value.
+	// New user form.
 	$('#first_name, #last_name').on('change', function() {
 		$displayName.val($firstName.val() + ' ' + $lastName.val());
+	});
+
+	// Update user form.
+	$('.first_name_field, .last_name_field').on('change', function() {
+		// Find the row this field sits on.
+		$row = $(this).closest('tr.ui-sortable-handle');
+
+		// Construct display name value based on which field is updated.
+		var displayName = $(this).hasClass('first_name_field') ? $(this).val() + ' ' + $row.find('.last_name_field').val() : $row.find('.first_name_field').val() + ' ' + $(this).val();
+
+		// Update display name field on this row.		
+		$row.find('.name_field').val(displayName);
 	});
 }
