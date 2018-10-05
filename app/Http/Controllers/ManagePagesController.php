@@ -74,7 +74,11 @@ class ManagePagesController extends Controller
                     'rank' => 'required|integer'
                 ];
                 $this->updateValidationOptions = [
-
+                    'name' => 'required',
+                    'url' => 'required|url',
+                    'duration' => 'required|integer',
+                    'rank' => 'required|integer',
+                    'status' => 'required|integer'
                 ];
                 break;
 

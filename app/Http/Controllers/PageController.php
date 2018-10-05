@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Page;
 use App\Models\User;
+use Validator;
 
 class PageController extends ManagePagesController
 {
@@ -131,6 +132,23 @@ class PageController extends ManagePagesController
             return redirect()->route('manage.index')->with('warning', $this->bounceReason);
         }
 
+        // Validate then insert if successful.
+        // First, create a collection based on the batch request, then validate each row.
+        $validationArray = collect($request->page)->map(function($item) {
+            // For each item, we'll need to create a Request object to pass into the validator.
+            $requestRow = new Request($item);
+            
+            $requestRow->validate($this->updateValidationOptions);
+
+            // If validator fails on any row, immediately return so database isn't touched.
+            // $validator = Validator::make($requestRow->all(), $this->updateValidationOptions);
+
+            // if ($validator->fails()) {
+            //     return redirect()->route('manage.index');
+            // }
+
+        });
+
         // Set array for request rows.
         $batchRequest = $request->all();
 
@@ -142,11 +160,11 @@ class PageController extends ManagePagesController
             return redirect()
                 ->route('pages.index')
                 ->with('warning', 'No updates were submitted.');
-        } else {
-            // Process any updates.
-            $this->processBatchUpdates(Page::class, $updateArray);
         }
 
+        // Process any updates.
+        $this->processBatchUpdates(Page::class, $updateArray);
+        
         // If there were any records disabled or enabled, we need to re-sort the ranking, and set the status, the assign a rank at the bottom of the list.
         if ($this->recordStatusChanged) {
 
