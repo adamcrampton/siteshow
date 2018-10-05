@@ -38,6 +38,7 @@ class UserController extends ManagePagesController
 
         // Global Config home page.
         return view('manage.user', [
+            'modelName' => 'User',
             'pageTitle' => 'Manage users',
             'introText' => 'Add or update users here.',
             'user' => $allUsers,

@@ -30,6 +30,7 @@ class OptionController extends ManagePagesController
 
         // Global Options home page.
         return view('manage.option', [
+            'modelName' => 'Option',
             'pageTitle' => 'Set Options',
             'option' => $this->globalOptions,
             'showAddButton' => false

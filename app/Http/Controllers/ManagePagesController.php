@@ -226,8 +226,9 @@ class ManagePagesController extends Controller
     private function checkUpdateArrayForExclusions($model)
     {
         switch ($model) {
-            // Example case - not currently in use.
+            // Status exclusions for models that have batch updating.
             case 'App\Models\Page':
+            case 'App\Models\Users':
                 return ['status'];
                 break;
             

@@ -36,6 +36,7 @@ class FetchLogController extends ManagePagesController
 
         // Log view.
         return view('manage.log', [
+            'modelName' => 'FetchLog',
             'pageTitle' => 'View Logs',
             'introText' => 'View logs from fetch requests',
             'log' => $allLogs,
