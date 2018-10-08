@@ -14,10 +14,16 @@ class DisplayController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Option $option, Page $page)
     {
-        //
-        return 'display';
+        // Global Config home page.
+        return view('index', [
+            'pageTitle' => 'Public Front End',
+            'introText' => 'Add or update users here.',
+            'allPages' => $page->getPages(null, null),
+            'pageCount' => $page->where('status', 1)->count(),
+            'option' => $option->getGlobalConfig()
+        ]);
     }
 
     /**

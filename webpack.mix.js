@@ -13,6 +13,7 @@ let mix = require('laravel-mix');
 
 mix.js('resources/assets/js/app.js', 'public/js')
 	.js('resources/assets/js/manage.js', 'public/js')
+	.js('resources/assets/js/display.js', 'public/js')
 	.less('resources/assets/less/app.less', 'public/css')
 	.copyDirectory('vendor/twbs/bootstrap/dist/css', 'public/vendor/bootstrap/css')
 	.copyDirectory('vendor/twbs/bootstrap/dist/js', 'public/vendor/bootstrap/js')

@@ -43,7 +43,7 @@ class UserController extends ManagePagesController
             'introText' => 'Add or update users here.',
             'user' => $allUsers,
             'userPermissions' => $allPermissions,
-            'pageCount' => $allUsers->where('status', 1)->count(),
+            'userCount' => $allUsers->where('status', 1)->count(),
             'option' => $this->globalOptions,
             'showAddButton' => true,
         ]);
