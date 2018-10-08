@@ -12,21 +12,38 @@
     <link rel="stylesheet" href="{{ URL::asset('css/app.css') }}">
 
     <title>{{ $pageTitle }}</title>
-  </head>
-  <body>
+	</head>
+	<body>
+		<!-- Build slideshow -->
+		<div id="displayCarousel" class="carousel slide" data-ride="carousel" data-interval=115000>
+			<div class="carousel-inner">
+				@foreach ($pageData as $page => $data)
+				<div class="carousel-item {{ $page === 0 ? 'active' : '' }}">
+					<img class="d-block w-100" src="{{ $globalOptions['default_save_path'] . $data->image_path }}" alt="{{ $data->name }}">
+					<div class="carousel-caption d-none d-md-block">
+						<h5>{{ $data->name }}</h5>
+						<p>Last updated: {{ $data->updated_at }}</p>
+					</div>
+				</div>
+				@endforeach
+			</div>
+			<a class="carousel-control-prev" href="#displayCarousel" role="button" data-slide="prev">
+			    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			    <span class="sr-only">Previous</span>
+			  </a>
+			  <a class="carousel-control-next" href="#displayCarousel" role="button" data-slide="next">
+			    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+			    <span class="sr-only">Next</span>
+			  </a>
+			</div>
+		</div>
+		<!-- Vendor JS -->
+	    <script src="{{ URL::asset('vendor/jquery/jquery.min.js') }}"></script>
+	    <script src="{{ URL::asset('vendor/jqueryui/jquery-ui.min.js') }}"></script>
+	    <script src="{{ URL::asset('vendor/bootstrap/js/bootstrap.min.js') }}"></script>
 
-  <!-- Build slideshow -->
-  @foreach ($pageData as $page => $data)
-
-  @endforeach
-  </div>
-	<!-- Vendor JS -->
-    <script src="{{ URL::asset('vendor/jquery/jquery.min.js') }}"></script>
-    <script src="{{ URL::asset('vendor/jqueryui/jquery-ui.min.js') }}"></script>
-    <script src="{{ URL::asset('vendor/bootstrap/js/bootstrap.min.js') }}"></script>
-
-    <!-- App Scripts -->
-    <script src="{{ URL::asset('js/app.js') }}"></script>
-    <script src="{{ URL::asset('js/display.js') }}"></script>
-  </body>
+	    <!-- App Scripts -->
+	    <script src="{{ URL::asset('js/app.js') }}"></script>
+	    <script src="{{ URL::asset('js/display.js') }}"></script>
+	</body>
 </html>
