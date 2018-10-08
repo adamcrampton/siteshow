@@ -1,0 +1,38 @@
+// Manage pages
+// ============
+
+// Bootstrap additions and overrides
+// =================================
+
+// Account for fixed navbar
+.container.container__main-container {
+	padding-top: 56px;
+}
+
+.alert-top {
+	top: 56px;
+}
+
+// Toggle button text switcher
+#show-toggle[aria-expanded="false"]:before{
+    content:"Show Inactive";
+}
+
+#show-toggle[aria-expanded="true"]:before{
+    content:"Hide Inactive";
+}
+
+#add-toggle[aria-expanded="false"]:before{
+    content:"Add New";
+}
+
+#add-toggle[aria-expanded="true"]:before{
+    content:"Hide";
+}
+
+// Add red asterisk for required fields
+.form-group.required .form-control-label::after { 
+   content:"*";
+   margin-left: 5px;
+   color:red;
+}

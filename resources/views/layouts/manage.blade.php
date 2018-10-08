@@ -11,6 +11,7 @@
     
     <!-- App CSS -->
     <link rel="stylesheet" href="{{ URL::asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('css/manage.css') }}">
 
     <title>@yield('title')</title>
   </head>
