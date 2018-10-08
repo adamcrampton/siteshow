@@ -21,8 +21,7 @@
 				<div class="carousel-item {{ $page === 0 ? 'active' : '' }}">
 					<img class="d-block w-100" src="{{ $globalOptions['default_save_path'] . $data->image_path }}" alt="{{ $data->name }}">
 					<div class="carousel-caption d-none d-md-block">
-						<h5>{{ $data->name }}</h5>
-						<p>Last updated: {{ $data->updated_at }}</p>
+						<!-- Captions if you want them -->
 					</div>
 				</div>
 				@endforeach

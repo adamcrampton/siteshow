@@ -28,7 +28,7 @@ class DisplayController extends Controller
     {
         // Return public home page.
         return view('index', [
-            'pageTitle' => 'Public Front End',
+            'pageTitle' => 'Siteshow',
             'pageData' => $this->pageData,
             'globalOptions' => $this->globalOptions
         ]);
