@@ -7,6 +7,7 @@ use App\Models\FetchLog;
 use App\Models\Option;
 use App\Models\Page;
 use App\Models\User;
+use Validator;
 
 class ManagePagesController extends Controller
 {
@@ -78,7 +79,7 @@ class ManagePagesController extends Controller
                     'url' => 'required|url',
                     'duration' => 'required|integer',
                     'rank' => 'required|integer',
-                    'status' => 'required|integer'
+                    'status' => 'required|boolean'
                 ];
                 break;
 
@@ -92,8 +93,14 @@ class ManagePagesController extends Controller
                     'password' => 'required'
                 ];
                 $this->updateValidationOptions = [
-
-                ];            
+                    'first_name' => 'required',
+                    'last_name' => 'required',
+                    'name' => 'required',
+                    'email' => 'required|email',
+                    'user_permission_level' => 'required|integer',
+                    'status' => 'required|boolean'
+                ];
+                break;        
 
             default:
                 $this->insertValidationOptions = [];
@@ -163,6 +170,30 @@ class ManagePagesController extends Controller
 
         // Return values or false if nothing to update.
         return (empty($updateArray)) ? false : $updateArray;
+    }
+
+    // Process batch validation from child controller.
+    protected function processBatchValidation($modelName, $batchRequest)
+    {
+        // Flatten request array for validation.
+        $validationArray = $batchRequest->all()[$modelName];
+
+        // Validate each row then insert if successful.
+        foreach ($validationArray as $item => $itemValues) {
+            // Create Request object required for validator.
+            $requestRow = new Request($validationArray[$item]);
+
+            // Make a validator for each row.
+            $validator = Validator::make($requestRow->all(), $this->updateValidationOptions);
+
+            var_dump($validator->fails());
+
+            // Boot immediately with error if failed.
+            if ($validator->fails()) {
+                return $validator;
+            }
+        }
+        return 'passed';
     }
 
     // Process batch updates from child controller.

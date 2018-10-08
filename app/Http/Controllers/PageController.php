@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Page;
 use App\Models\User;
-use Validator;
 
 class PageController extends ManagePagesController
 {
@@ -132,23 +131,15 @@ class PageController extends ManagePagesController
             return redirect()->route('manage.index')->with('warning', $this->bounceReason);
         }
 
-        // Flatten request array for validation.
-        $validationArray = $request->all()['page'];
+        // Validate each row then insert if successful.
+        // Boot the user to the manage page with errors if validation fails.
+        $batchValidationResult = $this->processBatchValidation('page', $request);
 
-        // Validate then insert if successful.
-        // First, create a collection based on the batch request, then validate each row.
-        foreach ($validationArray as $item => $itemValues) {
-
-            $requestRow = new Request($validationArray[$item]);
-
-            // Make a validator for each row.
-            $validator = Validator::make($requestRow->all(), $this->updateValidationOptions);
-
-            if ($validator->fails()) {
-                return redirect()
-                    ->route('pages.index')
-                    ->withErrors($validator);
-            }
+        // If validation doesn't pass, the validator object will be returned from the method.
+        if ($batchValidationResult !== 'passed') {
+            return redirect()
+                ->route('pages.index')
+                ->withErrors($batchValidationResult); 
         }
 
         // Set array for request rows.

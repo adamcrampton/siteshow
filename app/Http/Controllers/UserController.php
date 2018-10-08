@@ -136,6 +136,17 @@ class UserController extends ManagePagesController
             return redirect()->route('manage.index')->with('warning', $this->bounceReason);
         }
 
+        // Validate each row then insert if successful.
+        // Boot the user to the manage page with errors if validation fails.
+        $batchValidationResult = $this->processBatchValidation('user', $request);
+
+        // If validation doesn't pass, the validator object will be returned from the method.
+        if ($batchValidationResult !== 'passed') {
+            return redirect()
+                ->route('users.index')
+                ->withErrors($batchValidationResult); 
+        }
+
         // Set array for request rows.
         $batchRequest = $request->all();
 
