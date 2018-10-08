@@ -11,9 +11,12 @@
     <!-- App CSS -->
     <link rel="stylesheet" href="{{ URL::asset('css/app.css') }}">
 
-    <title>@yield('title')</title>
+    <title>{{ $pageTitle }}</title>
   </head>
   <body>
+	<!-- JSON object for pages -->
+	<script>var pageJSON = {{ $pageJSON }}</script>
+
 	<!-- Vendor JS -->
     <script src="{{ URL::asset('vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ URL::asset('vendor/jqueryui/jquery-ui.min.js') }}"></script>
