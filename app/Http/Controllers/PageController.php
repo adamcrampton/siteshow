@@ -132,20 +132,24 @@ class PageController extends ManagePagesController
             return redirect()->route('manage.index')->with('warning', $this->bounceReason);
         }
 
+        // Flatten request array for validation.
+        $validationArray = $request->all()['page'];
+
         // Validate then insert if successful.
         // First, create a collection based on the batch request, then validate each row.
-        $validationArray = collect($request->page)->map(function($item) {
-            // For each item, we'll need to create a Request object to pass into the validator.
-            $requestRow = new Request($item);
+        foreach ($validationArray as $item => $itemValues) {
 
-            // If validator fails on any row, immediately return so database isn't touched.
+            $requestRow = new Request($validationArray[$item]);
+
+            // Make a validator for each row.
             $validator = Validator::make($requestRow->all(), $this->updateValidationOptions);
 
             if ($validator->fails()) {
-                dd('Validator failed');
-            };
-
-        });
+                return redirect()
+                    ->route('pages.index')
+                    ->withErrors($validator);
+            }
+        }
 
         // Set array for request rows.
         $batchRequest = $request->all();
