@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Display;
+use App\Models\Option;
+use App\Models\Page;
 
 class DisplayController extends Controller
 {
