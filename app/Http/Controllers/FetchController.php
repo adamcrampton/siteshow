@@ -6,7 +6,9 @@ use App\Models\Fetch;
 use App\Models\FetchLog;
 use App\Models\Page;
 use App\Models\Option;
+use App\Mail\FetchNotification;
 use Illuminate\Http\Request;
+use Mail;
 
 class FetchController extends Controller
 {
@@ -27,7 +29,7 @@ class FetchController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Page $page, Fetch $fetch, FetchLog $fetchLog)
+    public function index(Page $page, Fetch $fetch, FetchLog $fetchLog, FetchNotification $fetchNotification)
     {
         // Generate and output results object.
         $jsonData = [];
@@ -76,7 +78,12 @@ class FetchController extends Controller
 
         // If email notifications are switched on, create an email and send it to the email address in the config.
         if ($this->globalConfig['global_email_results']) {
-            
+
+            $fetchNotification->buildConfig($jsonData);
+            $fetchNotification->build();
+
+            // Now send the completed email to the specified provider.
+            Mail::to($this->globalConfig['global_email'])->send($fetchNotification);
         }
 
         return $jsonData;
