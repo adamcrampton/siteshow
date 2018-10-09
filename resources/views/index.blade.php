@@ -15,7 +15,7 @@
 	</head>
 	<body>
 		<!-- Build slideshow -->
-		<div id="displayCarousel" class="carousel slide" data-ride="carousel" data-interval=115000>
+		<div id="displayCarousel" class="carousel slide" data-ride="carousel" data-interval=5000>
 			<div class="carousel-inner">
 				@foreach ($pageData as $page => $data)
 				<div class="carousel-item {{ $page === 0 ? 'active' : '' }}">

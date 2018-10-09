@@ -71,13 +71,11 @@ class ManagePagesController extends Controller
                 $this->insertValidationOptions = [
                     'name' => 'required',
                     'url' => 'required|url',
-                    'duration' => 'required|integer',
                     'rank' => 'required|integer'
                 ];
                 $this->updateValidationOptions = [
                     'name' => 'required',
                     'url' => 'required|url',
-                    'duration' => 'required|integer',
                     'rank' => 'required|integer',
                     'status' => 'required|boolean'
                 ];
@@ -133,7 +131,7 @@ class ManagePagesController extends Controller
         switch ($controllerType) {
             case 'page':
                 return [
-                    'name', 'url', 'duration', 'rank', 'status'
+                    'name', 'url', 'rank', 'status'
                 ];
                 break;
             case 'user':

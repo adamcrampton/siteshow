@@ -75,7 +75,6 @@ class PageController extends ManagePagesController
         // Insert the record.
         $page->name = $request->name;
         $page->url = $request->url;
-        $page->duration = $request->duration;
         $page->rank = $request->rank;
         $page->save();
 

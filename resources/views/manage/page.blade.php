@@ -20,12 +20,6 @@
 			  </div>
 			</div>
 			<div class="form-group row required">
-		      <label class="col-lg-3 col-form-label form-control-label">Display Duration (seconds)</label>
-		      <div class="col-lg-9">
-		          {{ Form::text('duration', $option['global_delay'], ['class' => 'form-control', 'id' => 'duration', 'required']) }}
-			  </div>
-			</div>
-			<div class="form-group row required">
 				<label class="col-lg-3 col-form-label form-control-label">Ranking</label>
 				<div class="col-lg-9">
 					<select class="form-control" name="rank" id="rank" required>
@@ -65,7 +59,6 @@
 			<tr>
 				<th scope="col">Page Name</th>
 				<th scope="col">Page URL</th>
-				<th scope="col">Duration</th>
 				<th scope="col">Image Link</th>
 				<th scope="col">Rank</th>
 				<th scope="col">Status</th>
@@ -85,11 +78,6 @@
 					{{-- Store id and original value for each row - to be processed as an array in the backend. --}}
 					{{ Form::text('page['. $index .'][original_value_url]', $pageValues->url, ['style' => 'display:none']) }}
 					{{ Form::text('page['. $index .'][url]', $pageValues->url, ['class' => 'form-control', 'data-input-type' => 'url', 'data-update-row' => $index, 'required']) }}
-				</td>
-				<td>
-					{{-- Store id and original value for each row - to be processed as an array in the backend. --}}
-					{{ Form::text('page['. $index .'][original_value_duration]', $pageValues->duration, ['style' => 'display:none']) }}
-					{{ Form::text('page['. $index .'][duration]', $pageValues->duration, ['class' => 'form-control', 'id' => 'duration', 'required']) }}
 				</td>
 				<td>
 					@if (!empty($pageValues->image_path))		
@@ -120,7 +108,7 @@
 	<table>
 		<tbody>
 			<tr>
-				<td colspan="6" class="text-right">
+				<td colspan="5" class="text-right">
 					<input type="reset" class="btn btn-secondary" id="form-cancel" value="Cancel">
 					{!! Form::submit('Update', ['class' => 'btn btn-primary']) !!}
 				</td>

@@ -16,9 +16,8 @@ class CreatePagesTable extends Migration
         Schema::create('pages', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('url');
+            $table->string('url')->nullable();
             $table->tinyInteger('status')->default(1);
-            $table->integer('duration')->default(30);
             $table->string('image_path')->nullable();
             $table->smallInteger('rank')->default(0);
             $table->timestamps();
