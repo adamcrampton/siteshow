@@ -31,7 +31,7 @@ class UserController extends ManagePagesController
         }
 
         // Get all users.
-        $allUsers = User::paginate('2');
+        $allUsers = User::paginate(2);
 
         // Get user permission list.
         $allPermissions = UserPermission::all();
@@ -41,7 +41,7 @@ class UserController extends ManagePagesController
             'modelName' => 'User',
             'pageTitle' => 'Manage users',
             'introText' => 'Add or update users here.',
-            'user' => $allUsers->sortBy('user_permissions_fk')->sortBy('name'),
+            'user' => $allUsers,
             'userPermissions' => $allPermissions,
             'userCount' => $allUsers->where('status', 1)->count(),
             'option' => $this->globalOptions,

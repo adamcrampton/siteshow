@@ -55,9 +55,6 @@
 			      {!! Form::submit('Submit', ['class' => 'btn btn-primary']) !!}
 			  </div>
 			</div>
-			<div class="col-lg-12">
-				{{ $allUsers->links() }}
-			</div>
 		{!! Form::close() !!}
 		</div>
 	</div>
@@ -144,6 +141,9 @@
 		</tbody>
 	</table>
 	{!! Form::close() !!}
+</div>
+<div class="col-lg-12 mt-3">
+	{{ $user->links() }}
 </div>
 
 @endsection
