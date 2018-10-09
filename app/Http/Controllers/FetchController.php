@@ -74,6 +74,11 @@ class FetchController extends Controller
         $jsonData['filesUpdated'] = $this->savedFiles;
         $jsonData['totalUpdates'] = $this->processedPageData;
 
+        // If email notifications are switched on, create an email and send it to the email address in the config.
+        if ($this->globalConfig['global_email_results']) {
+            
+        }
+
         return $jsonData;
     }
 
