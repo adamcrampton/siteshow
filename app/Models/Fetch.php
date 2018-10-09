@@ -28,6 +28,7 @@ class Fetch extends Model
             'windowWidth' => $globalConfig['global_fetch_window_width'],
             'windowLength' => $globalConfig['global_fetch_window_height'],
             'fetchDelay' => $globalConfig['global_fetch_delay'],
+            'fetchTimeout' => $globalConfig['global_fetch_timeout'],
             'dismissDialogues' => $globalConfig['dismiss_dialogues'],
             'waitUntilNetworkIdle' => $globalConfig['wait_until_network_idle'],
             'error' => [],
@@ -72,6 +73,9 @@ class Fetch extends Model
             // Set user agent.
             $browserShot->userAgent($loopFunctionVariables['userAgent']);
             
+            // Set timeout.
+            $browserShot->timeout($loopFunctionVariables['fetchTimeout']);
+
             // Certain options only set if enabled.
             if ($loopFunctionVariables['dismissDialogues']) {
                 $browserShot->dismissDialogs();

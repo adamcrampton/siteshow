@@ -20,7 +20,7 @@
 					<td>{{ $logValues->finished }}</td>
 					<td>{{ $logValues->duration }}</td>
 					<td>{{ $logValues->user_agent_used }}</td>
-					<td>{{ $logValues->output }}</td>
+					<td>{!! $logValues->output !!}</td>
 				</tr>
 			@endforeach
 		</tbody>

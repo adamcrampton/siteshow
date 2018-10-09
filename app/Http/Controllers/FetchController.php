@@ -74,7 +74,7 @@ class FetchController extends Controller
         $jsonData['filesUpdated'] = $this->savedFiles;
         $jsonData['totalUpdates'] = $this->processedPageData;
 
-        return json_encode($jsonData);
+        return $jsonData;
     }
 
     /**

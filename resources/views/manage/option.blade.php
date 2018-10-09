@@ -28,6 +28,12 @@
 					</div>
 				</div>
 				<div class="form-group row required">
+					<label class="col-lg-3 col-form-label form-control-label">Fetch Timeout</label>
+					<div class="col-lg-9">
+					{{ Form::text('global_fetch_timeout', $option['global_fetch_timeout'], ['class' => 'form-control', 'id' => 'global_fetch_timeout', 'required']) }}
+					</div>
+				</div>
+				<div class="form-group row required">
 					<label class="col-lg-3 col-form-label form-control-label">Page List Limit</label>
 					<div class="col-lg-9">
 					{{ Form::text('global_page_list_limit', $option['global_page_list_limit'], ['class' => 'form-control', 'id' => 'global_page_list_limit', 'required']) }}

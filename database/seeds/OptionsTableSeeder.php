@@ -78,6 +78,13 @@ class OptionsTableSeeder extends Seeder
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ],
             [
+                'option_nice_name' => 'Fetch Timeout',
+                'option_name' => 'global_fetch_timeout',
+                'option_value' => 100000,
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+            ],
+            [
                 'option_nice_name' => 'User Agent',
                 'option_name' => 'user_agent',
                 'option_value' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36',
