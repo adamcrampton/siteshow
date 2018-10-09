@@ -10,7 +10,23 @@
 			{!! Form::open(['action' => ['OptionController@batchUpdate'], 'class' => 'form']) !!}
 			{{ method_field('PATCH') }}
 				<div class="form-group row required">
-					<label class="col-lg-3 col-form-label form-control-label">Delay</label>
+					<label class="col-lg-3 col-form-label form-control-label">Email Fetch Results?</label>
+					<div class="col-lg-9">
+						<select class="form-control" name="global_email_results" id="global_email_results" required>
+							<option value required>Please select one:</option>
+							<option value="1" {{ $option['global_email_results'] == 1 ? 'selected' : '' }}>Yes</option>
+							<option value="0" {{ $option['global_email_results'] == 0 ? 'selected' : '' }}>No</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group row required">
+					<label class="col-lg-3 col-form-label form-control-label">Notifications Email Address</label>
+					<div class="col-lg-9">
+					{{ Form::text('global_email', $option['global_email'], ['class' => 'form-control', 'id' => 'global_email', 'required']) }}
+					</div>
+				</div>
+				<div class="form-group row required">
+					<label class="col-lg-3 col-form-label form-control-label">Display Delay</label>
 					<div class="col-lg-9">
 					{{ Form::text('global_delay', $option['global_delay'], ['class' => 'form-control', 'id' => 'global_delay', 'required']) }}
 					</div>

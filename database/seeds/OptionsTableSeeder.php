@@ -15,6 +15,20 @@ class OptionsTableSeeder extends Seeder
         // Add default config.
         DB::table('options')->insert([
             [
+                'option_nice_name' => 'Email Results',
+                'option_name' => 'global_email_results',
+                'option_value' => 0,
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+            ],
+            [
+                'option_nice_name' => 'Notifications Email Address',
+                'option_name' => 'global_email',
+                'option_value' => 'admin@site.com',
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+            ],
+            [
                 'option_nice_name' => 'Delay',
                 'option_name' => 'global_delay',
             	'option_value' => 30,
@@ -34,7 +48,7 @@ class OptionsTableSeeder extends Seeder
             	'option_value' => 50,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-            ],
+            ],    
             [
                 'option_nice_name' => 'Overwrite Files',
                 'option_name' => 'global_overwrite_files',
