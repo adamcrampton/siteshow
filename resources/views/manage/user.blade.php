@@ -55,6 +55,9 @@
 			      {!! Form::submit('Submit', ['class' => 'btn btn-primary']) !!}
 			  </div>
 			</div>
+			<div class="col-lg-12">
+				{{ $allUsers->links() }}
+			</div>
 		{!! Form::close() !!}
 		</div>
 	</div>
