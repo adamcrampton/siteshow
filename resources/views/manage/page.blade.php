@@ -65,7 +65,7 @@
 			</tr>
 		</thead>
 		<tbody>
-		@foreach($page as $index => $pageValues)
+		@foreach($page->take($loopLimit) as $index => $pageValues)
 			{{-- Hide row if item is inactive --}}
 			<tr {!! $pageValues->status == 0 ? 'class="collapse multi-collapse inactive-row"' : '' !!}>
 				<td>
@@ -102,6 +102,14 @@
 					</select>
 				</td>
 			</tr>
+			{{-- If loop limit is reached in this iteration,, and there are more records, offer to load more. --}}
+			@if($index + 1 === $loopLimit)
+			<tr>
+				<td colspan="2"></td>
+				<td><button class="btn btn-primary">Load more?</button></td>
+				<td colspan="2"></td>
+			</tr>
+			@endif
 		@endforeach
 		</tbody>
 	</table>
