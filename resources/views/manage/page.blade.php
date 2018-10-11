@@ -65,49 +65,53 @@
 			</tr>
 		</thead>
 		<tbody>
-		@foreach($page->take($loopLimit) as $index => $pageValues)
-			{{-- Hide row if item is inactive --}}
-			<tr {!! $pageValues->status == 0 ? 'class="collapse multi-collapse inactive-row"' : '' !!}>
-				<td>
-					{{-- Store id and original value for each row - to be processed as an array in the backend. --}}
-					{{ Form::text('page['. $index .'][id]', $pageValues->id, ['style' => 'display:none']) }}
-					{{ Form::text('page['. $index .'][original_value_name]', $pageValues->name, ['style' => 'display:none']) }}
-					{{ Form::text('page['. $index .'][name]', $pageValues->name, ['class' => 'form-control name_field', 'data-input-type' => 'name', 'data-update-row' => $index, 'required']) }}
-				</td>
-				<td>
-					{{-- Store id and original value for each row - to be processed as an array in the backend. --}}
-					{{ Form::text('page['. $index .'][original_value_url]', $pageValues->url, ['style' => 'display:none']) }}
-					{{ Form::text('page['. $index .'][url]', $pageValues->url, ['class' => 'form-control', 'data-input-type' => 'url', 'data-update-row' => $index, 'required']) }}
-				</td>
-				<td>
-					@if (!empty($pageValues->image_path))		
-					<a class="venobox" href="{{ $option['default_save_path'] }}{{ $pageValues->image_path }}">Link</a>
-					@else
-					No image
-					@endif
-				</td>
-				<td>								
-					{{-- Store id and original value for each row - to be processed as an array in the backend. --}}
-					{{ Form::text('page['. $index .'][original_value_rank]', $pageValues->rank, ['style' => 'display:none', 'class' => 'original_rank_field']) }}
-					{{ Form::text('page['. $index .'][rank]', $pageValues->rank, ['style' => 'display:none', 'class' => 'rank_field']) }}
-					{{-- Show 'Inactive' if disabled --}}
-					{{ $pageValues->rank ? $pageValues->rank : 'Inactive' }}
-				</td>
-				<td>
-					{{-- Store id and original value for each row - to be processed as an array in the backend. --}}
-					{{ Form::text('page['. $index .'][original_value_status]', $pageValues->status, ['style' => 'display:none']) }}
-					<select class="form-control" name="page[{{$index}}][status]" id="status" required>
-						<option value="1" {{ $pageValues->status == 1 ? 'selected' : '' }}>Active</option>
-						<option value="0" {{ $pageValues->status == 0 ? 'selected' : '' }}>Inactive</option>
-					</select>
-				</td>
-			</tr>
-			{{-- If loop limit is reached in this iteration,, and there are more records, offer to load more. --}}
-			@if($index + 1 === $loopLimit)
-			<tr>
-				<td colspan="5" class="text-center"><button class="btn btn-success">Load more?</button></td>
-			</tr>
-			@endif
+		@foreach($page->chunk($loopLimit) as $pageGroup)
+			@foreach($pageGroup as $index => $pageValues)
+				{{-- Hide row if item is inactive --}}
+				<tr {!! $pageValues->status == 0 ? 'class="collapse multi-collapse inactive-row"' : '' !!}>
+					<td>
+						{{-- Store id and original value for each row - to be processed as an array in the backend. --}}
+						{{ Form::text('page['. $index .'][id]', $pageValues->id, ['style' => 'display:none']) }}
+						{{ Form::text('page['. $index .'][original_value_name]', $pageValues->name, ['style' => 'display:none']) }}
+						{{ Form::text('page['. $index .'][name]', $pageValues->name, ['class' => 'form-control name_field', 'data-input-type' => 'name', 'data-update-row' => $index, 'required']) }}
+					</td>
+					<td>
+						{{-- Store id and original value for each row - to be processed as an array in the backend. --}}
+						{{ Form::text('page['. $index .'][original_value_url]', $pageValues->url, ['style' => 'display:none']) }}
+						{{ Form::text('page['. $index .'][url]', $pageValues->url, ['class' => 'form-control', 'data-input-type' => 'url', 'data-update-row' => $index, 'required']) }}
+					</td>
+					<td>
+						@if (!empty($pageValues->image_path))		
+						<a class="venobox" href="{{ $option['default_save_path'] }}{{ $pageValues->image_path }}">Link</a>
+						@else
+						No image
+						@endif
+					</td>
+					<td>								
+						{{-- Store id and original value for each row - to be processed as an array in the backend. --}}
+						{{ Form::text('page['. $index .'][original_value_rank]', $pageValues->rank, ['style' => 'display:none', 'class' => 'original_rank_field']) }}
+						{{ Form::text('page['. $index .'][rank]', $pageValues->rank, ['style' => 'display:none', 'class' => 'rank_field']) }}
+						{{-- Show 'Inactive' if disabled --}}
+						{{ $pageValues->rank ? $pageValues->rank : 'Inactive' }}
+					</td>
+					<td>
+						{{-- Store id and original value for each row - to be processed as an array in the backend. --}}
+						{{ Form::text('page['. $index .'][original_value_status]', $pageValues->status, ['style' => 'display:none']) }}
+						<select class="form-control" name="page[{{$index}}][status]" id="status" required>
+							<option value="1" {{ $pageValues->status == 1 ? 'selected' : '' }}>Active</option>
+							<option value="0" {{ $pageValues->status == 0 ? 'selected' : '' }}>Inactive</option>
+						</select>
+					</td>
+				</tr>
+				{{-- If loop limit is reached in this iteration, and there are more records, offer to load more. --}}
+				@if($index + 1 === $loopLimit)
+					<tr>
+						<td colspan="5" class="text-center"><button class="btn btn-success">Load more?</button></td>
+					</tr>
+					@break
+				@endif
+				
+			@endforeach
 		@endforeach
 		</tbody>
 	</table>

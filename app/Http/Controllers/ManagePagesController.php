@@ -18,6 +18,7 @@ class ManagePagesController extends Controller
     protected $updateValidationOptions;
     protected $nameColumn;
     protected $fieldsToCompare;
+    protected $loopLimit;
     protected $recordStatusChanged = false;
 
     public function __construct($controllerType)
@@ -41,6 +42,9 @@ class ManagePagesController extends Controller
 
         // Determine fields to compare when updating.
         $this->fieldsToCompare = $this->fieldsToCompare($this->controllerType);
+
+        // Set loop limit.
+        $this->loopLimit = $this->setLoopLimit($this->controllerType);
 
         // Set column name for the model used by the controller.
         $this->nameColumn = $this->setNameColumn($this->controllerType);
@@ -122,6 +126,19 @@ class ManagePagesController extends Controller
 
             default:
                 return 'name';
+                break;
+        }
+    }
+
+    // For pages with "Load more" pagination instead of links, set how many records to show on page for each batch.
+    protected function setLoopLimit($controllerType) {
+        switch ($controllerType) {
+            case 'page':
+                return 5;
+                break;
+            
+            default:
+                return 5;
                 break;
         }
     }
