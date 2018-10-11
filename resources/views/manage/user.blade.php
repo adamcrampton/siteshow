@@ -130,7 +130,7 @@
 		@endforeach
 		</tbody>
 	</table>
-	<table>
+	<table class="table">
 		<tbody>
 			<tr>
 				<td colspan="5" class="text-right">

@@ -105,18 +105,16 @@
 			{{-- If loop limit is reached in this iteration,, and there are more records, offer to load more. --}}
 			@if($index + 1 === $loopLimit)
 			<tr>
-				<td colspan="2"></td>
-				<td><button class="btn btn-primary">Load more?</button></td>
-				<td colspan="2"></td>
+				<td colspan="5" class="text-center"><button class="btn btn-success">Load more?</button></td>
 			</tr>
 			@endif
 		@endforeach
 		</tbody>
 	</table>
-	<table>
+	<table class="table">
 		<tbody>
 			<tr>
-				<td colspan="5" class="text-right">
+				<td class="text-right">
 					<input type="reset" class="btn btn-secondary" id="form-cancel" value="Cancel">
 					{!! Form::submit('Update', ['class' => 'btn btn-primary']) !!}
 				</td>
