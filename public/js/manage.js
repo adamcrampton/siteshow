@@ -98,6 +98,25 @@ $(document).ready(function () {
 		initSortable($pageSortTable);
 	}
 
+	// Set up listener for pages that have "Load more" button.
+	var allowedModelsLoadMore = ['page'];
+
+	if (modelName && $.inArray(modelName, allowedModelsSortable) >= 0) {
+		$('.load-more').on('click', function (e) {
+			// Prevent any default button stuff.
+			e.preventDefault();
+
+			// Get data attribute of table to un-hide.
+			var $iteration = $(this).attr('data-load-more');
+
+			// Unhide the correct table.
+			$('table[data-iteration=' + $iteration + ']').removeClass('d-none');
+
+			// Remove the button from the DOM.
+			$(this).remove();
+		});
+	}
+
 	// Set up listener for user first and last name fields, and auto-update the display name field on change.
 	nameFieldListener();
 });

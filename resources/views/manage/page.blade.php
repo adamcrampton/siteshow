@@ -110,6 +110,13 @@
 				@endforeach
 			</tbody>
 		</table>
+		{{-- If it's not the last iteration, and there are more items, offer to load more rows --}}
+		@if(! $loop->last)
+			<div class="text-center mb-3">
+				<button class="btn btn-success load-more" data-load-more="{{ $loop->iteration + 1 }}">Load More</button>
+			</div>
+		@endif
+
 	@endforeach
 	<table class="table">
 		<tbody>
