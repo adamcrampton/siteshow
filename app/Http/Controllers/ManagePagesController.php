@@ -134,7 +134,7 @@ class ManagePagesController extends Controller
     protected function setLoopLimit($controllerType) {
         switch ($controllerType) {
             case 'page':
-                return 1;
+                return 5;
                 break;
             
             default:
