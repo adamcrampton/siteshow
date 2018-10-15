@@ -23,14 +23,14 @@ $(document).ready(function() {
 	// Set up listener for pages that have "Load more" button.
 	var allowedModelsLoadMore = ['page'];
 
-	if (modelName && $.inArray(modelName, allowedModelsSortable) >= 0) {
+	if (modelName && $.inArray(modelName, allowedModelsLoadMore) >= 0) {
 		loadMoreListener();
 	}
 
 	// Set up listener for user first and last name fields, and auto-update the display name field on change.
 	var allowedModelsNameFieldUpdater = ['user'];
 
-	if (modelName && $.inArray(modelName, allowedModelsSortable) >= 0) {
+	if (modelName && $.inArray(modelName, allowedModelsNameFieldUpdater) >= 0) {
 		nameFieldListener();
 	}
 });
