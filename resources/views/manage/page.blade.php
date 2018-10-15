@@ -48,13 +48,18 @@
 	<h2 class="float-md-left">Update Pages</h2>
 	<div class="float-md-right">
 		{{-- Only show visibility toggle if inactive records are on page --}}
-		@if ($page->contains('status', 0))
+		@if ($allPages->contains('status', 0))
 		<button id="show-toggle" class="btn btn-info btn-right" type="button" data-toggle="collapse" data-target=".inactive-row" aria-expanded="false" aria-controls="inactive-row"></button>
 		@endif
 	</div>
 	{!! Form::open(['action' => ['PageController@batchUpdate'], 'class' => 'form']) !!}
 	{{ method_field('PATCH') }}
-	@foreach($page->chunk($loopLimit) as $iteration => $pageGroup)
+	{{-- Separate table for inactive records - visibility can be toggled. --}}
+	@foreach($inactivePages as $iteration => $pageGroup)	
+	
+	@endforeach
+
+	@foreach($activePages->chunk($loopLimit) as $iteration => $pageGroup)
 		{{-- Hide table if not in first loop iteration. Also add data attribute so we can toggle visibility of additional loads. --}}
 		<table class="table table-sm table-hover {{ $loop->iteration !== 1 ? 'd-none' : '' }}" id="update-form" data-iteration={{ $loop->iteration }}>
 			{{-- Only show thead in first iteration. --}}
@@ -116,7 +121,6 @@
 				<button class="btn btn-success load-more">Load More</button>
 			</div>
 		@endif
-
 	@endforeach
 	<table class="table">
 		<tbody>
@@ -127,7 +131,7 @@
 				</td>
 			</tr>
 		</tbody>
-	</table>
+	</table>	
 	{!! Form::close() !!}
 </div>
 

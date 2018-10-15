@@ -9,11 +9,21 @@ use App\Models\User;
 class PageController extends ManagePagesController
 {
     private $bounceReason = 'Sorry, you require editor access or higher to manage pages.';
+    private $allPages;
+    private $activePages;
+    private $inactivePages;
+    private $pageCount;
 
-    public function __construct()
+    public function __construct(Page $page)
     {
         // Initialise parent constructor.
         parent::__construct('page');
+
+        // Set up properties required for front end.
+        $this->allPages = Page::all()->sortBy('rank')->values();
+        $this->activePages = $page->where('status', 1)->orderBy('rank')->get();
+        $this->inactivePages = $page->where('status', 0)->orderBy('rank')->get();
+        $this->pageCount = $this->allPages->where('status', 1)->count();
     }
 
     /**
@@ -28,16 +38,15 @@ class PageController extends ManagePagesController
             return redirect()->route('manage.index')->with('warning', $this->bounceReason);
         }
 
-        // Get all pages.
-        $allPages = Page::all()->sortBy('rank');
-
         // Manage Pages front end.
         return view('manage.page', [
             'modelName' => 'Page',
             'pageTitle' => 'Manage Pages',
             'introText' => 'Add or update pages here.',
-            'page' => $allPages->values(),
-            'pageCount' => $allPages->where('status', 1)->count(),
+            'allPages' => $this->allPages,
+            'activePages' => $this->activePages,
+            'inactivePages' => $this->inactivePages,
+            'pageCount' => $this->pageCount,
             'loopLimit' => $this->loopLimit,
             'option' => $this->globalOptions,
             'showAddButton' => true
