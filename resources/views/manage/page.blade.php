@@ -44,6 +44,7 @@
 <div class="col-lg-12">
 	<hr>
 </div>
+
 {{-- Separate table for inactive records - visibility can be toggled. --}}
 <div class="col-lg-12 clearfix collapse table-toggle">
 	<h2>Inactive Pages</h2>

@@ -11,11 +11,21 @@ use Validator;
 class UserController extends ManagePagesController
 {
     private $bounceReason = 'Sorry, you require admin access to manage users.';
+    private $allUsers;
+    private $activeUsers;
+    private $inactiveUsers;
+    private $userCount;
 
-    public function __construct()
+    public function __construct(User $user)
     {
         // Initialise parent constructor.
         parent::__construct('user');
+
+        // Set up properties required for front end.
+        $this->allUsers = User::all()->values();
+        $this->activeUsers = $user->where('status', 1)->paginate(2);
+        $this->inactiveUsers = $user->where('status', 0)->get();
+        $this->userCount = $this->allUsers->where('status', 1)->count();
     }
 
     /**
@@ -30,9 +40,6 @@ class UserController extends ManagePagesController
             return redirect()->route('manage.index')->with('warning', $this->bounceReason);
         }
 
-        // Get all users.
-        $allUsers = User::paginate(2);
-
         // Get user permission list.
         $allPermissions = UserPermission::all();
 
@@ -41,9 +48,11 @@ class UserController extends ManagePagesController
             'modelName' => 'User',
             'pageTitle' => 'Manage users',
             'introText' => 'Add or update users here.',
-            'user' => $allUsers,
+            'allUsers' => $this->allUsers,
+            'activeUsers' => $this->activeUsers,
+            'inactiveUsers' => $this->inactiveUsers,
+            'userCount' => $this->userCount,
             'userPermissions' => $allPermissions,
-            'userCount' => $allUsers->where('status', 1)->count(),
             'option' => $this->globalOptions,
             'showAddButton' => true,
         ]);
