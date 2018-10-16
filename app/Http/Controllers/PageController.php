@@ -12,7 +12,8 @@ class PageController extends ManagePagesController
     private $allPages;
     private $activePages;
     private $inactivePages;
-    private $pageCount;
+    private $activePageCount;
+    private $inactivePageCount;
 
     public function __construct(Page $page)
     {
@@ -23,7 +24,8 @@ class PageController extends ManagePagesController
         $this->allPages = Page::all()->sortBy('rank')->values();
         $this->activePages = $page->where('status', 1)->orderBy('rank')->get();
         $this->inactivePages = $page->where('status', 0)->orderBy('rank')->get();
-        $this->pageCount = $this->allPages->where('status', 1)->count();
+        $this->activePageCount = $this->allPages->where('status', 1)->count();
+        $this->inActivePageCount = $this->allPages->where('status', 0)->count();
     }
 
     /**
@@ -46,7 +48,8 @@ class PageController extends ManagePagesController
             'allPages' => $this->allPages,
             'activePages' => $this->activePages,
             'inactivePages' => $this->inactivePages,
-            'pageCount' => $this->pageCount,
+            'activePageCount' => $this->activePageCount,
+            'inactivePageCount' => $this->inActivePageCount,
             'loopLimit' => $this->loopLimit,
             'option' => $this->globalOptions,
             'showAddButton' => true

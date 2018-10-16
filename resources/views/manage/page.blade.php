@@ -24,7 +24,7 @@
 				<div class="col-lg-9">
 					<select class="form-control" name="rank" id="rank" required>
 			        <option value required>Please select one:</option>
-			        	@for ($i = 1; $i <= $pageCount + 1; $i++)
+			        	@for ($i = 1; $i <= $activePageCount + 1; $i++)
 			        		<option value="{{ $i }}">{{ $i }}</option>
 			        	@endfor
 					</select>	
@@ -44,6 +44,9 @@
 <div class="col-lg-12">
 	<hr>
 </div>
+
+{!! Form::open(['action' => ['PageController@batchUpdate'], 'class' => 'form']) !!}
+{{ method_field('PATCH') }}
 
 {{-- Separate table for inactive records - visibility can be toggled. --}}
 <div class="col-lg-12 clearfix collapse table-toggle">
@@ -106,8 +109,6 @@
 		<button id="show-toggle" class="btn btn-info btn-right" type="button" data-toggle="collapse" data-target=".table-toggle" aria-expanded="false" aria-controls="table-toggle"></button>
 		@endif
 	</div>
-	{!! Form::open(['action' => ['PageController@batchUpdate'], 'class' => 'form']) !!}
-	{{ method_field('PATCH') }}
 </div>
 <div class="col-lg-12 clearfix">
 	{{-- Active records --}}
@@ -128,7 +129,12 @@
 			@endif
 			<tbody>
 				@foreach($pageGroup as $index => $pageValues)
-					{{-- Hide row if item is inactive --}}
+					{{-- If there are inactive records, we need to start the loop with an offset so field names aren't overwritten --}}
+					@if ($allPages->contains('status', 0) && $loop->iteration === 1)
+						@php
+							$index = $inactivePageCount;
+						@endphp
+					@endif
 					<tr>
 						<td>
 							{{-- Store id and original value for each row - to be processed as an array in the backend. --}}
