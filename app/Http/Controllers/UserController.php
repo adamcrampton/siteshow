@@ -14,7 +14,8 @@ class UserController extends ManagePagesController
     private $allUsers;
     private $activeUsers;
     private $inactiveUsers;
-    private $userCount;
+    private $activeUserCount;
+    private $inActiveUserCount;
 
     public function __construct(User $user)
     {
@@ -25,7 +26,8 @@ class UserController extends ManagePagesController
         $this->allUsers = User::all()->values();
         $this->activeUsers = $user->where('status', 1)->paginate(2);
         $this->inactiveUsers = $user->where('status', 0)->get();
-        $this->userCount = $this->allUsers->where('status', 1)->count();
+        $this->activeUserCount = $this->allUsers->where('status', 1)->count();
+        $this->inactiveUserCount = $this->allUsers->where('status', 0)->count();
     }
 
     /**
@@ -51,7 +53,8 @@ class UserController extends ManagePagesController
             'allUsers' => $this->allUsers,
             'activeUsers' => $this->activeUsers,
             'inactiveUsers' => $this->inactiveUsers,
-            'userCount' => $this->userCount,
+            'activeUserCount' => $this->activeUserCount,
+            'inactiveUserCount' => $this->inactiveUserCount,
             'userPermissions' => $allPermissions,
             'option' => $this->globalOptions,
             'showAddButton' => true,

@@ -63,6 +63,9 @@
 	<hr>
 </div>
 
+{!! Form::open(['action' => ['UserController@batchUpdate'], 'class' => 'form']) !!}
+{{ method_field('PATCH') }}
+
 {{-- Separate table for inactive records - visibility can be toggled. --}}
 <div class="col-lg-12 clearfix collapse table-toggle">
 	<h2>Inactive Users</h2>
@@ -123,8 +126,7 @@
 	</table>
 	<hr>
 </div>
-
-<div class="mt-5 col-lg-12 clearfix">
+<div class="col-lg-12 clearfix">
 	<h2 class="float-md-left">Active Users</h2>
 	<div class="float-md-right">
 		{{-- Only show visibility toggle if inactive records are on user --}}
@@ -132,9 +134,8 @@
 		<button id="show-toggle" class="btn btn-info btn-right" type="button" data-toggle="collapse" data-target=".table-toggle" aria-expanded="false" aria-controls="table-toggle"></button>
 		@endif
 	</div>
-	{!! Form::open(['action' => ['UserController@batchUpdate'], 'class' => 'form']) !!}
-	{{ method_field('PATCH') }}
-	<table class="table table-hover" id="update-form">
+	
+	<table class="table table-sm table-hover" id="update-form">
 		<thead>
 			<tr>
 				<th scope="col">First Name</th>
@@ -147,7 +148,12 @@
 		</thead>
 		<tbody>
 		@foreach($activeUsers as $index => $activeUserValues)
-			{{-- Hide row if item is inactive --}}
+			{{-- If there are inactive records, we need to start offset the index so field names aren't overwritten --}}
+			@if ($allUsers->contains('status', 0))
+				@php
+					$index += $inactiveUserCount;
+				@endphp
+			@endif
 			<tr>
 				<td>
 					{{-- Store id and original value for each row - to be processed as an array in the backend. --}}
