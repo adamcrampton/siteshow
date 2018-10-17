@@ -111,10 +111,9 @@
 	</div>
 </div>
 <div class="col-lg-12 clearfix">
+	<table class="table table-sm table-hover" id="update-form">
 	{{-- Active records --}}
-	@foreach($activePages->chunk($loopLimit) as $iteration => $pageGroup)
-		{{-- Hide table if not in first loop iteration. Also add data attribute so we can toggle visibility of additional loads. --}}
-		<table class="table table-sm table-hover {{ $loop->iteration !== 1 ? 'd-none' : '' }}" id="update-form" data-iteration={{ $loop->iteration }}>
+		@foreach($activePages->chunk($loopLimit) as $iteration => $pageGroup)
 			{{-- Only show thead in first iteration. --}}
 			@if ($loop->first)
 			<thead>
@@ -127,12 +126,12 @@
 				</tr>
 			</thead>
 			@endif
-			<tbody>
+			<tbody {{ $loop->iteration !== 1 ? 'class=d-none' : '' }} data-iteration={{ $loop->iteration }}>
 				@foreach($pageGroup as $index => $pageValues)
-					{{-- If there are inactive records, we need to start offset the index so field names aren't overwritten --}}
-					@if ($allPages->contains('status', 0))
+					{{-- If there are inactive records, we need to start the loop with an offset so field names aren't overwritten --}}
+					@if ($allPages->contains('status', 0) && $loop->iteration === 1)
 						@php
-							$index += $inactivePageCount;
+							$index = $inactivePageCount;
 						@endphp
 					@endif
 					<tr>
@@ -172,14 +171,16 @@
 					</tr>		
 				@endforeach
 			</tbody>
-		</table>
+			
 		{{-- If it's not the last iteration, and there are more items, offer to load more rows --}}
 		@if(! $loop->last)
 			<div class="text-center mb-3 load-more-container {{ $loop->iteration !== 1 ? 'd-none' : '' }}" data-load-more="{{ $loop->iteration }}">
 				<button class="btn btn-success load-more">Load More</button>
 			</div>
-		@endif
+		@endif	
 	@endforeach
+	</table>
+	
 	<table class="table">
 		<tbody>
 			<tr>

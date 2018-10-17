@@ -101,8 +101,8 @@ $('.load-more').on('click', function(e) {
 		var closestContainerValue = $(this).closest('.load-more-container').attr('data-load-more');
 		var nextIteration = parseInt(closestContainerValue) + 1;
 
-		// Unhide the correct table & button.
-		$('table[data-iteration=' + nextIteration + ']').removeClass('d-none');
+		// Unhide the correct tbody & button.
+		$('tbody[data-iteration=' + nextIteration + ']').removeClass('d-none');
 		$('div[data-load-more=' + nextIteration + ']').removeClass('d-none')
 
 		// Remove the button from the DOM, make the next button visible.
