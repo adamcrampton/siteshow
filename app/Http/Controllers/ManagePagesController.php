@@ -201,8 +201,6 @@ class ManagePagesController extends Controller
             // Make a validator for each row.
             $validator = Validator::make($requestRow->all(), $this->updateValidationOptions);
 
-            var_dump($validator->fails());
-
             // Boot immediately with error if failed.
             if ($validator->fails()) {
                 return $validator;

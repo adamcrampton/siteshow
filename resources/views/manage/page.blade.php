@@ -129,10 +129,10 @@
 			@endif
 			<tbody>
 				@foreach($pageGroup as $index => $pageValues)
-					{{-- If there are inactive records, we need to start the loop with an offset so field names aren't overwritten --}}
-					@if ($allPages->contains('status', 0) && $loop->iteration === 1)
+					{{-- If there are inactive records, we need to start offset the index so field names aren't overwritten --}}
+					@if ($allPages->contains('status', 0))
 						@php
-							$index = $inactivePageCount;
+							$index += $inactivePageCount;
 						@endphp
 					@endif
 					<tr>
