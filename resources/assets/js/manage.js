@@ -103,7 +103,7 @@ $('.load-more').on('click', function(e) {
 
 		// Unhide the correct tbody & button.
 		$('tbody[data-iteration=' + nextIteration + ']').removeClass('d-none');
-		$('div[data-load-more=' + nextIteration + ']').removeClass('d-none')
+		$('tr[data-load-more=' + nextIteration + ']').removeClass('d-none')
 
 		// Remove the button from the DOM, make the next button visible.
 		$(this).remove();	

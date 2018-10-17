@@ -174,13 +174,14 @@
 			
 		{{-- If it's not the last iteration, and there are more items, offer to load more rows --}}
 		@if(! $loop->last)
-			<div class="text-center mb-3 load-more-container {{ $loop->iteration !== 1 ? 'd-none' : '' }}" data-load-more="{{ $loop->iteration }}">
+		<tr data-load-more="{{ $loop->iteration }}" class="load-more-container text-center pt-4{{ $loop->iteration !== 1 ? 'd-none' : '' }}">
+			<td class="" colspan="5">
 				<button class="btn btn-success load-more">Load More</button>
-			</div>
+			</td>
+		</tr>
 		@endif	
 	@endforeach
 	</table>
-	
 	<table class="table">
 		<tbody>
 			<tr>
