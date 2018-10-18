@@ -111,70 +111,69 @@
 <div class="col-lg-12 clearfix">
 	<table class="table table-sm table-hover" id="update-form">
 	{{-- Active records --}}
-		@foreach($activePages->chunk($loopLimit) as $iteration => $pageGroup)
-			{{-- Only show thead in first iteration. --}}
-			@if ($loop->first)
-			<thead>
-				<tr>
-					<th scope="col">Page Name</th>
-					<th scope="col">Page URL</th>
-					<th scope="col">Image Link</th>
-					<th scope="col">Rank</th>
-					<th scope="col">Status</th>
-				</tr>
-			</thead>
+	@foreach($activePages->chunk($loopLimit) as $iteration => $pageGroup)
+		{{-- Only show thead in first iteration. --}}
+		@if ($loop->first)
+		<thead>
+			<tr>
+				<th scope="col">Page Name</th>
+				<th scope="col">Page URL</th>
+				<th scope="col">Image Link</th>
+				<th scope="col">Rank</th>
+				<th scope="col">Status</th>
+			</tr>
+		</thead>
+		@endif
+		<tbody {{ $loop->iteration !== 1 ? 'class=d-none' : '' }} data-iteration={{ $loop->iteration }}>
+		@foreach($pageGroup as $index => $pageValues)
+			{{-- If there are inactive records, we need to start the loop with an offset so field names aren't overwritten --}}
+			@if ($allPages->contains('status', 0) && $loop->iteration === 1)
+				@php
+					$index = $inactivePageCount;
+				@endphp
 			@endif
-			<tbody {{ $loop->iteration !== 1 ? 'class=d-none' : '' }} data-iteration={{ $loop->iteration }}>
-				@foreach($pageGroup as $index => $pageValues)
-					{{-- If there are inactive records, we need to start the loop with an offset so field names aren't overwritten --}}
-					@if ($allPages->contains('status', 0) && $loop->iteration === 1)
-						@php
-							$index = $inactivePageCount;
-						@endphp
+			<tr>
+				<td>
+					{{-- Store id and original value for each row - to be processed as an array in the backend. --}}
+					{{ Form::text('page['. $index .'][id]', $pageValues->id, ['class' => 'd-none']) }}
+					{{ Form::text('page['. $index .'][original_value_name]', $pageValues->name, ['class' => 'd-none']) }}
+					{{ Form::text('page['. $index .'][name]', $pageValues->name, ['class' => 'form-control name_field', 'data-input-type' => 'name', 'data-update-row' => $index, 'required']) }}
+				</td>
+				<td>
+					{{-- Store original value for each row - to be processed as an array in the backend. --}}
+					{{ Form::text('page['. $index .'][original_value_url]', $pageValues->url, ['class' => 'd-none']) }}
+					{{ Form::text('page['. $index .'][url]', $pageValues->url, ['class' => 'form-control', 'data-input-type' => 'url', 'data-update-row' => $index, 'required']) }}
+				</td>
+				<td>
+					@if (!empty($pageValues->image_path))		
+					<a class="venobox" href="{{ $option['default_save_path'] }}{{ $pageValues->image_path }}">Link</a>
+					@else
+					No image
 					@endif
-					<tr>
-						<td>
-							{{-- Store id and original value for each row - to be processed as an array in the backend. --}}
-							{{ Form::text('page['. $index .'][id]', $pageValues->id, ['class' => 'd-none']) }}
-							{{ Form::text('page['. $index .'][original_value_name]', $pageValues->name, ['class' => 'd-none']) }}
-							{{ Form::text('page['. $index .'][name]', $pageValues->name, ['class' => 'form-control name_field', 'data-input-type' => 'name', 'data-update-row' => $index, 'required']) }}
-						</td>
-						<td>
-							{{-- Store original value for each row - to be processed as an array in the backend. --}}
-							{{ Form::text('page['. $index .'][original_value_url]', $pageValues->url, ['class' => 'd-none']) }}
-							{{ Form::text('page['. $index .'][url]', $pageValues->url, ['class' => 'form-control', 'data-input-type' => 'url', 'data-update-row' => $index, 'required']) }}
-						</td>
-						<td>
-							@if (!empty($pageValues->image_path))		
-							<a class="venobox" href="{{ $option['default_save_path'] }}{{ $pageValues->image_path }}">Link</a>
-							@else
-							No image
-							@endif
-						</td>
-						<td>								
-							{{-- Store original value for each row - to be processed as an array in the backend. --}}
-							{{ Form::text('page['. $index .'][original_value_rank]', $pageValues->rank, ['class' => 'original_rank_field d-none']) }}
-							{{ Form::text('page['. $index .'][rank]', $pageValues->rank, ['class' => 'form-control  rank_field']) }}
-						</td>
-						<td>
-							{{-- Store original value for each row - to be processed as an array in the backend. --}}
-							{{ Form::text('page['. $index .'][original_value_status]', $pageValues->status, ['class' => 'd-none']) }}
-							<select class="form-control" name="page[{{$index}}][status]" id="status" required>
-								<option value="1" {{ $pageValues->status == 1 ? 'selected' : '' }}>Active</option>
-								<option value="0" {{ $pageValues->status == 0 ? 'selected' : '' }}>Inactive</option>
-							</select>
-						</td>
-					</tr>		
-				@endforeach
-			</tbody>
-			
+				</td>
+				<td>								
+					{{-- Store original value for each row - to be processed as an array in the backend. --}}
+					{{ Form::text('page['. $index .'][original_value_rank]', $pageValues->rank, ['class' => 'original_rank_field d-none']) }}
+					{{ Form::text('page['. $index .'][rank]', $pageValues->rank, ['class' => 'form-control  rank_field']) }}
+				</td>
+				<td>
+					{{-- Store original value for each row - to be processed as an array in the backend. --}}
+					{{ Form::text('page['. $index .'][original_value_status]', $pageValues->status, ['class' => 'd-none']) }}
+					<select class="form-control" name="page[{{$index}}][status]" id="status" required>
+						<option value="1" {{ $pageValues->status == 1 ? 'selected' : '' }}>Active</option>
+						<option value="0" {{ $pageValues->status == 0 ? 'selected' : '' }}>Inactive</option>
+					</select>
+				</td>
+			</tr>		
+		@endforeach
+	
 		{{-- If it's not the last iteration, and there are more items, offer to load more rows --}}
 		@if(! $loop->last)
-		<tr data-load-more="{{ $loop->iteration }}" class="load-more-container text-center pt-4{{ $loop->iteration !== 1 ? 'd-none' : '' }}">
-			<td class="" colspan="5">
-				<button class="btn btn-success load-more">Load More</button>
-			</td>
-		</tr>
+			<tr data-load-more="{{ $loop->iteration }}" class="load-more-container text-center pt-4{{ $loop->iteration !== 1 ? 'd-none' : '' }}">
+				<td class="" colspan="5">
+					<button class="btn btn-success load-more">Load More</button>
+				</td>
+			</tr>
 		@endif	
 	@endforeach
 	</table>

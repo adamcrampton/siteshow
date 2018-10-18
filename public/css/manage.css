@@ -4,6 +4,9 @@
 .alert-top {
   top: 56px;
 }
+#update-form tbody + tbody {
+  border-top: none;
+}
 #show-toggle[aria-expanded="false"]:before {
   content: "Show Inactive";
 }

@@ -13,6 +13,13 @@
 	top: 56px;
 }
 
+// Multiple tbody elements in batch update tables.
+#update-form {
+	tbody+tbody {
+		border-top: none;
+	}
+} 
+
 // Toggle button text switcher
 #show-toggle[aria-expanded="false"]:before{
     content:"Show Inactive";
