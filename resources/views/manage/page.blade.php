@@ -72,7 +72,7 @@
 
 				{{-- Store original value for each row - to be processed as an array in the backend. --}}
 				{{ Form::text('page['. $index .'][original_value_name]', $inactivePageValues->name, ['class' => 'd-none']) }}
-				{{ Form::text('page['. $index .'][name]', $inactivePageValues->name . ' ' . $index, ['class' => 'form-control name_field', 'data-input-type' => 'name', 'data-update-row' => $index, 'required']) }}
+				{{ Form::text('page['. $index .'][name]', $inactivePageValues->name, ['class' => 'form-control name_field', 'data-input-type' => 'name', 'data-update-row' => $index, 'required']) }}
 			</td>
 			<td>
 				{{-- Store original value for each row - to be processed as an array in the backend. --}}
@@ -126,10 +126,10 @@
 		@endif
 		<tbody {{ $loop->iteration !== 1 ? 'class=d-none' : '' }} data-iteration={{ $loop->iteration }}>
 		@foreach($pageGroup as $index => $pageValues)
-			{{-- If there are inactive records, we need to start the loop with an offset so field names aren't overwritten --}}
-			@if ($allPages->contains('status', 0) && $loop->iteration === 1)
+			{{-- If there are inactive records, we need to use an index offset so field names aren't overwritten --}}
+			@if ($allPages->contains('status', 0))
 				@php
-					$index = $inactivePageCount;
+					$index += $inactivePageCount;
 				@endphp
 			@endif
 			<tr>
@@ -137,7 +137,7 @@
 					{{-- Store id and original value for each row - to be processed as an array in the backend. --}}
 					{{ Form::text('page['. $index .'][id]', $pageValues->id,  ['class' => 'd-none']) }}
 					{{ Form::text('page['. $index .'][original_value_name]', $pageValues->name, ['class' => 'd-none']) }}
-					{{ Form::text('page['. $index .'][name]', $pageValues->name . ' ' . $index, ['class' => 'form-control name_field', 'data-input-type' => 'name', 'data-update-row' => $index, 'required']) }}
+					{{ Form::text('page['. $index .'][name]', $pageValues->name, ['class' => 'form-control name_field', 'data-input-type' => 'name', 'data-update-row' => $index, 'required']) }}
 				</td>
 				<td>
 					{{-- Store original value for each row - to be processed as an array in the backend. --}}
