@@ -84,31 +84,30 @@
 		<tr>
 			<td>
 				{{-- Store id for each row. --}}
-				{{ Form::text('user['. $index .'][id]', $inactiveUserValues->id, ['class => d-none']) }}
+				{{ Form::text('user['. $index .'][id]', $inactiveUserValues->id, ['class' => 'd-none']) }}
 
 				{{-- Store original value for each row - to be processed as an array in the backend. --}}
-				{{ Form::text('user['. $index .'][original_value_first_name]', $inactiveUserValues->first_name, ['class => d-none']) }}
+				{{ Form::text('user['. $index .'][original_value_first_name]', $inactiveUserValues->first_name, ['class' => 'd-none']) }}
 				{{ Form::text('user['. $index .'][first_name]', $inactiveUserValues->first_name, ['class' => 'form-control first_name_field', 'data-input-type' => 'first_name', 'data-update-row' => $index, 'required']) }}
-			</td>
 			</td>
 			<td>
 				{{-- Store original value for each row - to be processed as an array in the backend. --}}
-				{{ Form::text('user['. $index .'][original_value_last_name]', $inactiveUserValues->last_name, ['class => d-none']) }}
+				{{ Form::text('user['. $index .'][original_value_last_name]', $inactiveUserValues->last_name, ['class' => 'd-none']) }}
 				{{ Form::text('user['. $index .'][last_name]', $inactiveUserValues->last_name, ['class' => 'form-control last_name_field', 'data-input-type' => 'last_name', 'data-update-row' => $index, 'required']) }}
 			</td>
 			<td>
 				{{-- Store original value for each row - to be processed as an array in the backend. --}}
-				{{ Form::text('user['. $index .'][original_value_name]', $inactiveUserValues->name, ['class => d-none']) }}
+				{{ Form::text('user['. $index .'][original_value_name]', $inactiveUserValues->name, ['class' => 'd-none']) }}
 				{{ Form::text('user['. $index .'][name]', $inactiveUserValues->name, ['class' => 'form-control name_field', 'data-input-type' => 'name', 'data-update-row' => $index, 'required']) }}
 			</td>
 			<td>
 				{{-- Store original value for each row - to be processed as an array in the backend. --}}
-				{{ Form::text('user['. $index .'][original_value_email]', $inactiveUserValues->email, ['class => d-none']) }}
+				{{ Form::text('user['. $index .'][original_value_email]', $inactiveUserValues->email, ['class' => 'd-none']) }}
 				{{ Form::text('user['. $index .'][email]', $inactiveUserValues->email, ['class' => 'form-control email_field', 'data-input-type' => 'email', 'data-update-row' => $index, 'required']) }}
 			</td>
 			<td>
 				{{-- Store original value for each row - to be processed as an array in the backend. --}}
-				{{ Form::text('user['. $index .'][original_value_user_permission_level]', $inactiveUserValues->user_permissions_fk, ['class => d-none']) }}
+				{{ Form::text('user['. $index .'][original_value_user_permission_level]', $inactiveUserValues->user_permissions_fk, ['class' => 'd-none']) }}
 				<select class="form-control user_permission_level_field" name="user[{{$index}}][user_permission_level]" required>
 					@foreach($userPermissions as $userPermission)
 						<option value="{{ $userPermission->id }}" {{ $inactiveUserValues->user_permissions_fk == $userPermission->id ? 'selected' : '' }}>{{ $userPermission->permission }}</option>
@@ -117,7 +116,7 @@
 			</td>
 			<td>
 				{{-- Store original value for each row - to be processed as an array in the backend. --}}
-				{{ Form::text('user['. $index .'][original_value_status]', $inactiveUserValues->status, ['class => d-none']) }}
+				{{ Form::text('user['. $index .'][original_value_status]', $inactiveUserValues->status, ['class' => 'd-none']) }}
 				<select class="form-control status_field" name="user[{{$index}}][status]" required>
 					<option value="1" {{ $inactiveUserValues->status == 1 ? 'selected' : '' }}>Active</option>
 					<option value="0" {{ $inactiveUserValues->status == 0 ? 'selected' : '' }}>Inactive</option>
