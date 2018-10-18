@@ -63,7 +63,7 @@
 		@foreach($inactivePages as $index => $inactivePageValues)	
 		<tr>
 			<td>
-				{{-- Store id and original value for each row - to be processed as an array in the backend. --}}
+				{{-- Store id each row. --}}
 				{{ Form::text('page['. $index .'][id]', $inactivePageValues->id, ['class' => 'd-none']) }}
 
 				{{-- Don't display rank, but pass the value in anyway, as it's required for validation. --}}
@@ -134,8 +134,10 @@
 			@endif
 			<tr>
 				<td>
-					{{-- Store id and original value for each row - to be processed as an array in the backend. --}}
+					{{-- Store id for each row. --}}
 					{{ Form::text('page['. $index .'][id]', $pageValues->id,  ['class' => 'd-none']) }}
+
+					{{-- Store original value for each row - to be processed as an array in the backend. --}}
 					{{ Form::text('page['. $index .'][original_value_name]', $pageValues->name, ['class' => 'd-none']) }}
 					{{ Form::text('page['. $index .'][name]', $pageValues->name, ['class' => 'form-control name_field', 'data-input-type' => 'name', 'data-update-row' => $index, 'required']) }}
 				</td>
