@@ -101,24 +101,16 @@ $(document).ready(function () {
 	// Set up listener for pages that have "Load more" button.
 	var allowedModelsLoadMore = ['page'];
 
-	if (modelName && $.inArray(modelName, allowedModelsSortable) >= 0) {
-		$('.load-more').on('click', function (e) {
-			// Prevent any default button stuff.
-			e.preventDefault();
-
-			// Get data attribute of table to un-hide.
-			var $iteration = $(this).attr('data-load-more');
-
-			// Unhide the correct table.
-			$('table[data-iteration=' + $iteration + ']').removeClass('d-none');
-
-			// Remove the button from the DOM.
-			$(this).remove();
-		});
+	if (modelName && $.inArray(modelName, allowedModelsLoadMore) >= 0) {
+		loadMoreListener();
 	}
 
 	// Set up listener for user first and last name fields, and auto-update the display name field on change.
-	nameFieldListener();
+	var allowedModelsNameFieldUpdater = ['user'];
+
+	if (modelName && $.inArray(modelName, allowedModelsNameFieldUpdater) >= 0) {
+		nameFieldListener();
+	}
 });
 
 function initVenobox() {
@@ -175,6 +167,24 @@ function nameFieldListener() {
 
 		// Update display name field on this row.		
 		$row.find('.name_field').val(displayName);
+	});
+}
+
+function loadMoreListener() {
+	$('.load-more').on('click', function (e) {
+		// Prevent any default button stuff.
+		e.preventDefault();
+
+		// Set iteration value for visiblity toggling.
+		var closestContainerValue = $(this).closest('.load-more-container').attr('data-load-more');
+		var nextIteration = parseInt(closestContainerValue) + 1;
+
+		// Unhide the correct tbody & button.
+		$('tbody[data-iteration=' + nextIteration + ']').removeClass('d-none');
+		$('tr[data-load-more=' + nextIteration + ']').removeClass('d-none');
+
+		// Remove the button from the DOM, make the next button visible.
+		$(this).remove();
 	});
 }
 
