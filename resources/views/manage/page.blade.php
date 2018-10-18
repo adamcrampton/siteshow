@@ -64,7 +64,7 @@
 		<tr>
 			<td>
 				{{-- Store id and original value for each row - to be processed as an array in the backend. --}}
-				{{ Form::text('page['. $index .'][id]', $inactivePageValues->id) }}
+				{{ Form::text('page['. $index .'][id]', $inactivePageValues->id, ['class' => 'd-none']) }}
 
 				{{-- Don't display rank, but pass the value in anyway, as it's required for validation. --}}
 				{{ Form::text('page['. $index .'][original_value_rank]', $inactivePageValues->rank, ['class' => 'd-none original_rank_field']) }}
@@ -72,7 +72,7 @@
 
 				{{-- Store original value for each row - to be processed as an array in the backend. --}}
 				{{ Form::text('page['. $index .'][original_value_name]', $inactivePageValues->name, ['class' => 'd-none']) }}
-				{{ Form::text('page['. $index .'][name]', $inactivePageValues->name, ['class' => 'form-control name_field', 'data-input-type' => 'name', 'data-update-row' => $index, 'required']) }}
+				{{ Form::text('page['. $index .'][name]', $inactivePageValues->name . ' ' . $index, ['class' => 'form-control name_field', 'data-input-type' => 'name', 'data-update-row' => $index, 'required']) }}
 			</td>
 			<td>
 				{{-- Store original value for each row - to be processed as an array in the backend. --}}
@@ -127,17 +127,17 @@
 		<tbody {{ $loop->iteration !== 1 ? 'class=d-none' : '' }} data-iteration={{ $loop->iteration }}>
 		@foreach($pageGroup as $index => $pageValues)
 			{{-- If there are inactive records, we need to start the loop with an offset so field names aren't overwritten --}}
-			@if ($allPages->contains('status', 0) && $loop->depth > 1 && $loop->iteration === 1)
+			@if ($allPages->contains('status', 0) && $loop->iteration === 1)
 				@php
-					$index += $inactivePageCount;
+					$index = $inactivePageCount;
 				@endphp
 			@endif
 			<tr>
 				<td>
 					{{-- Store id and original value for each row - to be processed as an array in the backend. --}}
-					{{ Form::text('page['. $index .'][id]', $pageValues->id) }}
+					{{ Form::text('page['. $index .'][id]', $pageValues->id,  ['class' => 'd-none']) }}
 					{{ Form::text('page['. $index .'][original_value_name]', $pageValues->name, ['class' => 'd-none']) }}
-					{{ Form::text('page['. $index .'][name]', $pageValues->name, ['class' => 'form-control name_field', 'data-input-type' => 'name', 'data-update-row' => $index, 'required']) }}
+					{{ Form::text('page['. $index .'][name]', $pageValues->name . ' ' . $index, ['class' => 'form-control name_field', 'data-input-type' => 'name', 'data-update-row' => $index, 'required']) }}
 				</td>
 				<td>
 					{{-- Store original value for each row - to be processed as an array in the backend. --}}
