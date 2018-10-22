@@ -41,6 +41,15 @@ class RegisterController extends Controller
     }
 
     /**
+     * Disable user registration.
+     *
+     * @return void
+     */
+    public function showRegistrationForm() {
+        return redirect()->route('login')->with('warning', 'Registration is currently disabled.');
+    }
+
+    /**
      * Get a validator for an incoming registration request.
      *
      * @param  array  $data
