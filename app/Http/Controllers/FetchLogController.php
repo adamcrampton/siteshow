@@ -34,6 +34,29 @@ class FetchLogController extends ManagePagesController
         // Fetch all logs.
         $allLogs = FetchLog::all();
 
+        // Generate readable log format for the front end, then insert into collection.
+        $allLogs->each(function($item) {
+            // Decode log details for this item.
+            $logDetails = json_decode($item->output);
+
+            // Reset $item->output.
+            $item->output = '<ul>';
+
+            // Insert updated values.
+            foreach ($logDetails as $id => $details) {
+                $outputHTML = '<ul>';
+                $outputHTML .= '<li>ID: '. $id .'</li>';
+                $outputHTML .= '<li>Original Filename: '. $details->original .'</li>';
+                $outputHTML .= '<li>Saved Filename: '. $details->saved .'</li>';
+                $outputHTML .= '<li>New file created? '. $details->new ? 'Yes' : 'No' .'</li>';
+                $outputHTML .= '</ul>';
+
+                $item->output .= $outputHTML;
+            }
+            // Close off list.
+            $item->output .= '</ul>';
+        });
+
         // Log view.
         return view('manage.log', [
             'modelName' => 'FetchLog',
