@@ -33,6 +33,18 @@ $(document).ready(function() {
 	if (modelName && $.inArray(modelName, allowedModelsNameFieldUpdater) >= 0) {
 		nameFieldListener();
 	}
+
+	// Listener for view logs modal.
+	$('#viewLog').on('click', function(e) {
+		e.preventDefault();
+
+		// Get modal HTML from nearest DIV with the data attribute.
+		var modalHTML = $(this).closest('.logButtonContainer').attr('data-logValues');
+
+		// Populate modal content with HTML, then show.
+		$('#logModal .modal-body').html(modalHTML);
+		$('#logModal').modal('show');
+	})
 });
 
 function initVenobox() {

@@ -40,16 +40,19 @@ class FetchLogController extends ManagePagesController
             $logDetails = json_decode($item->output);
 
             // Reset $item->output.
-            $item->output = '<ul>';
+            $item->output = '<ul class="list-group">';
 
             // Insert updated values.
             foreach ($logDetails as $id => $details) {
-                $outputHTML = '<ul>';
-                $outputHTML .= '<li>ID: '. $id .'</li>';
-                $outputHTML .= '<li>Original Filename: '. $details->original .'</li>';
-                $outputHTML .= '<li>Saved Filename: '. $details->saved .'</li>';
-                $outputHTML .= '<li>New file created? '. $details->new ? 'Yes' : 'No' .'</li>';
-                $outputHTML .= '</ul>';
+                // Easier to declare this here.
+                $newFileCreated = $details->new ? 'Yes' : 'No';
+
+                $outputHTML = '<li class="list-group-item"><ul class="list-group">';
+                $outputHTML .= '<li class="list-group-item">Item # '. $id .'</li>';
+                $outputHTML .= '<li class="list-group-item">Original Filename: '. $details->original .'</li>';
+                $outputHTML .= '<li class="list-group-item">Saved Filename: '. $details->saved .'</li>';
+                $outputHTML .= '<li class="list-group-item">New file created? '. $newFileCreated . '</li>';
+                $outputHTML .= '</ul></li>';
 
                 $item->output .= $outputHTML;
             }
