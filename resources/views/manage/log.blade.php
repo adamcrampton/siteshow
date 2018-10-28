@@ -21,10 +21,11 @@
 					<td>{{ $logValues->duration }}</td>
 					<td>{{ $logValues->user_agent_used }}</td>
 					<td>
-						<div class="d-none logButtonContainer" data-logValues="{!! $logValues->output !!}"></div>
-						<button type="button" id="viewLog" class="btn btn-primary" data-toggle="modal" data-target="#logModal">
-						  View Details
-						</button>
+						<div class="logButtonContainer" data-log-values="{{ $logValues->output }}">
+							<button type="button" id="viewLog" class="btn btn-primary" data-toggle="modal" data-target="#logModal">
+							  View Details
+							</button>
+						</div>
 					</td>
 				</tr>
 			@endforeach
@@ -47,7 +48,6 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>

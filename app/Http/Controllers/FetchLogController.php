@@ -58,6 +58,9 @@ class FetchLogController extends ManagePagesController
             }
             // Close off list.
             $item->output .= '</ul>';
+
+            // Encode so we can use it as a data attribute.
+            $item->output = json_encode($item->output);
         });
 
         // Log view.

@@ -39,7 +39,10 @@ $(document).ready(function() {
 		e.preventDefault();
 
 		// Get modal HTML from nearest DIV with the data attribute.
-		var modalHTML = $(this).closest('.logButtonContainer').attr('data-logValues');
+		var modalHTML = $(this).parent().attr('data-log-values');
+
+		// Parse the JSON.
+		modalHTML = JSON.parse(modalHTML);
 
 		// Populate modal content with HTML, then show.
 		$('#logModal .modal-body').html(modalHTML);
