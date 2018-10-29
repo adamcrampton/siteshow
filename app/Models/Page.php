@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class Page extends Model
 {
+    use Searchable;
+
 	// Fetch all records from pages table, bound by limit.
     public function getPages($fetchLimit = null, $sortOption = null)
     {
